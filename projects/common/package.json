@@ -8,6 +8,13 @@
     "google analytics",
     "typescript"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juanca202/factor-ui"
+  },
+  "bugs": {
+    "url": "https://github.com/juanca202/factor-ui/issues"
+  },
   "license": "gpl-3.0",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
