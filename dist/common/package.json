@@ -1,0 +1,29 @@
+{
+  "name": "factor-common",
+  "version": "0.0.1",
+  "author": "Juan Carlos Altamirano",
+  "keywords": [
+    "angular",
+    "oauth",
+    "google analytics",
+    "typescript"
+  ],
+  "license": "gpl-3.0",
+  "peerDependencies": {
+    "@angular/common": "^7.0.0",
+    "@angular/core": "^7.0.0"
+  },
+  "main": "bundles/factor-common.umd.js",
+  "module": "fesm5/factor-common.js",
+  "es2015": "fesm2015/factor-common.js",
+  "esm5": "esm5/factor-common.js",
+  "esm2015": "esm2015/factor-common.js",
+  "fesm5": "fesm5/factor-common.js",
+  "fesm2015": "fesm2015/factor-common.js",
+  "typings": "factor-common.d.ts",
+  "metadata": "factor-common.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
