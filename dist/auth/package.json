@@ -1,0 +1,37 @@
+{
+  "name": "factor-auth",
+  "version": "0.0.10",
+  "license": "CC-BY-NC-ND-4.0",
+  "author": "Factor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juanca202/factor-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juanca202/factor-ui/issues"
+  },
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "input"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0",
+    "factor-utils": "^0.0.1"
+  },
+  "main": "bundles/factor-auth.umd.js",
+  "module": "fesm5/factor-auth.js",
+  "es2015": "fesm2015/factor-auth.js",
+  "esm5": "esm5/factor-auth.js",
+  "esm2015": "esm2015/factor-auth.js",
+  "fesm5": "fesm5/factor-auth.js",
+  "fesm2015": "fesm2015/factor-auth.js",
+  "typings": "factor-auth.d.ts",
+  "metadata": "factor-auth.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

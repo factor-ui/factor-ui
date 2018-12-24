@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { AuthService } from 'factor-auth';
 
 @Component({
-  selector: 'app-root',
+  selector: 'factor-root',
   templateUrl: './app.component.html',
-  styles: []
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'factor-ui';
+export class AppComponent implements OnInit {
+
+  constructor(
+    private authService: AuthService
+  ) { }
+
+  ngOnInit() {
+    console.log(this.authService);
+  }
 }

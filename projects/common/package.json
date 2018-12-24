@@ -1,23 +1,25 @@
 {
   "name": "factor-common",
-  "version": "0.0.2",
-  "author": "Juan Carlos Altamirano",
-  "keywords": [
-    "angular",
-    "oauth",
-    "google analytics",
-    "typescript"
-  ],
+  "version": "0.0.5",
+  "license": "CC-BY-NC-ND-4.0",
+  "author": "Factor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/juanca202/factor-ui"
+    "url": "https://github.com/juanca202/factor-ui.git"
   },
   "bugs": {
     "url": "https://github.com/juanca202/factor-ui/issues"
   },
-  "license": "gpl-3.0",
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "input"
+  ],
+  "homepage": "https://github.com/juanca202/factor-ui#readme",
+  "private": false,
   "peerDependencies": {
-    "@angular/common": "^7.0.0",
-    "@angular/core": "^7.0.0"
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0"
   }
 }

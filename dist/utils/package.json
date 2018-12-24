@@ -1,0 +1,38 @@
+{
+  "name": "factor-utils",
+  "version": "0.0.1",
+  "license": "CC-BY-NC-ND-4.0",
+  "author": "Factor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juanca202/factor-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juanca202/factor-ui/issues"
+  },
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "input"
+  ],
+  "homepage": "https://github.com/juanca202/factor-ui#readme",
+  "private": false,
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0"
+  },
+  "main": "bundles/factor-utils.umd.js",
+  "module": "fesm5/factor-utils.js",
+  "es2015": "fesm2015/factor-utils.js",
+  "esm5": "esm5/factor-utils.js",
+  "esm2015": "esm2015/factor-utils.js",
+  "fesm5": "fesm5/factor-utils.js",
+  "fesm2015": "fesm2015/factor-utils.js",
+  "typings": "factor-utils.d.ts",
+  "metadata": "factor-utils.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

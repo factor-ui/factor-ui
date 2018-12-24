@@ -9,6 +9,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
@@ -18,11 +19,29 @@
       "dom"
     ],
     "paths": {
-      "common": [
+      "factor-common": [
         "dist/common"
       ],
-      "common/*": [
+      "factor-common/*": [
         "dist/common/*"
+      ],
+      "factor-auth": [
+        "dist/auth"
+      ],
+      "factor-auth/*": [
+        "dist/auth/*"
+      ],
+      "factor-inputs": [
+        "dist/inputs"
+      ],
+      "factor-inputs/*": [
+        "dist/inputs/*"
+      ],
+      "factor-utils": [
+        "dist/utils"
+      ],
+      "factor-utils/*": [
+        "dist/utils/*"
       ]
     }
   }

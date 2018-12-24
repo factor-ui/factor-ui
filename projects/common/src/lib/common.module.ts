@@ -1,20 +1,22 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
-import { AuthInterceptor } from './auth-interceptor';
+import { IconComponent } from './icon/icon.component';
 
 @NgModule({
-  imports: [],
-  declarations: [],
-  exports: []
+  declarations: [
+    IconComponent
+  ],
+  imports: [
+  ],
+  exports: [
+    IconComponent
+  ]
 })
 export class CommonModule {
-  public static forRoot(environment: any): ModuleWithProviders {
+  public static forRoot(configuration: any): ModuleWithProviders {
     return {
       ngModule: CommonModule,
       providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        { provide: 'environment', useValue: environment }
+        { provide: 'FactorCommonConfiguration', useValue: configuration }
       ]
     };
   }

@@ -1,17 +1,26 @@
 {
   "name": "factor-common",
-  "version": "0.0.1",
-  "author": "Juan Carlos Altamirano",
+  "version": "0.0.5",
+  "license": "CC-BY-NC-ND-4.0",
+  "author": "Factor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juanca202/factor-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juanca202/factor-ui/issues"
+  },
   "keywords": [
     "angular",
-    "oauth",
-    "google analytics",
-    "typescript"
+    "javascript",
+    "typescript",
+    "input"
   ],
-  "license": "gpl-3.0",
+  "homepage": "https://github.com/juanca202/factor-ui#readme",
+  "private": false,
   "peerDependencies": {
-    "@angular/common": "^7.0.0",
-    "@angular/core": "^7.0.0"
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0"
   },
   "main": "bundles/factor-common.umd.js",
   "module": "fesm5/factor-common.js",
