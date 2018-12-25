@@ -17,7 +17,6 @@ var AuthService = /** @class */ (function () {
         this.configuration = configuration;
         this.loggedInSource = new BehaviorSubject(false);
         this.loggedIn$ = this.loggedInSource.asObservable();
-        this.router = injector.get(Router);
     }
     /**
      * @param {?} form
@@ -31,6 +30,7 @@ var AuthService = /** @class */ (function () {
      */
     function (form, redirect) {
         var _this = this;
+        this.router = this.router || this.injector.get(Router);
         /** @type {?} */
         var params = {
             client_id: this.configuration.clientId,
@@ -57,6 +57,7 @@ var AuthService = /** @class */ (function () {
      * @return {?}
      */
     function (redirect) {
+        this.router = this.router || this.injector.get(Router);
         this.storageService.delete('token', localStorage);
         this.loggedInSource.next(false);
         this.router.navigate(['/login', redirect ? { redirect: redirect } : {}]);

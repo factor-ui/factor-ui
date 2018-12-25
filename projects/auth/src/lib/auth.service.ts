@@ -19,11 +19,10 @@ export class AuthService {
     private injector: Injector,
     private storageService: StorageService,
     @Inject('FactorAuthConfiguration') private configuration
-  ) {
-    this.router = injector.get(Router);
-  }
+  ) { }
 
   login(form: any, redirect?: string) {
+    this.router = this.router || this.injector.get(Router);
     const params = {
       client_id: this.configuration.clientId,
       client_secret: this.configuration.clientSecret,
@@ -41,6 +40,7 @@ export class AuthService {
     }));
   }
   logout(redirect?: string) {
+    this.router = this.router || this.injector.get(Router);
     this.storageService.delete('token', localStorage);
     this.loggedInSource.next(false);
     this.router.navigate(['/login', redirect ? { redirect: redirect } : {}]);

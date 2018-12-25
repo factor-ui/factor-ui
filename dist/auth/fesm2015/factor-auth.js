@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { tap, catchError, filter, take, switchMap, finalize, share } from 'rxjs/operators';
 import { Injectable, Injector, Inject, NgModule, defineInjectable, inject, INJECTOR } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
 
 /**
  * @fileoverview added by tsickle
@@ -23,7 +23,6 @@ class AuthService {
         this.configuration = configuration;
         this.loggedInSource = new BehaviorSubject(false);
         this.loggedIn$ = this.loggedInSource.asObservable();
-        this.router = injector.get(Router);
     }
     /**
      * @param {?} form
@@ -31,6 +30,7 @@ class AuthService {
      * @return {?}
      */
     login(form, redirect) {
+        this.router = this.router || this.injector.get(Router);
         /** @type {?} */
         const params = {
             client_id: this.configuration.clientId,
@@ -53,6 +53,7 @@ class AuthService {
      * @return {?}
      */
     logout(redirect) {
+        this.router = this.router || this.injector.get(Router);
         this.storageService.delete('token', localStorage);
         this.loggedInSource.next(false);
         this.router.navigate(['/login', redirect ? { redirect: redirect } : {}]);

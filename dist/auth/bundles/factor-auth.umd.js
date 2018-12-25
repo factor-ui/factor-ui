@@ -16,7 +16,6 @@
             this.configuration = configuration;
             this.loggedInSource = new rxjs.BehaviorSubject(false);
             this.loggedIn$ = this.loggedInSource.asObservable();
-            this.router = injector.get(i2$1.Router);
         }
         /**
          * @param {?} form
@@ -30,6 +29,7 @@
          */
             function (form, redirect) {
                 var _this = this;
+                this.router = this.router || this.injector.get(i2$1.Router);
                 /** @type {?} */
                 var params = {
                     client_id: this.configuration.clientId,
@@ -56,6 +56,7 @@
          * @return {?}
          */
             function (redirect) {
+                this.router = this.router || this.injector.get(i2$1.Router);
                 this.storageService.delete('token', localStorage);
                 this.loggedInSource.next(false);
                 this.router.navigate(['/login', redirect ? { redirect: redirect } : {}]);
