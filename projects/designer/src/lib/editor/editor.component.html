@@ -1,0 +1,89 @@
+<div class="view flex-grow-1">
+  <div class="canvas">
+    <ng-container *ngTemplateOutlet="component?.template; context:{component:component}"></ng-container>
+  </div>
+  <div class="grid-guides d-flex container">
+    <div class="row flex-grow-1">
+      <div class="col d-flex" *ngFor="let col of [1,2,3,4,5,6,7,8,9,10,11,12]"></div>
+    </div>
+  </div>
+  <div class="selection">
+    <ng-container *ngTemplateOutlet="component?.template; context:{component:component}"></ng-container>
+  </div>
+</div>
+<div class="properties card mr-2 my-2 card" *ngIf="currentComponent">
+  <div class="card-header">Properties</div>
+  <div class="card-body">
+    <div class="form-group">
+      Type: {{ currentComponent.type }}
+    </div>
+    <div class="form-group">
+      <label>Class</label>
+      <div><input type="text" class="form-control" [(ngModel)]="currentComponent.properties.class" /></div>
+    </div>
+    <div class="form-group">
+      <label>Value</label>
+      <div><input type="text" class="form-control" [(ngModel)]="currentComponent.value" /></div>
+    </div>
+    <div class="form-group">
+      <div class="dropdown">
+        <button class="btn btn-primary btn-block" type="button" data-toggle="dropdown">
+          <div class="d-flex align-items-center">
+            <ft-icon name="plus"></ft-icon>
+            <div class="ml-2">Add component</div>
+          </div>
+        </button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item p-2" *ngFor="let component of components" (click)="add(component, currentComponent)">
+            <div class="d-flex align-items-center">
+              <ft-icon class="mr-2" [name]="component.icon? component.icon : 'module'" collection="factoricons-slim"></ft-icon>
+              <div class="small">{{ component.label }}</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-danger btn-block" (click)="remove(currentComponent)">Remove component</button>
+    </div>
+  </div>
+</div>
+
+<!-- Components templates -->
+<ng-template #box let-component="component">
+  <div class="component has-children" [class.selected]="component==currentComponent" [ngClass]="component?.properties?.class" (click)="select(component, $event)">
+    <ng-container *ngIf="component.children && component.children.length>0">
+      <ng-container *ngFor="let child of component.children">
+        <ng-container *ngTemplateOutlet="child.template; context:{component:child}"></ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+<ng-template #button let-component="component">
+  <div class="component btn has-children" [class.selected]="component==currentComponent" [ngClass]="component?.properties?.class" (click)="select(component, $event)">
+    <ng-container *ngIf="component.children && component.children.length>0">
+      <ng-container *ngFor="let child of component.children">
+        <ng-container *ngTemplateOutlet="child.template; context:{component:child}"></ng-container>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+<ng-template #heading let-component="component">
+  <h1 class="component has-children" [class.selected]="component==currentComponent" [ngClass]="component?.properties?.class" (click)="select(component, $event)">{{ component.value }}</h1>
+</ng-template>
+<ng-template #icon let-component="component">
+  <div class="component" [class.selected]="component==currentComponent" [ngClass]="component?.properties?.class" (click)="select(component, $event)">
+    <ft-icon [name]="component?.properties?.name" [collection]="component?.properties?.collection"></ft-icon>
+  </div>
+</ng-template>
+<ng-template #image let-component="component">
+  <div class="component" [class.selected]="component==currentComponent" [ngClass]="component?.properties?.class" (click)="select(component, $event)">
+    <img class="img-fluid" [src]="component?.properties?.src" />
+  </div>
+</ng-template>
+<ng-template #paragraph let-component="component">
+  <p class="component has-children" [class.selected]="component==currentComponent" [ngClass]="component?.properties?.class" (click)="select(component, $event)">{{ component.value }}</p>
+</ng-template>
+<ng-template #text let-component="component">
+  <span class="component has-children" [class.selected]="component==currentComponent" [ngClass]="component?.properties?.class" (click)="select(component, $event)">{{ component.value }}</span>
+</ng-template>

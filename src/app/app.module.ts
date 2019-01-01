@@ -4,9 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { LayoutsModule } from './layouts/layouts.module';
 import { AppComponent } from './app.component';
 import { InputsModule } from 'factor-inputs';
 import { AuthModule } from 'factor-auth';
+import { DesignerModule } from 'factor-designer';
 import { CommonModule as FactorCommonModule } from 'factor-common';
 
 @NgModule({
@@ -20,7 +22,9 @@ import { CommonModule as FactorCommonModule } from 'factor-common';
     HttpClientModule,
     FactorCommonModule.forRoot({ icon: { collection: 'factoricons-regular' } }),
     AuthModule.forRoot({ tokenUrl: 'token' }),
-    InputsModule
+    DesignerModule,
+    InputsModule,
+    LayoutsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -269,7 +269,7 @@
                     }));
                 }
                 else {
-                    this.refreshTokenInProgress = false;
+                    //this.refreshTokenInProgress = false;
                     return this.refreshTokenSubject.pipe(operators.filter(function (token) { return token != null; }), operators.take(1), operators.switchMap(function (token) {
                         return next.handle(_this.addAuthenticationToken(request));
                     }));

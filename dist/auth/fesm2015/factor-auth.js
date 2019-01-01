@@ -238,7 +238,7 @@ class AuthInterceptor {
             }));
         }
         else {
-            this.refreshTokenInProgress = false;
+            //this.refreshTokenInProgress = false;
             return this.refreshTokenSubject.pipe(filter(token => token != null), take(1), switchMap(token => {
                 return next.handle(this.addAuthenticationToken(request));
             }));

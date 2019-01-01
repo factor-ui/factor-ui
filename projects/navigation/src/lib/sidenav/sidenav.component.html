@@ -1,0 +1,14 @@
+<div class="backdrop" (click)="hide()"></div>
+<div class="content d-flex flex-column" *ngIf="options">
+  <ng-content select="[ftStart]"></ng-content>
+  <div class="list-group">
+    <button type="button" class="list-group-item list-group-item-action p-3" [ngClass]="option.class" *ngFor="let option of options" (click)="selectOption(option)">
+      <div class="d-flex align-items-center">
+        <ft-icon [name]="option.icon" [title]="option.name"></ft-icon>
+        <div class="label">{{ option.name }}</div>
+      </div>
+    </button>
+  </div>
+  <ng-content select="[ftEnd]"></ng-content>
+</div>
+<div class="resizer" (click)="show()" *ngIf="!docked"></div>

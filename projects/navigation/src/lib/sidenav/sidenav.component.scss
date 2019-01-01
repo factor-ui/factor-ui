@@ -1,0 +1,115 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/_mixins";
+$sidenav-collapsed-width: 60px;
+$sidenav-show-width: 280px;
+.content {
+  background-color: map-get($theme-colors, light);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: $sidenav-show-width;
+  max-width: calc(100vw - #{$sidenav-collapsed-width});
+  transform: translateX(-100vw);
+  transition: transform 0.3s ease-in-out, width 0.3s, color 0.3s, background-color 0.3s;
+  z-index: $zindex-fixed;
+  @include media-breakpoint-up(md) {
+    :host:not(.show):not(.docked) & {
+      background-color: map-get($theme-colors, dark);
+      transform: translateX(0);
+      width: $sidenav-collapsed-width;
+      .list-group-item {
+        @include media-breakpoint-up(md) {
+          color: #FFF;
+          &:hover {
+            background: darken(map-get($theme-colors, light), 80%);
+          }
+          &.active {
+            background-color: map-get($theme-colors, light);
+            color: $body-color;
+          }
+        }
+        ft-icon {
+          margin-left: 0.125rem;
+        }
+      }
+    }
+  }
+  :host.show & {
+    transform: translateX(0);
+    box-shadow: rgba(15, 15, 15, 0.05) 0 0 0 1px, rgba(15, 15, 15, 0.1) 0 3px 6px, rgba(15, 15, 15, 0.2) 0 9px 24px;
+  }
+  :host.docked & {
+    @include media-breakpoint-up(md) {
+      transform: translateX(0);
+      box-shadow: 0 0 0;
+    }
+  }
+  > .list-group {
+    display: block;
+    overflow: auto;
+    > .list-group-item {
+      color: $body-color;
+      background-color: transparent;
+      border-radius: 0;
+      border: 0;
+      outline: none;
+      transition: background-color 0.3s;
+      &:hover {
+        background: darken(map-get($theme-colors, light), 7.5%);
+      }
+      .label {
+        display: block;
+        margin-left: 0.25rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .label,
+      ft-icon {
+        transition: margin-left 0.3s;
+      }
+    }
+  }
+  ft-icon {
+    font-size: 1.5rem;
+  }
+}
+.backdrop {
+  z-index: $zindex-fixed;
+  :host.show & {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.1);
+  }
+  :host.docked & {
+    @include media-breakpoint-up(md) {
+      display: none;
+    }
+  }
+}
+.resizer {
+  display: none;
+  position: fixed;
+  width: 4px;
+  top: 0;
+  bottom: 0;
+  left: $sidenav-collapsed-width;
+  transition: background-color 0.3s, left 0.3s;
+  z-index: $zindex-fixed;
+  cursor: e-resize;
+  background-color: transparent;
+  @include media-breakpoint-up(md) {
+    display: block;
+  }
+  :host.show & {
+    display: none;
+  }
+  &:hover {
+    background-color: map-get($theme-colors, primary);
+  }
+}

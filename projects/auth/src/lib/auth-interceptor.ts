@@ -60,7 +60,6 @@ export class AuthInterceptor {
         }),
       );
     } else {
-      this.refreshTokenInProgress = false;
       return this.refreshTokenSubject.pipe(
         filter(token => token != null),
         take(1),

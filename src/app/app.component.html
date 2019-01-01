@@ -1,9 +1,1 @@
-<div class="container">
-  <h1>App</h1>
-  <ft-file-picker class="btn btn-secondary" [(ngModel)]="files" accept="image/*">
-    <div *ngIf="!files">Cargar archivos</div>
-    <img *ngIf="files" [src]="files[0].data" />
-  </ft-file-picker>
-  <ft-icon name="search"></ft-icon>
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>
