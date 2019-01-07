@@ -10,10 +10,14 @@ import { InputsModule } from 'factor-inputs';
 import { AuthModule } from 'factor-auth';
 import { DesignerModule } from 'factor-designer';
 import { CommonModule as FactorCommonModule } from 'factor-common';
+import { HomeComponent } from './home/home.component';
+import { StyleGuideComponent } from './style-guide/style-guide.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    StyleGuideComponent
   ],
   imports: [
     BrowserModule,

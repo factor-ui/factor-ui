@@ -9,38 +9,292 @@ import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core'
 export class EditorComponent implements OnInit {
   components: any[] = [
     {
-      type: 'box',
-      label: 'Box'
+      label: 'Box',
+      library: 'html',
+      group: 'layout',
+      component: {
+        type: 'box'
+      }
     },
     {
-      type: 'button',
-      label: 'Button'
+      label: 'Container',
+      library: 'bootstrap',
+      group: 'layout',
+      component: {
+        type: 'box',
+        properties: {
+          class: 'container'
+        }
+      }
     },
     {
-      type: 'icon',
-      label: 'Icon'
+      label: 'Row',
+      library: 'bootstrap',
+      group: 'layout',
+      component: {
+        type: 'box',
+        properties: {
+          class: 'row'
+        },
+        children: [
+          {
+            type: 'box',
+            properties: {
+              class: 'col'
+            }
+          },
+          {
+            type: 'box',
+            properties: {
+              class: 'col'
+            }
+          }
+        ]
+      }
+    },
+    {
+      label: 'Alert',
+      library: 'bootstrap',
+      group: 'components',
+      component: {
+        type: 'box',
+        properties: {
+          class: 'alert alert-primary'
+        }
+      }
+    },
+    {
+      label: 'Badge',
+      library: 'bootstrap',
+      group: 'components',
+      component: {
+        type: 'text',
+        properties: {
+          class: 'badge badge-secondary'
+        }
+      }
+    },
+    {
+      label: 'Button group',
+      library: 'bootstrap',
+      group: 'components',
+      component: {
+        type: 'box',
+        properties: {
+          class: 'btn-group'
+        },
+        children: [
+          {
+            type: 'button'
+          },
+          {
+            type: 'button'
+          }
+        ]
+      }
+    },
+    {
+      label: 'Card',
+      library: 'bootstrap',
+      group: 'components',
+      component: {
+        type: 'box',
+        properties: {
+          class: 'card'
+        },
+        children: [
+          {
+            type: 'box',
+            properties: {
+              class: 'card-header'
+            }
+          },
+          {
+            type: 'box',
+            properties: {
+              class: 'card-body'
+            }
+          }
+        ]
+      }
+    },
+    {
+      label: 'Form group',
+      library: 'bootstrap',
+      group: 'forms',
+      component: {
+        type: 'box',
+        properties: {
+          class: 'form-group'
+        },
+        children: [
+          {
+            type: 'text',
+            properties: {
+              class: 'd-block'
+            }
+          },
+          {
+            type: 'input'
+          }
+        ]
+      }
+    },
+    {
+      label: 'Jumbotron',
+      library: 'bootstrap',
+      group: 'components',
+      component: {
+        type: 'box',
+        properties: {
+          class: 'jumbotron'
+        },
+        children: [
+          {
+            type: 'heading',
+            value: 'Hello, world!',
+            properties: {
+              class: 'display-4'
+            }
+          },
+          {
+            type: 'paragraph',
+            value: 'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.',
+            properties: {
+              class: 'lead'
+            }
+          }
+        ]
+      }
+    },
+    {
+      label: 'List group',
+      library: 'bootstrap',
+      group: 'navigation',
+      component: {
+        type: 'box',
+        properties: {
+          class: 'list-group'
+        },
+        children: [
+          {
+            type: 'box',
+            properties: {
+              class: 'list-group-item'
+            }
+          },
+          {
+            type: 'box',
+            properties: {
+              class: 'list-group-item'
+            }
+          },
+          {
+            type: 'box',
+            properties: {
+              class: 'list-group-item'
+            }
+          }
+        ]
+      }
+    },
+    {
+      label: 'Nav',
+      library: 'bootstrap',
+      group: 'navigation',
+      component: {
+        type: 'nav',
+        properties: {
+          class: 'nav-tabs'
+        },
+        children: [
+          {
+            type: 'navItem',
+            value: 'Tab 1',
+            properties: {
+              class: 'active'
+            }
+          },
+          {
+            type: 'navItem',
+            value: 'Tab 2'
+          },
+          {
+            type: 'navItem',
+            value: 'Tab 3'
+          }
+        ]
+      }
+    },
+    {
+      label: 'Button',
+      library: 'html',
+      group: 'forms',
+      component: {
+        type: 'button'
+      }
+    },
+    {
+      label: 'Link',
+      library: 'html',
+      group: 'navigation',
+      component: {
+        type: 'link'
+      }
+    },
+    {
+      label: 'Icon',
+      library: 'factor-ui',
+      group: 'components',
+      component: {
+        type: 'icon'
+      }
     },
     {
       icon: 'media-image',
-      type: 'image',
-      label: 'Image'
+      label: 'Image',
+      library: 'html',
+      group: 'components',
+      component: {
+        type: 'image'
+      }
     },
     {
-      type: 'text',
-      label: 'Text'
+      label: 'Text',
+      library: 'html',
+      group: 'components',
+      component: {
+        type: 'text'
+      }
     },
     {
-      type: 'heading',
-      label: 'Heading'
+      label: 'Heading',
+      library: 'html',
+      group: 'components',
+      component: {
+        type: 'heading'
+      }
     },
     {
-      type: 'paragraph',
-      label: 'Paragraph'
+      label: 'Paragraph',
+      library: 'html',
+      group: 'components',
+      component: {
+        type: 'paragraph'
+      }
+    },
+    {
+      label: 'Input',
+      library: 'html',
+      group: 'forms',
+      component: {
+        type: 'input'
+      }
     }
   ];
   currentComponent: any;
   dragging: boolean;
-  overElement: any;
+  showGuides: boolean;
 
   private _component: any;
   get component(): any {
@@ -58,6 +312,12 @@ export class EditorComponent implements OnInit {
   icon: TemplateRef<any>;
   @ViewChild('image')
   image: TemplateRef<any>;
+  @ViewChild('input')
+  input: TemplateRef<any>;
+  @ViewChild('link')
+  link: TemplateRef<any>;
+  @ViewChild('nav')
+  nav: TemplateRef<any>;
   @ViewChild('text')
   text: TemplateRef<any>;
   @ViewChild('heading')
@@ -70,12 +330,12 @@ export class EditorComponent implements OnInit {
   ngOnInit() {
     this.component = this.mapComponent({ type: 'box', properties: { class: 'container' } });
   }
-  add(component, parent) {
-    let newComponent = this.mapComponent({ type: component.type, properties: {} });
+  add(option, parent) {
+    let newComponent: any = JSON.parse(JSON.stringify(option.component));
     if (newComponent.type == 'button') {
       const label = prompt('Type a label');
       if (label) {
-        newComponent.children = [this.mapComponent({ type: 'text', value: label })];
+        newComponent.children = [{ type: 'text', value: label }];
       }
     }
     if (newComponent.type == 'icon') {
@@ -84,15 +344,15 @@ export class EditorComponent implements OnInit {
     if (newComponent.type == 'image') {
       newComponent.properties.src = prompt('Type a url');
     }
-    if (['text', 'heading', 'paragraph'].indexOf(newComponent.type)>=0) {
+    if (['link', 'text', 'heading', 'paragraph'].indexOf(newComponent.type)>=0) {
       newComponent.value = prompt('Type text');
     }
+    this.currentComponent = this.mapComponent(newComponent);
     parent.children = parent.children || [];
-    parent.children.push(newComponent);
-    this.currentComponent = newComponent;
+    parent.children.push(this.currentComponent);
   }
   remove(component) {
-    
+
   }
   select(component, event) {
     event.stopPropagation();
@@ -101,11 +361,11 @@ export class EditorComponent implements OnInit {
   mapComponent(component): any {
     if (component) {
       component.template = this[component.type];
-      if (component.children) {
-        component.children.forEach((child) => {
-          this.mapComponent(child);
-        });
-      }
+      component.properties = component.properties || {};
+      component.children = component.children || [];
+      component.children.forEach((child) => {
+        this.mapComponent(child);
+      });
     }
     return component;
   }
