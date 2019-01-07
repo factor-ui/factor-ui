@@ -1,5 +1,5 @@
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Injectable, NgModule, Component, ElementRef, forwardRef, HostBinding, HostListener, Input, defineInjectable } from '@angular/core';
+import { Injectable, Component, NgModule, ElementRef, forwardRef, HostBinding, HostListener, Input, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -320,6 +320,33 @@ var InvalidFeedbackComponent = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+var TextInputComponent = /** @class */ (function () {
+    function TextInputComponent() {
+    }
+    /**
+     * @return {?}
+     */
+    TextInputComponent.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+    };
+    TextInputComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'ft-text-input',
+                    template: "<p>\n  text-input works!\n</p>\n",
+                    styles: [""]
+                }] }
+    ];
+    /** @nocollapse */
+    TextInputComponent.ctorParameters = function () { return []; };
+    return TextInputComponent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var InputsModule = /** @class */ (function () {
     function InputsModule() {
     }
@@ -327,7 +354,8 @@ var InputsModule = /** @class */ (function () {
         { type: NgModule, args: [{
                     declarations: [
                         FilePickerComponent,
-                        InvalidFeedbackComponent
+                        InvalidFeedbackComponent,
+                        TextInputComponent
                     ],
                     imports: [],
                     exports: [
@@ -349,6 +377,6 @@ var InputsModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputsService, InputsModule, FilePickerComponent, InvalidFeedbackComponent };
+export { InputsService, InputsModule, FilePickerComponent, InvalidFeedbackComponent, TextInputComponent as ɵa };
 
 //# sourceMappingURL=factor-inputs.js.map

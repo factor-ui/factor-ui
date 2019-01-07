@@ -320,6 +320,33 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var TextInputComponent = /** @class */ (function () {
+        function TextInputComponent() {
+        }
+        /**
+         * @return {?}
+         */
+        TextInputComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        TextInputComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'ft-text-input',
+                        template: "<p>\n  text-input works!\n</p>\n",
+                        styles: [""]
+                    }] }
+        ];
+        /** @nocollapse */
+        TextInputComponent.ctorParameters = function () { return []; };
+        return TextInputComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var InputsModule = /** @class */ (function () {
         function InputsModule() {
         }
@@ -327,7 +354,8 @@
             { type: i0.NgModule, args: [{
                         declarations: [
                             FilePickerComponent,
-                            InvalidFeedbackComponent
+                            InvalidFeedbackComponent,
+                            TextInputComponent
                         ],
                         imports: [],
                         exports: [
@@ -353,6 +381,7 @@
     exports.InputsModule = InputsModule;
     exports.FilePickerComponent = FilePickerComponent;
     exports.InvalidFeedbackComponent = InvalidFeedbackComponent;
+    exports.ɵa = TextInputComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

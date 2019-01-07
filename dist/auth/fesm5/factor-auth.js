@@ -264,7 +264,6 @@ var AuthInterceptor = /** @class */ (function () {
             }));
         }
         else {
-            //this.refreshTokenInProgress = false;
             return this.refreshTokenSubject.pipe(filter(function (token) { return token != null; }), take(1), switchMap(function (token) {
                 return next.handle(_this.addAuthenticationToken(request));
             }));

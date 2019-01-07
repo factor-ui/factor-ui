@@ -20,6 +20,7 @@
   "private": false,
   "peerDependencies": {
     "@angular/common": "^7.1.0",
-    "@angular/core": "^7.1.0"
+    "@angular/core": "^7.1.0",
+    "bootstrap": "^4.2.1"
   }
 }

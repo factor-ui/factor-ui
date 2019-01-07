@@ -1,5 +1,5 @@
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Injectable, NgModule, Component, ElementRef, forwardRef, HostBinding, HostListener, Input, defineInjectable } from '@angular/core';
+import { Injectable, Component, NgModule, Input, ElementRef, forwardRef, HostBinding, HostListener, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -246,13 +246,36 @@ InvalidFeedbackComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class TextInputComponent {
+    constructor() { }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+}
+TextInputComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'ft-text-input',
+                template: "<p>\n  text-input works!\n</p>\n",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+TextInputComponent.ctorParameters = () => [];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class InputsModule {
 }
 InputsModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [
                     FilePickerComponent,
-                    InvalidFeedbackComponent
+                    InvalidFeedbackComponent,
+                    TextInputComponent
                 ],
                 imports: [],
                 exports: [
@@ -272,6 +295,6 @@ InputsModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { InputsService, InputsModule, FilePickerComponent, InvalidFeedbackComponent };
+export { InputsService, InputsModule, FilePickerComponent, InvalidFeedbackComponent, TextInputComponent as ɵa };
 
 //# sourceMappingURL=factor-inputs.js.map

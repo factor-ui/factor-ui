@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ft-text-input',
   templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.css']
+  styleUrls: ['./text-input.component.scss']
 })
 export class TextInputComponent implements OnInit {
 
