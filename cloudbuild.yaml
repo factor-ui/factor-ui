@@ -10,4 +10,4 @@ steps:
 
   # Deploy to google cloud app engine
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', 'app.yaml', '--project=github-builds-227920']
+    args: ['app', 'deploy', 'app.yaml', '--version=1', '--project=github-builds-227920']
