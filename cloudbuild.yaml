@@ -8,6 +8,6 @@ steps:
   - name: 'gcr.io/cloud-builders/yarn'
     args: [ 'run', 'build', '--configuration=production' ]
 
-  # Deploy to google cloud app egnine
+  # Deploy to google cloud app engine
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', '--project github-builds-227920']
+    args: ['app', 'deploy', 'app.yaml --project=github-builds-227920']
