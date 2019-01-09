@@ -15,21 +15,20 @@ class IconComponent {
      * @return {?}
      */
     ngOnInit() {
-        if (this.collection) {
-            this.libraryUrl = `assets/${this.collection}.svg`;
-        }
-        else if (this.configuration.icon && this.configuration.icon.collection) {
-            this.libraryUrl = `assets/${this.configuration.icon.collection}.svg`;
-        }
-        else {
-            this.libraryUrl = 'assets/icons.svg';
+        if (!this.collection) {
+            if (this.configuration.icon && this.configuration.icon.collection) {
+                this.collection = this.configuration.icon.collection;
+            }
+            else {
+                this.collection = 'icons';
+            }
         }
     }
 }
 IconComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ft-icon',
-                template: "<svg><use attr.xlink:href=\"{{ libraryUrl }}#{{ name }}\" /></svg>\n",
+                template: "<svg><use attr.xlink:href=\"assets/{{ this.collection }}.svg#{{ name }}\" /></svg>\n",
                 styles: [":host{line-height:0;display:inline-block}svg{width:1em;height:1em;vertical-align:middle;fill:none}"]
             }] }
 ];

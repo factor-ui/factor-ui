@@ -332,6 +332,7 @@ export class EditorComponent implements OnInit {
   }
   add(option, parent) {
     let newComponent: any = JSON.parse(JSON.stringify(option.component));
+    newComponent.properties = newComponent.properties || {};
     if (newComponent.type == 'button') {
       const label = prompt('Type a label');
       if (label) {

@@ -10,19 +10,18 @@ export class IconComponent implements OnInit {
   name: string;
   @Input()
   collection: string;
-  libraryUrl: string;
 
   constructor(
     @Inject('FactorCommonConfiguration') private configuration
   ) { }
 
   ngOnInit() {
-    if (this.collection) {
-      this.libraryUrl = `assets/${this.collection}.svg`;
-    } else if (this.configuration.icon && this.configuration.icon.collection) {
-      this.libraryUrl = `assets/${this.configuration.icon.collection}.svg`;
-    } else {
-      this.libraryUrl = 'assets/icons.svg';
+    if (!this.collection) {
+      if (this.configuration.icon && this.configuration.icon.collection) {
+        this.collection = this.configuration.icon.collection;
+      } else {
+        this.collection = 'icons';
+      }
     }
   }
 }
