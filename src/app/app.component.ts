@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { GoogleAnalyticsService } from 'factor-utils';
+
 @Component({
   selector: 'factor-root',
   templateUrl: './app.component.html',
@@ -55,7 +57,9 @@ export class AppComponent implements OnInit {
     ]
   };
 
-  constructor() { }
+  constructor(googleAnalyticsService: GoogleAnalyticsService) {
+    googleAnalyticsService.appendTrackingCode();
+  }
 
   ngOnInit() {
 

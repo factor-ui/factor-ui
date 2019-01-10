@@ -10,7 +10,7 @@ export class StorageService {
   delete(key: string, storage?) {
     if (storage) {
       delete storage[key];
-    }else{
+    } else {
       delete sessionStorage[key];
     }
   }

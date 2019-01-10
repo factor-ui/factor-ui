@@ -1,4 +1,5 @@
-import { Injectable, NgModule, defineInjectable } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Injectable, NgModule, Inject, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -67,7 +68,114 @@ StorageService.ctorParameters = () => [];
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class GoogleAnalyticsService {
+    /**
+     * @param {?} router
+     * @param {?} configuration
+     */
+    constructor(router, configuration) {
+        this.router = router;
+        this.configuration = configuration;
+        router.events.subscribe(event => {
+            try {
+                if (typeof gtag === 'function') {
+                    if (event instanceof NavigationEnd) {
+                        setTimeout(() => {
+                            gtag('config', this.configuration.gaTrackingId, {
+                                'page_title': document.title,
+                                'page_path': event.urlAfterRedirects
+                            });
+                        }, 100);
+                    }
+                }
+            }
+            catch (e) {
+                console.error(e);
+            }
+        });
+    }
+    /**
+     * @return {?}
+     */
+    appendTrackingCode() {
+        try {
+            if (this.configuration && this.configuration.gaTrackingId) {
+                /** @type {?} */
+                const s1 = document.createElement('script');
+                s1.async = true;
+                s1.src = `https://www.googletagmanager.com/gtag/js?id=${this.configuration.gaTrackingId}`;
+                document.head.appendChild(s1);
+                /** @type {?} */
+                const s2 = document.createElement('script');
+                s2.innerHTML = `
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+         gtag('config', '${this.configuration.gaTrackingId}');
+       `;
+                document.head.appendChild(s2);
+            }
+        }
+        catch (ex) {
+            console.error('Error appending google analytics');
+            console.error(ex);
+        }
+    }
+    /**
+     * @param {?} action
+     * @param {?=} category
+     * @param {?=} label
+     * @param {?=} value
+     * @return {?}
+     */
+    setEvent(action, category = null, label = null, value = null) {
+        if (typeof gtag === 'function') {
+            gtag('event', action, {
+                event_category: category,
+                event_label: label,
+                value: value
+            });
+        }
+    }
+    /**
+     * @param {?} userId
+     * @return {?}
+     */
+    setUserId(userId) {
+        if (typeof gtag === 'function') {
+            gtag('set', { 'user_id': userId });
+        }
+    }
+}
+GoogleAnalyticsService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+GoogleAnalyticsService.ctorParameters = () => [
+    { type: Router },
+    { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
+];
+/** @nocollapse */ GoogleAnalyticsService.ngInjectableDef = defineInjectable({ factory: function GoogleAnalyticsService_Factory() { return new GoogleAnalyticsService(inject(Router), inject("FactorUtilsConfiguration")); }, token: GoogleAnalyticsService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class UtilsModule {
+    /**
+     * @param {?} configuration
+     * @return {?}
+     */
+    static forRoot(configuration) {
+        return {
+            ngModule: UtilsModule,
+            providers: [
+                { provide: 'FactorUtilsConfiguration', useValue: configuration }
+            ]
+        };
+    }
 }
 UtilsModule.decorators = [
     { type: NgModule, args: [{
@@ -87,6 +195,6 @@ UtilsModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { StorageService, UtilsModule };
+export { StorageService, GoogleAnalyticsService, UtilsModule };
 
 //# sourceMappingURL=factor-utils.js.map

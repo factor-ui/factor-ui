@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -11,4 +11,13 @@ import { NgModule } from '@angular/core';
 
   ]
 })
-export class UtilsModule { }
+export class UtilsModule {
+  public static forRoot(configuration: any): ModuleWithProviders {
+    return {
+      ngModule: UtilsModule,
+      providers: [
+        { provide: 'FactorUtilsConfiguration', useValue: configuration }
+      ]
+    };
+  }
+}

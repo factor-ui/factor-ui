@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { InputsModule } from 'factor-inputs';
 import { AuthModule } from 'factor-auth';
 import { DesignerModule } from 'factor-designer';
+import { UtilsModule } from 'factor-utils';
 import { CommonModule as FactorCommonModule } from 'factor-common';
 import { HomeComponent } from './home/home.component';
 import { StyleGuideComponent } from './style-guide/style-guide.component';
@@ -26,6 +27,7 @@ import { StyleGuideComponent } from './style-guide/style-guide.component';
     HttpClientModule,
     FactorCommonModule.forRoot({ icon: { collection: 'factoricons-regular' } }),
     AuthModule.forRoot({ tokenUrl: 'token' }),
+    UtilsModule.forRoot({ gaTrackingId: 'UA-309340-59' }),
     DesignerModule,
     InputsModule,
     LayoutsModule
