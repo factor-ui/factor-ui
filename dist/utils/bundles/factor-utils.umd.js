@@ -144,7 +144,7 @@
          * @param {?=} value
          * @return {?}
          */
-        GoogleAnalyticsService.prototype.setEvent = /**
+        GoogleAnalyticsService.prototype.trackEvent = /**
          * @param {?} action
          * @param {?=} category
          * @param {?=} label
@@ -166,6 +166,24 @@
                         event_category: category,
                         event_label: label,
                         value: value
+                    });
+                }
+            };
+        /**
+         * @param {?} description
+         * @param {?} fatal
+         * @return {?}
+         */
+        GoogleAnalyticsService.prototype.trackException = /**
+         * @param {?} description
+         * @param {?} fatal
+         * @return {?}
+         */
+            function (description, fatal) {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'exception', {
+                        description: description,
+                        fatal: fatal
                     });
                 }
             };

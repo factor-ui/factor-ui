@@ -128,12 +128,25 @@ class GoogleAnalyticsService {
      * @param {?=} value
      * @return {?}
      */
-    setEvent(action, category = null, label = null, value = null) {
+    trackEvent(action, category = null, label = null, value = null) {
         if (typeof gtag === 'function') {
             gtag('event', action, {
                 event_category: category,
                 event_label: label,
                 value: value
+            });
+        }
+    }
+    /**
+     * @param {?} description
+     * @param {?} fatal
+     * @return {?}
+     */
+    trackException(description, fatal) {
+        if (typeof gtag === 'function') {
+            gtag('event', 'exception', {
+                description: description,
+                fatal: fatal
             });
         }
     }

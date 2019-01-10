@@ -1,5 +1,5 @@
 import { NavigationEnd, Router } from '@angular/router';
-import { Injectable, NgModule, Inject, defineInjectable, inject } from '@angular/core';
+import { Injectable, Inject, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -141,7 +141,7 @@ var GoogleAnalyticsService = /** @class */ (function () {
      * @param {?=} value
      * @return {?}
      */
-    GoogleAnalyticsService.prototype.setEvent = /**
+    GoogleAnalyticsService.prototype.trackEvent = /**
      * @param {?} action
      * @param {?=} category
      * @param {?=} label
@@ -157,6 +157,24 @@ var GoogleAnalyticsService = /** @class */ (function () {
                 event_category: category,
                 event_label: label,
                 value: value
+            });
+        }
+    };
+    /**
+     * @param {?} description
+     * @param {?} fatal
+     * @return {?}
+     */
+    GoogleAnalyticsService.prototype.trackException = /**
+     * @param {?} description
+     * @param {?} fatal
+     * @return {?}
+     */
+    function (description, fatal) {
+        if (typeof gtag === 'function') {
+            gtag('event', 'exception', {
+                description: description,
+                fatal: fatal
             });
         }
     };
