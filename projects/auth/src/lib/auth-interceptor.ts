@@ -34,7 +34,7 @@ export class AuthInterceptor {
       })
     );
   }
-  handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+  handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     if (!this.refreshTokenInProgress) {
       this.refreshTokenInProgress = true;
       this.refreshTokenSubject.next(null);
@@ -69,7 +69,7 @@ export class AuthInterceptor {
       );
     }
   }
-  addAuthenticationToken(request) {
+  addAuthenticationToken(request): HttpRequest<any> {
     const token = this.authService.getToken();
 
     // If access token is null this means that user is not logged in

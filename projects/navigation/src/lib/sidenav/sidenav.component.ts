@@ -7,13 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
-  @HostBinding('class.docked')
   @Input()
   docked: boolean;
-  @HostBinding('class.show')
-  shown: boolean;
   @Input()
   options: string;
+  @Input()
+  position: 'left' | 'right' = 'left';
+  shown: boolean;
 
   constructor(
     private router: Router
@@ -24,6 +24,14 @@ export class SidenavComponent implements OnInit {
   hide() {
     this.shown = false;
   }
+  @HostBinding('class')
+	get hostClasses(): string {
+		return [
+			this.docked? 'docked' : '',
+			this.position,
+			this.shown? 'show': ''
+		].join(' ');
+	}
   selectOption(option) {
     if (option.url) {
       this.router.navigateByUrl(option.url);

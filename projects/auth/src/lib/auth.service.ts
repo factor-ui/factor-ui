@@ -11,8 +11,8 @@ import { StorageService } from 'factor-utils';
 })
 export class AuthService {
   private loggedInSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  loggedIn$: Observable<boolean> = this.loggedInSource.asObservable();
-  router: Router;
+  public loggedIn$: Observable<boolean> = this.loggedInSource.asObservable();
+  private router: Router;
 
   constructor(
     private http: HttpClient,
@@ -21,7 +21,7 @@ export class AuthService {
     @Inject('FactorAuthConfiguration') private configuration
   ) { }
 
-  login(form: any, redirect?: string) {
+  login(form: any, redirect?: string): Observable<any> {
     this.router = this.router || this.injector.get(Router);
     const params = {
       client_id: this.configuration.clientId,
@@ -39,13 +39,13 @@ export class AuthService {
       }
     }));
   }
-  logout(redirect?: string) {
+  logout(redirect?: string): void {
     this.router = this.router || this.injector.get(Router);
     this.storageService.delete('token', localStorage);
     this.loggedInSource.next(false);
     this.router.navigate(['/login', redirect ? { redirect: redirect } : {}]);
   }
-  getToken() {
+  getToken(): any {
     return this.storageService.get('token', localStorage);
   }
   refreshToken(): Observable<any> {

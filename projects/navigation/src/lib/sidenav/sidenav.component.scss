@@ -36,6 +36,11 @@ $sidenav-show-width: 280px;
       }
     }
   }
+  :host.right & {
+    left: inherit;
+    right: 0;
+    transform: translateX(100vw);
+  }
   :host.show & {
     transform: translateX(0);
     box-shadow: rgba(15, 15, 15, 0.05) 0 0 0 1px, rgba(15, 15, 15, 0.1) 0 3px 6px, rgba(15, 15, 15, 0.2) 0 9px 24px;
@@ -106,10 +111,15 @@ $sidenav-show-width: 280px;
   @include media-breakpoint-up(md) {
     display: block;
   }
+  &:hover {
+    background-color: map-get($theme-colors, primary);
+  }
   :host.show & {
     display: none;
   }
-  &:hover {
-    background-color: map-get($theme-colors, primary);
+  :host.right & {
+    cursor: w-resize;
+    left: inherit;
+    right: $sidenav-collapsed-width;
   }
 }

@@ -29,7 +29,7 @@ IconComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ft-icon',
                 template: "<svg><use attr.xlink:href=\"assets/{{ this.collection }}.svg#{{ name }}\" /></svg>\n",
-                styles: [":host{line-height:0;display:inline-block}svg{width:1em;height:1em;vertical-align:middle;fill:none}"]
+                styles: [":host{line-height:0;display:inline-block}svg{width:1em;height:1em;vertical-align:middle;fill:currentColor}"]
             }] }
 ];
 /** @nocollapse */
