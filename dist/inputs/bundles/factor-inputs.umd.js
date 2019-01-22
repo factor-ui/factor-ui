@@ -1,26 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('factor-inputs', ['exports', '@angular/forms', '@angular/core'], factory) :
-    (factory((global['factor-inputs'] = {}),global.ng.forms,global.ng.core));
-}(this, (function (exports,forms,i0) { 'use strict';
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var InputsService = /** @class */ (function () {
-        function InputsService() {
-        }
-        InputsService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        InputsService.ctorParameters = function () { return []; };
-        /** @nocollapse */ InputsService.ngInjectableDef = i0.defineInjectable({ factory: function InputsService_Factory() { return new InputsService(); }, token: InputsService, providedIn: "root" });
-        return InputsService;
-    }());
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/core'), require('@angular/forms')) :
+    typeof define === 'function' && define.amd ? define('factor-inputs', ['exports', '@angular/common', '@angular/core', '@angular/forms'], factory) :
+    (factory((global['factor-inputs'] = {}),global.ng.common,global.ng.core,global.ng.forms));
+}(this, (function (exports,common,core,forms) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -180,13 +162,13 @@
          */
             function () { };
         FilePickerComponent.decorators = [
-            { type: i0.Component, args: [{
+            { type: core.Component, args: [{
                         selector: 'ft-file-picker',
                         template: "<ng-content></ng-content>\n",
                         providers: [
                             {
                                 provide: forms.NG_VALUE_ACCESSOR,
-                                useExisting: i0.forwardRef(function () { return FilePickerComponent; }),
+                                useExisting: core.forwardRef(function () { return FilePickerComponent; }),
                                 multi: true
                             }
                         ],
@@ -196,15 +178,15 @@
         /** @nocollapse */
         FilePickerComponent.ctorParameters = function () {
             return [
-                { type: i0.ElementRef }
+                { type: core.ElementRef }
             ];
         };
         FilePickerComponent.propDecorators = {
-            accept: [{ type: i0.Input }],
-            disabled: [{ type: i0.Input }],
-            multiple: [{ type: i0.Input }],
-            dragover: [{ type: i0.HostBinding, args: ['class.dragover',] }],
-            openDialog: [{ type: i0.HostListener, args: ['click',] }]
+            accept: [{ type: core.Input }],
+            disabled: [{ type: core.Input }],
+            multiple: [{ type: core.Input }],
+            dragover: [{ type: core.HostBinding, args: ['class.dragover',] }],
+            openDialog: [{ type: core.HostListener, args: ['click',] }]
         };
         return FilePickerComponent;
     }());
@@ -303,15 +285,15 @@
                 return Object.keys(formGroup).find(function (name) { return control === formGroup[name]; }) || null;
             };
         InvalidFeedbackComponent.decorators = [
-            { type: i0.Component, args: [{
+            { type: core.Component, args: [{
                         selector: 'ft-invalid-feedback',
                         template: "{{ getError() }}\n",
                         styles: [""]
                     }] }
         ];
         InvalidFeedbackComponent.propDecorators = {
-            messages: [{ type: i0.Input }],
-            control: [{ type: i0.Input }]
+            messages: [{ type: core.Input }],
+            control: [{ type: core.Input }]
         };
         return InvalidFeedbackComponent;
     }());
@@ -322,7 +304,20 @@
      */
     var TextInputComponent = /** @class */ (function () {
         function TextInputComponent() {
+            this.type = 'text';
+            this.propagateChange = function (_) { };
         }
+        Object.defineProperty(TextInputComponent.prototype, "hostClasses", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return [
+                    this.style ? "style-" + this.style : ''
+                ].join(' ');
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -331,16 +326,184 @@
          */
             function () {
             };
+        Object.defineProperty(TextInputComponent.prototype, "value", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._value;
+            },
+            set: /**
+             * @param {?} value
+             * @return {?}
+             */ function (value) {
+                this.field.nativeElement.value = value;
+                this._value = value;
+                this.propagateChange(this._value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {?} fn
+         * @return {?}
+         */
+        TextInputComponent.prototype.registerOnChange = /**
+         * @param {?} fn
+         * @return {?}
+         */
+            function (fn) {
+                this.propagateChange = fn;
+            };
+        /**
+         * @return {?}
+         */
+        TextInputComponent.prototype.registerOnTouched = /**
+         * @return {?}
+         */
+            function () { };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        TextInputComponent.prototype.updateValue = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                this.value = event.target.value;
+            };
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        TextInputComponent.prototype.writeValue = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.value = value;
+            };
         TextInputComponent.decorators = [
-            { type: i0.Component, args: [{
+            { type: core.Component, args: [{
                         selector: 'ft-text-input',
-                        template: "<p>\n  text-input works!\n</p>\n",
-                        styles: [""]
+                        template: "<input #field [type]=\"type\" class=\"form-control\" placeholder=\" \" (change)=\"updateValue($event)\" />\n<label>{{ placeholder }}</label>\n",
+                        providers: [
+                            {
+                                provide: forms.NG_VALUE_ACCESSOR,
+                                useExisting: core.forwardRef(function () { return TextInputComponent; }),
+                                multi: true
+                            }
+                        ],
+                        styles: [":host{display:block;position:relative;padding-top:.8rem;background-color:#fff}:host input{background-color:#fff;border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block}:host input+label{background:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host input:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host input:focus+label,:host input:not(:placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host input:focus+label{color:#007bff!important}"]
                     }] }
         ];
         /** @nocollapse */
         TextInputComponent.ctorParameters = function () { return []; };
+        TextInputComponent.propDecorators = {
+            type: [{ type: core.Input }],
+            placeholder: [{ type: core.Input }],
+            style: [{ type: core.Input }],
+            hostClasses: [{ type: core.HostBinding, args: ['class',] }],
+            field: [{ type: core.ViewChild, args: ['field',] }]
+        };
         return TextInputComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var SelectComponent = /** @class */ (function () {
+        function SelectComponent() {
+            this.propagateChange = function (_) { };
+        }
+        /**
+         * @return {?}
+         */
+        SelectComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        Object.defineProperty(SelectComponent.prototype, "value", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._value;
+            },
+            set: /**
+             * @param {?} value
+             * @return {?}
+             */ function (value) {
+                this._value = value;
+                this.propagateChange(this._value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {?} fn
+         * @return {?}
+         */
+        SelectComponent.prototype.registerOnChange = /**
+         * @param {?} fn
+         * @return {?}
+         */
+            function (fn) {
+                this.propagateChange = fn;
+            };
+        /**
+         * @return {?}
+         */
+        SelectComponent.prototype.registerOnTouched = /**
+         * @return {?}
+         */
+            function () { };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        SelectComponent.prototype.updateValue = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                this.value = event.target.value;
+            };
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        SelectComponent.prototype.writeValue = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.value = value;
+            };
+        SelectComponent.decorators = [
+            { type: core.Component, args: [{
+                        selector: 'ft-select',
+                        template: "<select class=\"custom-select\" [ngClass]=\"{'placeholder-shown':value===''}\" (change)=\"updateValue($event)\">\n  <option *ngFor=\"let option of options\" [value]=\"option.value\" [selected]=\"option.value==value\">{{ option.label }}</option>\n</select>\n<label>{{ placeholder }}</label>\n",
+                        providers: [
+                            {
+                                provide: forms.NG_VALUE_ACCESSOR,
+                                useExisting: core.forwardRef(function () { return SelectComponent; }),
+                                multi: true
+                            }
+                        ],
+                        styles: [":host{background-color:#fff;display:block;position:relative;padding-top:.8rem}:host select{border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block;background-color:#fff}:host select+label{background-color:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host select:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host select:focus+label,:host select:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host select:focus+label{color:#007bff!important}"]
+                    }] }
+        ];
+        /** @nocollapse */
+        SelectComponent.ctorParameters = function () { return []; };
+        SelectComponent.propDecorators = {
+            options: [{ type: core.Input }],
+            placeholder: [{ type: core.Input }],
+            style: [{ type: core.Input }],
+            field: [{ type: core.ViewChild, args: ['field',] }]
+        };
+        return SelectComponent;
     }());
 
     /**
@@ -351,16 +514,21 @@
         function InputsModule() {
         }
         InputsModule.decorators = [
-            { type: i0.NgModule, args: [{
+            { type: core.NgModule, args: [{
                         declarations: [
                             FilePickerComponent,
                             InvalidFeedbackComponent,
+                            SelectComponent,
                             TextInputComponent
                         ],
-                        imports: [],
+                        imports: [
+                            common.CommonModule
+                        ],
                         exports: [
                             FilePickerComponent,
-                            InvalidFeedbackComponent
+                            InvalidFeedbackComponent,
+                            SelectComponent,
+                            TextInputComponent
                         ]
                     },] }
         ];
@@ -377,11 +545,11 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
-    exports.InputsService = InputsService;
     exports.InputsModule = InputsModule;
     exports.FilePickerComponent = FilePickerComponent;
+    exports.SelectComponent = SelectComponent;
+    exports.TextInputComponent = TextInputComponent;
     exports.InvalidFeedbackComponent = InvalidFeedbackComponent;
-    exports.ɵa = TextInputComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
