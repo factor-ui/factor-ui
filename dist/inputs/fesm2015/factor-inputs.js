@@ -293,7 +293,7 @@ class TextInputComponent {
 TextInputComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ft-text-input',
-                template: "<input #field [type]=\"type\" class=\"form-control\" placeholder=\" \" (change)=\"updateValue($event)\" />\n<label>{{ placeholder }}</label>\n",
+                template: "<input #field [type]=\"type\" class=\"form-control\" [ngClass]=\"{'placeholder-shown':!value || value===''}\" (keyup)=\"updateValue($event)\" (change)=\"updateValue($event)\" [readonly]=\"readOnly\" [disabled]=\"disabled\" />\n<label>{{ placeholder }}</label>\n",
                 providers: [
                     {
                         provide: NG_VALUE_ACCESSOR,
@@ -301,17 +301,20 @@ TextInputComponent.decorators = [
                         multi: true
                     }
                 ],
-                styles: [":host{display:block;position:relative;padding-top:.8rem;background-color:#fff}:host input{background-color:#fff;border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block}:host input+label{background:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host input:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host input:focus+label,:host input:not(:placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host input:focus+label{color:#007bff!important}"]
+                styles: [":host{display:block;position:relative;padding-top:.8rem;background-color:#fff}:host input{background-color:#fff;border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block}:host input+label{white-space:nowrap;width:100%;overflow:hidden;background:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host input:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host input:focus+label,:host input:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host input:focus+label{color:#007bff!important}"]
             }] }
 ];
 /** @nocollapse */
 TextInputComponent.ctorParameters = () => [];
 TextInputComponent.propDecorators = {
+    disabled: [{ type: Input }],
     type: [{ type: Input }],
     placeholder: [{ type: Input }],
+    readOnly: [{ type: Input }],
     style: [{ type: Input }],
     hostClasses: [{ type: HostBinding, args: ['class',] }],
-    field: [{ type: ViewChild, args: ['field',] }]
+    field: [{ type: ViewChild, args: ['field',] }],
+    value: [{ type: Input }]
 };
 
 /**
@@ -370,7 +373,7 @@ class SelectComponent {
 SelectComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ft-select',
-                template: "<select class=\"custom-select\" [ngClass]=\"{'placeholder-shown':value===''}\" (change)=\"updateValue($event)\">\n  <option *ngFor=\"let option of options\" [value]=\"option.value\" [selected]=\"option.value==value\">{{ option.label }}</option>\n</select>\n<label>{{ placeholder }}</label>\n",
+                template: "<select class=\"custom-select\" [ngClass]=\"{'placeholder-shown':!value || value===''}\" (change)=\"updateValue($event)\" [disabled]=\"disabled\">\n  <option value=\"\"></option>\n  <option *ngFor=\"let option of options\" [value]=\"option.value\" [selected]=\"option.value==value\">{{ option.label }}</option>\n</select>\n<label>{{ placeholder }}</label>\n",
                 providers: [
                     {
                         provide: NG_VALUE_ACCESSOR,
@@ -378,12 +381,13 @@ SelectComponent.decorators = [
                         multi: true
                     }
                 ],
-                styles: [":host{background-color:#fff;display:block;position:relative;padding-top:.8rem}:host select{border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block;background-color:#fff}:host select+label{background-color:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host select:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host select:focus+label,:host select:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host select:focus+label{color:#007bff!important}"]
+                styles: [":host{background-color:#fff;display:block;position:relative;padding-top:.8rem}:host select{border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block;background-color:#fff}:host select+label{white-space:nowrap;width:100%;overflow:hidden;background-color:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host select:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host select:focus+label,:host select:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host select:focus+label{color:#007bff!important}"]
             }] }
 ];
 /** @nocollapse */
 SelectComponent.ctorParameters = () => [];
 SelectComponent.propDecorators = {
+    disabled: [{ type: Input }],
     options: [{ type: Input }],
     placeholder: [{ type: Input }],
     style: [{ type: Input }],
