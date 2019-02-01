@@ -1,5 +1,5 @@
 import { NavigationEnd, Router } from '@angular/router';
-import { Injectable, NgModule, Inject, defineInjectable, inject } from '@angular/core';
+import { Injectable, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -71,17 +71,15 @@ StorageService.ctorParameters = () => [];
 class GoogleAnalyticsService {
     /**
      * @param {?} router
-     * @param {?} configuration
      */
-    constructor(router, configuration) {
+    constructor(router) {
         this.router = router;
-        this.configuration = configuration;
         router.events.subscribe(event => {
             try {
                 if (typeof gtag === 'function') {
-                    if (event instanceof NavigationEnd) {
+                    if (event instanceof NavigationEnd && this.trackingId) {
                         setTimeout(() => {
-                            gtag('config', this.configuration.gaTrackingId, {
+                            gtag('config', this.trackingId, {
                                 'page_title': document.title,
                                 'page_path': event.urlAfterRedirects
                             });
@@ -95,15 +93,17 @@ class GoogleAnalyticsService {
         });
     }
     /**
+     * @param {?} trackingId
      * @return {?}
      */
-    appendTrackingCode() {
+    appendTrackingCode(trackingId) {
         try {
-            if (this.configuration && this.configuration.gaTrackingId) {
+            if (trackingId) {
+                this.trackingId = trackingId;
                 /** @type {?} */
                 const s1 = document.createElement('script');
                 s1.async = true;
-                s1.src = `https://www.googletagmanager.com/gtag/js?id=${this.configuration.gaTrackingId}`;
+                s1.src = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`;
                 document.head.appendChild(s1);
                 /** @type {?} */
                 const s2 = document.createElement('script');
@@ -111,7 +111,7 @@ class GoogleAnalyticsService {
          window.dataLayer = window.dataLayer || [];
          function gtag(){dataLayer.push(arguments);}
          gtag('js', new Date());
-         gtag('config', '${this.configuration.gaTrackingId}');
+         gtag('config', '${trackingId}');
        `;
                 document.head.appendChild(s2);
             }
@@ -167,10 +167,9 @@ GoogleAnalyticsService.decorators = [
 ];
 /** @nocollapse */
 GoogleAnalyticsService.ctorParameters = () => [
-    { type: Router },
-    { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
+    { type: Router }
 ];
-/** @nocollapse */ GoogleAnalyticsService.ngInjectableDef = defineInjectable({ factory: function GoogleAnalyticsService_Factory() { return new GoogleAnalyticsService(inject(Router), inject("FactorUtilsConfiguration")); }, token: GoogleAnalyticsService, providedIn: "root" });
+/** @nocollapse */ GoogleAnalyticsService.ngInjectableDef = defineInjectable({ factory: function GoogleAnalyticsService_Factory() { return new GoogleAnalyticsService(inject(Router)); }, token: GoogleAnalyticsService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle

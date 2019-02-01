@@ -4,8 +4,8 @@
   <div class="list-group" *ngIf="options">
     <button type="button" class="list-group-item list-group-item-action p-3" [ngClass]="option.class" *ngFor="let option of options" (click)="selectOption(option)">
       <div class="d-flex align-items-center">
-        <ft-icon [name]="option.icon" [title]="option.name"></ft-icon>
-        <div class="label">{{ option.name }}</div>
+        <ft-icon [name]="option.icon" [collection]="iconCollection" [title]="getLabel(option)"></ft-icon>
+        <div class="label">{{ getLabel(option) }}</div>
       </div>
     </button>
   </div>

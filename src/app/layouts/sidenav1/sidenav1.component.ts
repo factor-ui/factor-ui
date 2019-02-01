@@ -10,38 +10,38 @@ import { LayoutService } from '../../core/layout.service';
 export class Sidenav1Component implements OnInit {
   options: any[] = [
     {
-      "name": "Invoicing",
-      "icon": "money",
-      "url": "/"
+      "label": "Search",
+      "icon": "search",
+      "url": "https://google.com"
     }, {
-      "name": "Timesheet",
+      "label": "Timesheet",
       "url": "/timesheet",
       "icon": "clock-cronometer"
     }, {
-      "name": "Contacts",
+      "label": "Contacts",
       "url": "/contacts",
       "icon": "contacts"
     }, {
-      "name": "Reports",
+      "label": "Reports",
       "icon": "report",
       "children": [
         {
-          "name": "Fiscal balance",
+          "label": "Fiscal balance",
           "url": "/reports/fiscal-balance",
           "icon": "document-text"
         }, {
-          "name": "Annual balance",
+          "label": "Annual balance",
           "url": "/summary",
           "icon": "document-text",
         }
       ],
     }, {
-      "name": "Settings",
+      "label": "Settings",
       "url": "/settings",
       "icon": "gear",
       "class": "d-none d-sm-block"
     }, {
-      "name": "Help",
+      "label": "Help",
       "url": "/help",
       "icon": "help",
       "class": "d-none d-sm-block"

@@ -10,6 +10,8 @@ export class IconComponent implements OnInit {
   name: string;
   @Input()
   collection: string;
+  @Input()
+  path: string;
 
   constructor(
     @Inject('FactorCommonConfiguration') private configuration
@@ -22,6 +24,9 @@ export class IconComponent implements OnInit {
       } else {
         this.collection = 'icons';
       }
+    }
+    if (!this.path) {
+      this.path = 'assets/';
     }
   }
 }

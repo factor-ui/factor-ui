@@ -7,16 +7,17 @@ declare var gtag: Function;
   providedIn: 'root'
 })
 export class GoogleAnalyticsService {
+  private trackingId: string;
+
   constructor(
-    public router: Router,
-    @Inject('FactorUtilsConfiguration') private configuration
+    public router: Router
   ) {
     router.events.subscribe(event => {
       try {
         if (typeof gtag === 'function') {
-          if (event instanceof NavigationEnd) {
+          if (event instanceof NavigationEnd && this.trackingId) {
             setTimeout(() => {
-              gtag('config', this.configuration.gaTrackingId, {
+              gtag('config', this.trackingId, {
                 'page_title': document.title,
                 'page_path': event.urlAfterRedirects
               });
@@ -28,19 +29,20 @@ export class GoogleAnalyticsService {
       }
     });
   }
-  public appendTrackingCode() {
+  public appendTrackingCode(trackingId: string) {
     try {
-      if (this.configuration && this.configuration.gaTrackingId) {
+      if (trackingId) {
+        this.trackingId = trackingId;
         const s1 = document.createElement('script');
         s1.async = true;
-        s1.src = `https://www.googletagmanager.com/gtag/js?id=${this.configuration.gaTrackingId}`;
+        s1.src = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`;
         document.head.appendChild(s1);
         const s2 = document.createElement('script');
         s2.innerHTML = `
          window.dataLayer = window.dataLayer || [];
          function gtag(){dataLayer.push(arguments);}
          gtag('js', new Date());
-         gtag('config', '${this.configuration.gaTrackingId}');
+         gtag('config', '${trackingId}');
        `;
         document.head.appendChild(s2);
       }

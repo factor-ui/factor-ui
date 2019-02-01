@@ -90,16 +90,15 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleAnalyticsService = /** @class */ (function () {
-        function GoogleAnalyticsService(router, configuration) {
+        function GoogleAnalyticsService(router) {
             var _this = this;
             this.router = router;
-            this.configuration = configuration;
             router.events.subscribe(function (event) {
                 try {
                     if (typeof gtag === 'function') {
-                        if (event instanceof i1.NavigationEnd) {
+                        if (event instanceof i1.NavigationEnd && _this.trackingId) {
                             setTimeout(function () {
-                                gtag('config', _this.configuration.gaTrackingId, {
+                                gtag('config', _this.trackingId, {
                                     'page_title': document.title,
                                     'page_path': event.urlAfterRedirects
                                 });
@@ -113,22 +112,25 @@
             });
         }
         /**
+         * @param {?} trackingId
          * @return {?}
          */
         GoogleAnalyticsService.prototype.appendTrackingCode = /**
+         * @param {?} trackingId
          * @return {?}
          */
-            function () {
+            function (trackingId) {
                 try {
-                    if (this.configuration && this.configuration.gaTrackingId) {
+                    if (trackingId) {
+                        this.trackingId = trackingId;
                         /** @type {?} */
                         var s1 = document.createElement('script');
                         s1.async = true;
-                        s1.src = "https://www.googletagmanager.com/gtag/js?id=" + this.configuration.gaTrackingId;
+                        s1.src = "https://www.googletagmanager.com/gtag/js?id=" + trackingId;
                         document.head.appendChild(s1);
                         /** @type {?} */
                         var s2 = document.createElement('script');
-                        s2.innerHTML = "\n         window.dataLayer = window.dataLayer || [];\n         function gtag(){dataLayer.push(arguments);}\n         gtag('js', new Date());\n         gtag('config', '" + this.configuration.gaTrackingId + "');\n       ";
+                        s2.innerHTML = "\n         window.dataLayer = window.dataLayer || [];\n         function gtag(){dataLayer.push(arguments);}\n         gtag('js', new Date());\n         gtag('config', '" + trackingId + "');\n       ";
                         document.head.appendChild(s2);
                     }
                 }
@@ -208,11 +210,10 @@
         /** @nocollapse */
         GoogleAnalyticsService.ctorParameters = function () {
             return [
-                { type: i1.Router },
-                { type: undefined, decorators: [{ type: i0.Inject, args: ['FactorUtilsConfiguration',] }] }
+                { type: i1.Router }
             ];
         };
-        /** @nocollapse */ GoogleAnalyticsService.ngInjectableDef = i0.defineInjectable({ factory: function GoogleAnalyticsService_Factory() { return new GoogleAnalyticsService(i0.inject(i1.Router), i0.inject("FactorUtilsConfiguration")); }, token: GoogleAnalyticsService, providedIn: "root" });
+        /** @nocollapse */ GoogleAnalyticsService.ngInjectableDef = i0.defineInjectable({ factory: function GoogleAnalyticsService_Factory() { return new GoogleAnalyticsService(i0.inject(i1.Router)); }, token: GoogleAnalyticsService, providedIn: "root" });
         return GoogleAnalyticsService;
     }());
 

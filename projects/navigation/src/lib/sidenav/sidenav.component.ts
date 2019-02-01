@@ -10,7 +10,11 @@ export class SidenavComponent implements OnInit {
   @Input()
   docked: boolean;
   @Input()
-  options: string;
+  iconCollection: string;
+  @Input()
+  options: any[];
+  @Input()
+  labelField: string;
   @Input()
   position: 'left' | 'right' = 'left';
   shown: boolean;
@@ -25,16 +29,27 @@ export class SidenavComponent implements OnInit {
     this.shown = false;
   }
   @HostBinding('class')
-	get hostClasses(): string {
-		return [
-			this.docked? 'docked' : '',
-			this.position,
-			this.shown? 'show': ''
-		].join(' ');
-	}
+  get hostClasses(): string {
+    return [
+      this.docked ? 'docked' : '',
+      this.position,
+      this.shown ? 'show' : ''
+    ].join(' ');
+  }
+  getLabel(option) {
+    if (this.labelField) {
+      return option[this.labelField];
+    } else {
+      return option.name;
+    }
+  }
   selectOption(option) {
     if (option.url) {
-      this.router.navigateByUrl(option.url);
+      if (option.url.match(/^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)) {
+        window.location.href = option.url;
+      } else {
+        this.router.navigateByUrl(option.url);
+      }
     } else if (option.click) {
       option.click();
     }

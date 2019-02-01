@@ -14,6 +14,7 @@ import { EditorComponent } from './editor/editor.component';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     DragDropModule,
     FactorCommonModule

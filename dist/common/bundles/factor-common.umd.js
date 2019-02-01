@@ -27,12 +27,15 @@
                         this.collection = 'icons';
                     }
                 }
+                if (!this.path) {
+                    this.path = 'assets/';
+                }
             };
         IconComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'ft-icon',
-                        template: "<svg><use attr.xlink:href=\"assets/{{ this.collection }}.svg#{{ name }}\" /></svg>\n",
-                        styles: [":host{line-height:0;display:inline-block}svg{width:1em;height:1em;vertical-align:middle;fill:currentColor}"]
+                        template: "<svg><use attr.xlink:href=\"{{ this.path }}{{ this.collection }}.svg#{{ name }}\" /></svg>\n",
+                        styles: [":host{line-height:0;display:inline-block}:host[size=\"1\"]{font-size:1rem}:host[size=\"2\"]{font-size:1.5rem}:host[size=\"3\"]{font-size:2rem}:host[size=\"4\"]{font-size:3rem}:host[size=\"5\"]{font-size:4.5rem}:host[size=\"6\"]{font-size:8rem}:host[size=\"7\"]{font-size:16rem}:host[size=\"8\"]{font-size:32rem}svg{width:1em;height:1em;vertical-align:middle;fill:currentColor}"]
                     }] }
         ];
         /** @nocollapse */
@@ -43,7 +46,8 @@
         };
         IconComponent.propDecorators = {
             name: [{ type: core.Input }],
-            collection: [{ type: core.Input }]
+            collection: [{ type: core.Input }],
+            path: [{ type: core.Input }]
         };
         return IconComponent;
     }());

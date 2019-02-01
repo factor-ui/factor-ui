@@ -213,6 +213,11 @@
       "sourceRoot": "projects/inputs/src",
       "projectType": "library",
       "prefix": "ft",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
