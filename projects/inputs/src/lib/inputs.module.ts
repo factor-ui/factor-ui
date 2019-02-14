@@ -6,6 +6,8 @@ import { InvalidFeedbackComponent } from './invalid-feedback/invalid-feedback.co
 import { TextInputComponent } from './text-input/text-input.component';
 import { SelectComponent } from './select/select.component';
 import { ListComponent } from './list/list.component';
+import { TextAreaComponent } from './text-area/text-area.component';
+import { RatingComponent } from './rating/rating.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { ListComponent } from './list/list.component';
     InvalidFeedbackComponent,
     SelectComponent,
     TextInputComponent,
-    ListComponent
+    ListComponent,
+    TextAreaComponent,
+    RatingComponent
   ],
   imports: [
     CommonModule
@@ -22,7 +26,10 @@ import { ListComponent } from './list/list.component';
     FilePickerComponent,
     InvalidFeedbackComponent,
     SelectComponent,
-    TextInputComponent
+    TextInputComponent,
+    ListComponent,
+    TextAreaComponent,
+    RatingComponent
   ]
 })
 export class InputsModule { }

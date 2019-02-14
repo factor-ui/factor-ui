@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/core'), require('@angular/forms')) :
-    typeof define === 'function' && define.amd ? define('factor-inputs', ['exports', '@angular/common', '@angular/core', '@angular/forms'], factory) :
-    (factory((global['factor-inputs'] = {}),global.ng.common,global.ng.core,global.ng.forms));
-}(this, (function (exports,common,core,forms) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/forms'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('factor-inputs', ['exports', '@angular/common', '@angular/forms', '@angular/core'], factory) :
+    (factory((global['factor-inputs'] = {}),global.ng.common,global.ng.forms,global.ng.core));
+}(this, (function (exports,common,forms,core) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -304,8 +304,8 @@
      */
     var TextInputComponent = /** @class */ (function () {
         function TextInputComponent() {
-            this.type = 'text';
             this.propagateChange = function (_) { };
+            this.type = 'text';
         }
         Object.defineProperty(TextInputComponent.prototype, "hostClasses", {
             get: /**
@@ -336,7 +336,7 @@
              * @param {?} value
              * @return {?}
              */ function (value) {
-                this.field.nativeElement.value = value;
+                this.input.nativeElement.value = value;
                 this._value = value;
                 this.propagateChange(this._value);
             },
@@ -386,7 +386,7 @@
         TextInputComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'ft-text-input',
-                        template: "<input #field [type]=\"type\" class=\"form-control\" [ngClass]=\"{'placeholder-shown':!value || value===''}\" (keyup)=\"updateValue($event)\" (change)=\"updateValue($event)\" [readonly]=\"readOnly\" [disabled]=\"disabled\" />\n<label>{{ placeholder }}</label>\n",
+                        template: "<input\n  #input\n  [autofocus]=\"autofocus\"\n  (change)=\"updateValue($event)\"\n  class=\"form-control\"\n  [disabled]=\"disabled\"\n  (keyup)=\"updateValue($event)\"\n  [max]=\"max\"\n  [attr.maxlength]=\"maxLength\"\n  [min]=\"min\"\n  [ngClass]=\"{'placeholder-shown':!value || value===''}\"\n  [type]=\"type\"\n  [readonly]=\"readOnly\"\n/>\n<label>{{ label }} <span *ngIf=\"required\" class=\"required-mark text-danger\">*</span></label>\n",
                         providers: [
                             {
                                 provide: forms.NG_VALUE_ACCESSOR,
@@ -394,19 +394,24 @@
                                 multi: true
                             }
                         ],
-                        styles: [":host{display:block;position:relative;padding-top:.8rem;background-color:#fff}:host input{background-color:#fff;border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block}:host input+label{white-space:nowrap;width:100%;overflow:hidden;background:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host input:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host input:focus+label,:host input:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host input:focus+label{color:#007bff!important}"]
+                        styles: [":host{display:block;position:relative;padding-top:.8rem;padding-bottom:1px;background-color:#fff}:host input{background-color:#fff;border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block}:host input+label{white-space:nowrap;width:100%;overflow:hidden;background:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host input+label .required-mark{opacity:1;transition:opacity .2s}:host input:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host input:focus+label,:host input:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host input:focus+label .required-mark,:host input:not(.placeholder-shown)+label .required-mark{opacity:0}:host input:focus+label{color:#007bff!important}"]
                     }] }
         ];
         /** @nocollapse */
         TextInputComponent.ctorParameters = function () { return []; };
         TextInputComponent.propDecorators = {
+            autofocus: [{ type: core.Input }],
             disabled: [{ type: core.Input }],
-            type: [{ type: core.Input }],
-            placeholder: [{ type: core.Input }],
+            input: [{ type: core.ViewChild, args: ['input',] }],
+            label: [{ type: core.Input }],
+            max: [{ type: core.Input }],
+            maxLength: [{ type: core.Input }],
+            min: [{ type: core.Input }],
             readOnly: [{ type: core.Input }],
+            required: [{ type: core.Input }],
             style: [{ type: core.Input }],
+            type: [{ type: core.Input }],
             hostClasses: [{ type: core.HostBinding, args: ['class',] }],
-            field: [{ type: core.ViewChild, args: ['field',] }],
             value: [{ type: core.Input }]
         };
         return TextInputComponent;
@@ -487,7 +492,7 @@
         SelectComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'ft-select',
-                        template: "<select class=\"custom-select\" [ngClass]=\"{'placeholder-shown':!value || value===''}\" (change)=\"updateValue($event)\" [disabled]=\"disabled\">\n  <option value=\"\"></option>\n  <option *ngFor=\"let option of options\" [value]=\"option.value\" [selected]=\"option.value==value\">{{ option.label }}</option>\n</select>\n<label>{{ placeholder }}</label>\n",
+                        template: "<select\n  #select\n  (change)=\"updateValue($event)\"\n  class=\"custom-select\"\n  [disabled]=\"disabled\"\n  [ngClass]=\"{'placeholder-shown':!value || value===''}\"\n>\n  <option value=\"\"></option>\n  <option *ngFor=\"let option of options\" [value]=\"option.value\" [selected]=\"option.value==value\">{{ option.label }}</option>\n</select>\n<label>{{ label }} <span *ngIf=\"required\" class=\"required-mark text-danger\">*</span></label>\n",
                         providers: [
                             {
                                 provide: forms.NG_VALUE_ACCESSOR,
@@ -495,7 +500,7 @@
                                 multi: true
                             }
                         ],
-                        styles: [":host{background-color:#fff;display:block;position:relative;padding-top:.8rem}:host select{border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block;background-color:#fff}:host select+label{white-space:nowrap;width:100%;overflow:hidden;background-color:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host select:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host select:focus+label,:host select:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host select:focus+label{color:#007bff!important}"]
+                        styles: [":host{background-color:#fff;display:block;position:relative;padding-top:.8rem}:host select{border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block;background-color:#fff}:host select+label{white-space:nowrap;width:100%;overflow:hidden;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host select+label .required-mark{opacity:1;transition:opacity .2s}:host select:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host select:focus+label,:host select:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host select:focus+label .required-mark,:host select:not(.placeholder-shown)+label .required-mark{opacity:0}:host select:focus+label{color:#007bff!important}"]
                     }] }
         ];
         /** @nocollapse */
@@ -503,11 +508,39 @@
         SelectComponent.propDecorators = {
             disabled: [{ type: core.Input }],
             options: [{ type: core.Input }],
-            placeholder: [{ type: core.Input }],
+            label: [{ type: core.Input }],
+            required: [{ type: core.Input }],
             style: [{ type: core.Input }],
-            field: [{ type: core.ViewChild, args: ['field',] }]
+            select: [{ type: core.ViewChild, args: ['select',] }]
         };
         return SelectComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var ListComponent = /** @class */ (function () {
+        function ListComponent() {
+        }
+        /**
+         * @return {?}
+         */
+        ListComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        ListComponent.decorators = [
+            { type: core.Component, args: [{
+                        selector: 'ft-list',
+                        template: "<p>\n  list works!\n</p>\n",
+                        styles: [""]
+                    }] }
+        ];
+        /** @nocollapse */
+        ListComponent.ctorParameters = function () { return []; };
+        return ListComponent;
     }());
 
     /**
@@ -523,7 +556,8 @@
                             FilePickerComponent,
                             InvalidFeedbackComponent,
                             SelectComponent,
-                            TextInputComponent
+                            TextInputComponent,
+                            ListComponent
                         ],
                         imports: [
                             common.CommonModule
@@ -553,6 +587,7 @@
     exports.FilePickerComponent = FilePickerComponent;
     exports.SelectComponent = SelectComponent;
     exports.TextInputComponent = TextInputComponent;
+    exports.ListComponent = ListComponent;
     exports.InvalidFeedbackComponent = InvalidFeedbackComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });

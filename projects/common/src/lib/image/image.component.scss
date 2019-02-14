@@ -1,0 +1,41 @@
+:host {
+  display: inline-block;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.loading {
+    background-color: rgba(0, 0, 0, .03);
+    &::after {
+      content: '';
+      display: block;
+      background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, .3), transparent);
+      height: 100%;
+      width: 50%;
+      animation: placeholder-loading 0.8s linear infinite;
+    }
+  }
+  &.error {
+    background-color: rgba(255, 0, 0, .03);
+  }
+}
+img {
+  max-width: 100%;
+  animation: fade-in .3s;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes placeholder-loading {
+  from {
+    transform: translate3d(-200%, 0, 0);
+  }
+  to {
+    transform: translate3d(200%, 0, 0);
+  }
+}

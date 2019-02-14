@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { EditorComponent } from 'factor-designer';
 import { StyleGuideComponent } from './style-guide/style-guide.component';
 import { IconComponent } from './icon/icon.component';
+import { ImageComponent } from './image/image.component';
 import { InputsComponent } from './inputs/inputs.component';
 import { Sidenav1Component } from './layouts/sidenav1/sidenav1.component';
 
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'components/common/icon',
     component: IconComponent,
+  },
+  {
+    path: 'components/common/image',
+    component: ImageComponent,
   },
   {
     path: 'components/navigation/sidenav',

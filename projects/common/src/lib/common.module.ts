@@ -1,14 +1,19 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule as AngularCommonModule } from '@angular/common';
 import { IconComponent } from './icon/icon.component';
+import { ImageComponent } from './image/image.component';
 
 @NgModule({
   declarations: [
-    IconComponent
+    IconComponent,
+    ImageComponent
   ],
   imports: [
+    AngularCommonModule
   ],
   exports: [
-    IconComponent
+    IconComponent,
+    ImageComponent
   ]
 })
 export class CommonModule {

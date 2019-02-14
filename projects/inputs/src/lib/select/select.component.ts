@@ -19,11 +19,13 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Input()
   options: any[];
   @Input()
-  placeholder: string;
+  label: string;
   @Input()
-  style: 'default' | 'rounded-outline' | 'outline';
-  @ViewChild('field')
-  field: ElementRef<any>;
+  required: boolean;
+  @Input()
+  style: 'default' | 'outline';
+  @ViewChild('select')
+  select: ElementRef<any>;
   _value: string;
   propagateChange = (_: any) => { };
 

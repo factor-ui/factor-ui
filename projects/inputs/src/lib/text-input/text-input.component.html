@@ -1,2 +1,15 @@
-<input #field [type]="type" class="form-control" [ngClass]="{'placeholder-shown':!value || value===''}" (keyup)="updateValue($event)" (change)="updateValue($event)" [readonly]="readOnly" [disabled]="disabled" />
-<label>{{ placeholder }}</label>
+<input
+  #input
+  [autofocus]="autofocus"
+  (change)="updateValue($event)"
+  class="form-control"
+  [disabled]="disabled"
+  (keyup)="updateValue($event)"
+  [max]="max"
+  [attr.maxlength]="maxLength"
+  [min]="min"
+  [ngClass]="{'placeholder-shown':!value || value===''}"
+  [type]="type"
+  [readonly]="readOnly"
+/>
+<label>{{ label }} <span *ngIf="required" class="required-mark text-danger">*</span></label>

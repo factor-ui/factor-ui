@@ -16,6 +16,7 @@ import { HomeComponent } from './home/home.component';
 import { StyleGuideComponent } from './style-guide/style-guide.component';
 import { IconComponent } from './icon/icon.component';
 import { InputsComponent } from './inputs/inputs.component';
+import { ImageComponent } from './image/image.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { InputsComponent } from './inputs/inputs.component';
     HomeComponent,
     StyleGuideComponent,
     IconComponent,
-    InputsComponent
+    InputsComponent,
+    ImageComponent
   ],
   imports: [
     AppRoutingModule,
@@ -34,7 +36,7 @@ import { InputsComponent } from './inputs/inputs.component';
     HttpClientModule,
     FactorCommonModule.forRoot({ icon: { collection: 'factoricons-regular' } }),
     AuthModule.forRoot({ tokenUrl: 'token' }),
-    UtilsModule.forRoot({ gaTrackingId: 'UA-309340-59' }),
+    UtilsModule,
     DesignerModule,
     InputsModule,
     LayoutsModule

@@ -1,34 +1,18 @@
 <form [formGroup]="entityForm" class="container">
   <h1>TextInput Component</h1>
-  <div class="form-group">
-    <input type="text" placeholder="First Name" class="form-control" formControlName="firstName" />
+  <div class="form-group form-row">
+    <div class="col-6">
+      <ft-text-input label="First Name" formControlName="firstName" [required]="true"></ft-text-input>
+    </div>
+    <div class="col-6">
+      <ft-text-input label="Last Name" formControlName="lastName" [required]="true"></ft-text-input>
+    </div>
   </div>
   <div class="form-group">
-    <ft-text-input placeholder="First Name" formControlName="firstName"></ft-text-input>
+    <ft-text-input label="Company" formControlName="lastName" formControlName="company" [disabled]="true"></ft-text-input>
   </div>
   <div class="form-group">
-    <ft-text-input placeholder="First Name" formControlName="firstName" [readOnly]="true"></ft-text-input>
-  </div>
-  <div class="form-group">
-    <ft-text-input placeholder="First Name" formControlName="firstName" [disabled]="true"></ft-text-input>
-  </div>
-  <div class="form-group">
-    <ft-text-input placeholder="First Name" value="Joe" [disabled]="true"></ft-text-input>
-  </div>
-  <div class="form-group">
-    <ft-text-input placeholder="First Name" value="Joe"></ft-text-input>
-  </div>
-  <div class="form-group">
-    <ft-text-input placeholder="First Name"></ft-text-input>
-  </div>
-  <div class="form-group">
-    <ft-text-input type="date" placeholder="Birthday"></ft-text-input>
-  </div>
-  <div class="form-group">
-    <ft-select placeholder="Gender" [options]="options" formControlName="gender"></ft-select>
-  </div>
-  <div class="form-group">
-    <ft-select placeholder="Gender" [options]="options" formControlName="gender" [disabled]="true"></ft-select>
+    <ft-select label="Gender" [options]="options" formControlName="gender" [required]="true"></ft-select>
   </div>
 
   <pre>{{ entityForm.value | json }}</pre>

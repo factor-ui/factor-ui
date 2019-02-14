@@ -15,25 +15,36 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class TextInputComponent implements OnInit, ControlValueAccessor {
   @Input()
+  autofocus: boolean;
+  @Input()
   disabled: boolean;
+  @ViewChild('input')
+  input: ElementRef<any>;
   @Input()
-  type: string = 'text';
+  label: string;
   @Input()
-  placeholder: string;
+  max: boolean;
+  @Input()
+  maxLength: boolean;
+  @Input()
+  min: boolean;
+  propagateChange = (_: any) => { };
   @Input()
   readOnly: boolean;
   @Input()
+  required: boolean;
+  @Input()
   style: 'default' | 'rounded-outline' | 'outline';
+  @Input()
+  type: string = 'text';
+  _value: string;
+
   @HostBinding('class')
   get hostClasses(): string {
     return [
       this.style ? `style-${this.style}` : ''
     ].join(' ');
   }
-  @ViewChild('field')
-  field: ElementRef<any>;
-  _value: string;
-  propagateChange = (_: any) => { };
 
   constructor() { }
 
@@ -44,7 +55,7 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
   }
   @Input()
   set value(value: any) {
-    this.field.nativeElement.value = value;
+    this.input.nativeElement.value = value;
     this._value = value;
     this.propagateChange(this._value);
   }

@@ -22,9 +22,9 @@ export class InputsComponent implements OnInit {
   }
   createForm() {
     this.entityForm = this.formBuilder.group({
-      id: '1234567890',
-      firstName: 'Joe',
-      lastName: 'Doe',
+      firstName: '',
+      lastName: '',
+      company: 'Factor',
       gender: ''
     });
   }

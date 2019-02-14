@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
   };
 
   constructor(googleAnalyticsService: GoogleAnalyticsService) {
-    googleAnalyticsService.appendTrackingCode();
+    googleAnalyticsService.appendTrackingCode('UA-309340-59');
   }
 
   ngOnInit() {
