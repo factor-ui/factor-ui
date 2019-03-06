@@ -26,7 +26,11 @@ export class IconComponent implements OnInit {
       }
     }
     if (!this.path) {
-      this.path = 'assets/';
+      if (this.configuration.icon && this.configuration.icon.path) {
+        this.path = this.configuration.icon.path;
+      } else {
+        this.path = 'assets';
+      }
     }
   }
 }

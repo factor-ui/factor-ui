@@ -17,6 +17,7 @@ import { StyleGuideComponent } from './style-guide/style-guide.component';
 import { IconComponent } from './icon/icon.component';
 import { InputsComponent } from './inputs/inputs.component';
 import { ImageComponent } from './image/image.component';
+import { RippleComponent } from './ripple/ripple.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ImageComponent } from './image/image.component';
     StyleGuideComponent,
     IconComponent,
     InputsComponent,
-    ImageComponent
+    ImageComponent,
+    RippleComponent
   ],
   imports: [
     AppRoutingModule,

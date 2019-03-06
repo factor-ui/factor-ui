@@ -50,7 +50,7 @@ export class InvalidFeedbackComponent {
     fname = fname.replace(/\b\w/g, l => l.toUpperCase())
 
     var msg = this.messages[type] || this.defaultMessages[type](params) || 'Error';
-    return control.dirty? msg.replace("##FIELD##", fname) : '';
+    return control.dirty || control.touched? msg.replace("##FIELD##", fname) : '';
   }
   /**
    * Obtiene el name del control (input)

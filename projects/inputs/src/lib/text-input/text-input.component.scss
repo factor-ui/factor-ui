@@ -27,7 +27,8 @@
       padding: 0.375rem 0;
       transition: 0.2s ease all;
       top: 0.8rem;
-      margin: 0;
+      margin-bottom: 0;
+      margin-top: 1px;
       .required-mark {
         opacity: 1;
         transition: opacity .2s;
@@ -48,6 +49,14 @@
     }
     &:focus+label {
       color: $primary !important;
+    }
+  }
+  &.ng-touched.ng-invalid {
+    input {
+      border-color: $danger;
+      &:focus {
+        box-shadow: 0 1px $danger;
+      }
     }
   }
 }

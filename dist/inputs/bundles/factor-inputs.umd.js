@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/forms'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('factor-inputs', ['exports', '@angular/common', '@angular/forms', '@angular/core'], factory) :
-    (factory((global['factor-inputs'] = {}),global.ng.common,global.ng.forms,global.ng.core));
-}(this, (function (exports,common,forms,core) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/core'), require('@angular/forms')) :
+    typeof define === 'function' && define.amd ? define('factor-inputs', ['exports', '@angular/common', '@angular/core', '@angular/forms'], factory) :
+    (factory((global['factor-inputs'] = {}),global.ng.common,global.ng.core,global.ng.forms));
+}(this, (function (exports,common,core,forms) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -263,7 +263,7 @@
                 fname = fname.replace(/\b\w/g, function (l) { return l.toUpperCase(); });
                 /** @type {?} */
                 var msg = this.messages[type] || this.defaultMessages[type](params) || 'Error';
-                return control.dirty ? msg.replace("##FIELD##", fname) : '';
+                return control.dirty || control.touched ? msg.replace("##FIELD##", fname) : '';
             };
         /**
          * Obtiene el name del control (input)
@@ -288,7 +288,7 @@
             { type: core.Component, args: [{
                         selector: 'ft-invalid-feedback',
                         template: "{{ getError() }}\n",
-                        styles: [""]
+                        styles: [":host{font-size:80%;color:#dc3545}"]
                     }] }
         ];
         InvalidFeedbackComponent.propDecorators = {
@@ -302,119 +302,54 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var TextInputComponent = /** @class */ (function () {
-        function TextInputComponent() {
-            this.propagateChange = function (_) { };
-            this.type = 'text';
+    var ListComponent = /** @class */ (function () {
+        function ListComponent() {
         }
-        Object.defineProperty(TextInputComponent.prototype, "hostClasses", {
-            get: /**
-             * @return {?}
-             */ function () {
-                return [
-                    this.style ? "style-" + this.style : ''
-                ].join(' ');
-            },
-            enumerable: true,
-            configurable: true
-        });
         /**
          * @return {?}
          */
-        TextInputComponent.prototype.ngOnInit = /**
+        ListComponent.prototype.ngOnInit = /**
          * @return {?}
          */
             function () {
             };
-        Object.defineProperty(TextInputComponent.prototype, "value", {
-            get: /**
-             * @return {?}
-             */ function () {
-                return this._value;
-            },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
-                this.input.nativeElement.value = value;
-                this._value = value;
-                this.propagateChange(this._value);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        /**
-         * @param {?} fn
-         * @return {?}
-         */
-        TextInputComponent.prototype.registerOnChange = /**
-         * @param {?} fn
-         * @return {?}
-         */
-            function (fn) {
-                this.propagateChange = fn;
-            };
-        /**
-         * @return {?}
-         */
-        TextInputComponent.prototype.registerOnTouched = /**
-         * @return {?}
-         */
-            function () { };
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        TextInputComponent.prototype.updateValue = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                this.value = event.target.value;
-            };
-        /**
-         * @param {?} value
-         * @return {?}
-         */
-        TextInputComponent.prototype.writeValue = /**
-         * @param {?} value
-         * @return {?}
-         */
-            function (value) {
-                this.value = value;
-            };
-        TextInputComponent.decorators = [
+        ListComponent.decorators = [
             { type: core.Component, args: [{
-                        selector: 'ft-text-input',
-                        template: "<input\n  #input\n  [autofocus]=\"autofocus\"\n  (change)=\"updateValue($event)\"\n  class=\"form-control\"\n  [disabled]=\"disabled\"\n  (keyup)=\"updateValue($event)\"\n  [max]=\"max\"\n  [attr.maxlength]=\"maxLength\"\n  [min]=\"min\"\n  [ngClass]=\"{'placeholder-shown':!value || value===''}\"\n  [type]=\"type\"\n  [readonly]=\"readOnly\"\n/>\n<label>{{ label }} <span *ngIf=\"required\" class=\"required-mark text-danger\">*</span></label>\n",
-                        providers: [
-                            {
-                                provide: forms.NG_VALUE_ACCESSOR,
-                                useExisting: core.forwardRef(function () { return TextInputComponent; }),
-                                multi: true
-                            }
-                        ],
-                        styles: [":host{display:block;position:relative;padding-top:.8rem;padding-bottom:1px;background-color:#fff}:host input{background-color:#fff;border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block}:host input+label{white-space:nowrap;width:100%;overflow:hidden;background:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host input+label .required-mark{opacity:1;transition:opacity .2s}:host input:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host input:focus+label,:host input:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host input:focus+label .required-mark,:host input:not(.placeholder-shown)+label .required-mark{opacity:0}:host input:focus+label{color:#007bff!important}"]
+                        selector: 'ft-list',
+                        template: "<p>\n  list works!\n</p>\n",
+                        styles: [""]
                     }] }
         ];
         /** @nocollapse */
-        TextInputComponent.ctorParameters = function () { return []; };
-        TextInputComponent.propDecorators = {
-            autofocus: [{ type: core.Input }],
-            disabled: [{ type: core.Input }],
-            input: [{ type: core.ViewChild, args: ['input',] }],
-            label: [{ type: core.Input }],
-            max: [{ type: core.Input }],
-            maxLength: [{ type: core.Input }],
-            min: [{ type: core.Input }],
-            readOnly: [{ type: core.Input }],
-            required: [{ type: core.Input }],
-            style: [{ type: core.Input }],
-            type: [{ type: core.Input }],
-            hostClasses: [{ type: core.HostBinding, args: ['class',] }],
-            value: [{ type: core.Input }]
-        };
-        return TextInputComponent;
+        ListComponent.ctorParameters = function () { return []; };
+        return ListComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var RatingComponent = /** @class */ (function () {
+        function RatingComponent() {
+        }
+        /**
+         * @return {?}
+         */
+        RatingComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        RatingComponent.decorators = [
+            { type: core.Component, args: [{
+                        selector: 'ft-rating',
+                        template: "<p>\n  rating works!\n</p>\n",
+                        styles: [""]
+                    }] }
+        ];
+        /** @nocollapse */
+        RatingComponent.ctorParameters = function () { return []; };
+        return RatingComponent;
     }());
 
     /**
@@ -500,7 +435,7 @@
                                 multi: true
                             }
                         ],
-                        styles: [":host{background-color:#fff;display:block;position:relative;padding-top:.8rem}:host select{border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block;background-color:#fff}:host select+label{white-space:nowrap;width:100%;overflow:hidden;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin:0}:host select+label .required-mark{opacity:1;transition:opacity .2s}:host select:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host select:focus+label,:host select:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host select:focus+label .required-mark,:host select:not(.placeholder-shown)+label .required-mark{opacity:0}:host select:focus+label{color:#007bff!important}"]
+                        styles: [":host{background-color:#fff;display:block;position:relative;padding-top:.8rem}:host select{border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block;background-color:#fff}:host select+label{white-space:nowrap;width:100%;overflow:hidden;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin-bottom:0;margin-top:1px}:host select+label .required-mark{opacity:1;transition:opacity .2s}:host select:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host select:focus+label,:host select:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host select:focus+label .required-mark,:host select:not(.placeholder-shown)+label .required-mark{opacity:0}:host select:focus+label{color:#007bff!important}:host.ng-touched.ng-invalid select{border-color:#dc3545}:host.ng-touched.ng-invalid select:focus{box-shadow:0 1px #dc3545}"]
                     }] }
         ];
         /** @nocollapse */
@@ -520,27 +455,234 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var ListComponent = /** @class */ (function () {
-        function ListComponent() {
+    var TextInputComponent = /** @class */ (function () {
+        function TextInputComponent() {
+            this.propagateChange = function (_) { };
+            this.type = 'text';
         }
         /**
          * @return {?}
          */
-        ListComponent.prototype.ngOnInit = /**
+        TextInputComponent.prototype.ngOnInit = /**
          * @return {?}
          */
             function () {
             };
-        ListComponent.decorators = [
+        Object.defineProperty(TextInputComponent.prototype, "value", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._value;
+            },
+            set: /**
+             * @param {?} value
+             * @return {?}
+             */ function (value) {
+                this.input.nativeElement.value = value;
+                this._value = value;
+                this.propagateChange(this._value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {?} fn
+         * @return {?}
+         */
+        TextInputComponent.prototype.registerOnChange = /**
+         * @param {?} fn
+         * @return {?}
+         */
+            function (fn) {
+                this.propagateChange = fn;
+            };
+        /**
+         * @return {?}
+         */
+        TextInputComponent.prototype.registerOnTouched = /**
+         * @return {?}
+         */
+            function () { };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        TextInputComponent.prototype.updateValue = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                this.value = event.target.value;
+            };
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        TextInputComponent.prototype.writeValue = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.value = value;
+            };
+        TextInputComponent.decorators = [
             { type: core.Component, args: [{
-                        selector: 'ft-list',
-                        template: "<p>\n  list works!\n</p>\n",
-                        styles: [""]
+                        selector: 'ft-text-input',
+                        template: "<input\n  #input\n  [autofocus]=\"autofocus\"\n  (change)=\"updateValue($event)\"\n  class=\"form-control\"\n  [disabled]=\"disabled\"\n  (keyup)=\"updateValue($event)\"\n  [max]=\"max\"\n  [attr.maxlength]=\"maxLength\"\n  [min]=\"min\"\n  [ngClass]=\"{'placeholder-shown':!value || value===''}\"\n  [type]=\"type\"\n  [readonly]=\"readOnly\"\n/>\n<label>{{ label }} <span *ngIf=\"required\" class=\"required-mark text-danger\">*</span></label>\n",
+                        providers: [
+                            {
+                                provide: forms.NG_VALUE_ACCESSOR,
+                                useExisting: core.forwardRef(function () { return TextInputComponent; }),
+                                multi: true
+                            }
+                        ],
+                        styles: [":host{display:block;position:relative;padding-top:.8rem;padding-bottom:1px;background-color:#fff}:host input{background-color:#fff;border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block}:host input+label{white-space:nowrap;width:100%;overflow:hidden;background:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin-bottom:0;margin-top:1px}:host input+label .required-mark{opacity:1;transition:opacity .2s}:host input:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host input:focus+label,:host input:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host input:focus+label .required-mark,:host input:not(.placeholder-shown)+label .required-mark{opacity:0}:host input:focus+label{color:#007bff!important}:host.ng-touched.ng-invalid input{border-color:#dc3545}:host.ng-touched.ng-invalid input:focus{box-shadow:0 1px #dc3545}"]
                     }] }
         ];
         /** @nocollapse */
-        ListComponent.ctorParameters = function () { return []; };
-        return ListComponent;
+        TextInputComponent.ctorParameters = function () { return []; };
+        TextInputComponent.propDecorators = {
+            autofocus: [{ type: core.Input }],
+            disabled: [{ type: core.Input }],
+            input: [{ type: core.ViewChild, args: ['input',] }],
+            label: [{ type: core.Input }],
+            max: [{ type: core.Input }],
+            maxLength: [{ type: core.Input }],
+            min: [{ type: core.Input }],
+            readOnly: [{ type: core.Input }],
+            required: [{ type: core.Input }],
+            type: [{ type: core.Input }],
+            value: [{ type: core.Input }]
+        };
+        return TextInputComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var TextAreaComponent = /** @class */ (function () {
+        function TextAreaComponent() {
+            this.propagateChange = function (_) { };
+        }
+        /**
+         * @return {?}
+         */
+        TextAreaComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () { };
+        Object.defineProperty(TextAreaComponent.prototype, "value", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._value;
+            },
+            set: /**
+             * @param {?} value
+             * @return {?}
+             */ function (value) {
+                this.input.nativeElement.value = value;
+                this._value = value;
+                this.propagateChange(this._value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {?} maxHeight
+         * @return {?}
+         */
+        TextAreaComponent.prototype.fitToContent = /**
+         * @param {?} maxHeight
+         * @return {?}
+         */
+            function (maxHeight) {
+                /** @type {?} */
+                var input = this.input.nativeElement;
+                /** @type {?} */
+                var adjustedHeight = input.clientHeight;
+                if (!maxHeight || maxHeight > adjustedHeight) {
+                    adjustedHeight = Math.max(input.scrollHeight, adjustedHeight);
+                    if (maxHeight) {
+                        adjustedHeight = Math.min(maxHeight, adjustedHeight);
+                    }
+                    input.style.height = adjustedHeight + "px";
+                }
+            };
+        /**
+         * @param {?} fn
+         * @return {?}
+         */
+        TextAreaComponent.prototype.registerOnChange = /**
+         * @param {?} fn
+         * @return {?}
+         */
+            function (fn) {
+                this.propagateChange = fn;
+            };
+        /**
+         * @return {?}
+         */
+        TextAreaComponent.prototype.registerOnTouched = /**
+         * @return {?}
+         */
+            function () { };
+        /**
+         * @param {?} event
+         * @return {?}
+         */
+        TextAreaComponent.prototype.updateValue = /**
+         * @param {?} event
+         * @return {?}
+         */
+            function (event) {
+                this.value = event.target.value;
+                if (this.autosize) {
+                    this.fitToContent(this.maxHeight);
+                }
+            };
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        TextAreaComponent.prototype.writeValue = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.value = value;
+            };
+        TextAreaComponent.decorators = [
+            { type: core.Component, args: [{
+                        selector: 'ft-text-area',
+                        template: "<textarea\n  #input\n  [autofocus]=\"autofocus\"\n  (change)=\"updateValue($event)\"\n  class=\"form-control\"\n  [disabled]=\"disabled\"\n  (keyup)=\"updateValue($event)\"\n  [attr.maxlength]=\"maxLength\"\n  [ngClass]=\"{'placeholder-shown':!value || value===''}\"\n  [readonly]=\"readOnly\"\n  rows=\"1\"\n></textarea>\n<label>{{ label }} <span *ngIf=\"required\" class=\"required-mark text-danger\">*</span></label>\n",
+                        providers: [
+                            {
+                                provide: forms.NG_VALUE_ACCESSOR,
+                                useExisting: core.forwardRef(function () { return TextAreaComponent; }),
+                                multi: true
+                            }
+                        ],
+                        styles: [":host{display:block;position:relative;padding-top:.8rem;padding-bottom:1px;background-color:#fff}:host.autosize textarea{resize:none;overflow:hidden}:host textarea{background-color:#fff;border-radius:0;border-width:0 0 1px;padding-left:0;padding-right:0;font-weight:500;display:block;transition:height .2s}:host textarea+label{white-space:nowrap;width:100%;overflow:hidden;background:#fff;color:#6c757d;position:absolute;pointer-events:none;padding:.375rem 0;transition:.2s;top:.8rem;margin-bottom:0;margin-top:1px}:host textarea+label .required-mark{opacity:1;transition:opacity .2s}:host textarea:focus{box-shadow:0 1px #007bff;border-color:#007bff}:host textarea:focus+label,:host textarea:not(.placeholder-shown)+label{top:0;padding:0;font-size:.8rem}:host textarea:focus+label .required-mark,:host textarea:not(.placeholder-shown)+label .required-mark{opacity:0}:host textarea:focus+label{color:#007bff!important}:host.ng-touched.ng-invalid textarea{border-color:#dc3545}:host.ng-touched.ng-invalid textarea:focus{box-shadow:0 1px #dc3545}"]
+                    }] }
+        ];
+        /** @nocollapse */
+        TextAreaComponent.ctorParameters = function () { return []; };
+        TextAreaComponent.propDecorators = {
+            autofocus: [{ type: core.Input }],
+            autosize: [{ type: core.Input }, { type: core.HostBinding, args: ['class.autosize',] }],
+            disabled: [{ type: core.Input }],
+            input: [{ type: core.ViewChild, args: ['input',] }],
+            label: [{ type: core.Input }],
+            maxHeight: [{ type: core.Input }],
+            maxLength: [{ type: core.Input }],
+            minHeight: [{ type: core.Input }],
+            readOnly: [{ type: core.Input }],
+            required: [{ type: core.Input }],
+            value: [{ type: core.Input }]
+        };
+        return TextAreaComponent;
     }());
 
     /**
@@ -555,9 +697,11 @@
                         declarations: [
                             FilePickerComponent,
                             InvalidFeedbackComponent,
+                            ListComponent,
+                            RatingComponent,
                             SelectComponent,
                             TextInputComponent,
-                            ListComponent
+                            TextAreaComponent
                         ],
                         imports: [
                             common.CommonModule
@@ -565,8 +709,11 @@
                         exports: [
                             FilePickerComponent,
                             InvalidFeedbackComponent,
+                            ListComponent,
+                            RatingComponent,
                             SelectComponent,
-                            TextInputComponent
+                            TextInputComponent,
+                            TextAreaComponent
                         ]
                     },] }
         ];
@@ -585,10 +732,12 @@
 
     exports.InputsModule = InputsModule;
     exports.FilePickerComponent = FilePickerComponent;
-    exports.SelectComponent = SelectComponent;
-    exports.TextInputComponent = TextInputComponent;
-    exports.ListComponent = ListComponent;
     exports.InvalidFeedbackComponent = InvalidFeedbackComponent;
+    exports.ListComponent = ListComponent;
+    exports.RatingComponent = RatingComponent;
+    exports.SelectComponent = SelectComponent;
+    exports.TextAreaComponent = TextAreaComponent;
+    exports.TextInputComponent = TextInputComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -36,13 +36,6 @@ export class SidenavComponent implements OnInit {
       this.shown ? 'show' : ''
     ].join(' ');
   }
-  getLabel(option) {
-    if (this.labelField) {
-      return option[this.labelField];
-    } else {
-      return option.name;
-    }
-  }
   selectOption(option) {
     if (option.url) {
       if (option.url.match(/^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)) {
@@ -54,6 +47,9 @@ export class SidenavComponent implements OnInit {
       option.click();
     }
     this.hide();
+  }
+  toggleShow(option) {
+    option.show = !option.show;
   }
   show() {
     this.shown = true;

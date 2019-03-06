@@ -1,8 +1,8 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/_mixins";
-$sidenav-collapsed-width: 60px;
-$sidenav-show-width: 280px;
+$sidenav-collapsed-width: 3.75rem;
+$sidenav-show-width: 16rem;
 .content {
   background-color: map-get($theme-colors, light);
   position: fixed;
@@ -14,6 +14,7 @@ $sidenav-show-width: 280px;
   transform: translateX(-100vw);
   transition: transform 0.3s ease-in-out, width 0.3s, color 0.3s, background-color 0.3s;
   z-index: $zindex-fixed;
+  font-size: 0.875rem;
   @include media-breakpoint-up(md) {
     :host:not(.show):not(.docked) & {
       background-color: map-get($theme-colors, dark);
@@ -30,7 +31,7 @@ $sidenav-show-width: 280px;
             color: $body-color;
           }
         }
-        ft-icon {
+        .icon {
           margin-left: 0.125rem;
         }
       }
@@ -48,14 +49,15 @@ $sidenav-show-width: 280px;
   :host.docked & {
     @include media-breakpoint-up(md) {
       transform: translateX(0);
-      box-shadow: 0 0 0;
+      box-shadow: 1px 0 4px rgba(0,0,0,.1);
     }
   }
-  > .list-group {
+  .list-group {
     display: block;
     overflow: auto;
-    > .list-group-item {
+    .list-group-item {
       color: $body-color;
+      cursor: pointer;
       background-color: transparent;
       border-radius: 0;
       border: 0;
@@ -64,20 +66,20 @@ $sidenav-show-width: 280px;
       &:hover {
         background: darken(map-get($theme-colors, light), 7.5%);
       }
-      .label {
+      .icon+.label {
         display: block;
         margin-left: 0.25rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .label,
-      ft-icon {
+      .icon,
+      .label {
         transition: margin-left 0.3s;
       }
     }
   }
-  ft-icon {
+  .icon {
     font-size: 1.5rem;
   }
 }
@@ -100,7 +102,7 @@ $sidenav-show-width: 280px;
 .resizer {
   display: none;
   position: fixed;
-  width: 4px;
+  width: 0.25rem;
   top: 0;
   bottom: 0;
   left: $sidenav-collapsed-width;
@@ -121,5 +123,34 @@ $sidenav-show-width: 280px;
     cursor: w-resize;
     left: inherit;
     right: $sidenav-collapsed-width;
+  }
+}
+.collapsible {
+  overflow: hidden;
+  transition: max-height 0.2s;
+  max-height: 100vh;
+  background-color: rgba(0, 0, 0, .01);
+  box-shadow: inset 0 4px 9px -7px rgba(0,0,0,0.4);
+  &-header {
+    font-weight: 500;
+  }
+  &:not(.show) {
+    max-height: 0;
+    background-color: transparent;
+  }
+}
+.header {
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 1.5rem .5rem;
+  padding-bottom: 0;
+  margin: 0 0.75rem;
+  font-size: .75rem;
+}
+.toggle {
+  transform: rotate(0);
+  transition: transform 0.2s;
+  .show & {
+    transform: rotate(90deg);
   }
 }

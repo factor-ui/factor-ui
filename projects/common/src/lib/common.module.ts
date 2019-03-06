@@ -2,18 +2,24 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule as AngularCommonModule } from '@angular/common';
 import { IconComponent } from './icon/icon.component';
 import { ImageComponent } from './image/image.component';
+import { RippleDirective } from './ripple.directive';
+import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
   declarations: [
     IconComponent,
-    ImageComponent
+    ImageComponent,
+    RippleDirective,
+    ProgressComponent
   ],
   imports: [
     AngularCommonModule
   ],
   exports: [
     IconComponent,
-    ImageComponent
+    ImageComponent,
+    RippleDirective,
+    ProgressComponent
   ]
 })
 export class CommonModule {

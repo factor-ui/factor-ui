@@ -44,7 +44,7 @@ export class ImageComponent implements OnInit {
           }
         });
       }, {
-        rootMargin: "0px 0px 0px 0px"
+        rootMargin: "0px 0px 200px 0px"
       });
       elementObserver.observe(this.element.nativeElement);
     } else {

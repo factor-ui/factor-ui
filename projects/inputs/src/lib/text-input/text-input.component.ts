@@ -34,17 +34,8 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
   @Input()
   required: boolean;
   @Input()
-  style: 'default' | 'rounded-outline' | 'outline';
-  @Input()
   type: string = 'text';
   _value: string;
-
-  @HostBinding('class')
-  get hostClasses(): string {
-    return [
-      this.style ? `style-${this.style}` : ''
-    ].join(' ');
-  }
 
   constructor() { }
 

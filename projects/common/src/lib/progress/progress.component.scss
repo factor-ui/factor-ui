@@ -1,0 +1,48 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/_mixins";
+:host {
+  line-height: 0;
+  display: inline-block;
+  &[size="1"] {
+    font-size: 1rem;
+  }
+  &[size="2"] {
+    font-size: 1.5rem;
+  }
+  &[size="3"] {
+    font-size: 2rem;
+  }
+  &[size="4"] {
+    font-size: 3rem;
+  }
+  &[size="5"] {
+    font-size: 4.5rem;
+  }
+  &[size="6"] {
+    font-size: 8rem;
+  }
+  &[size="7"] {
+    font-size: 16rem;
+  }
+  &[size="8"] {
+    font-size: 32rem;
+  }
+}
+svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  .track {
+    fill: none;
+    stroke-opacity: 0.08;
+    stroke-width: 10;
+    stroke: #000;
+  }
+  .bar {
+    fill: none;
+    stroke-opacity: 0.9;
+    stroke-width: 6;
+    stroke: $primary;
+  }
+}

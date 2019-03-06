@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-inputs',
@@ -8,10 +8,12 @@ import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 })
 export class InputsComponent implements OnInit {
   options: any[] = [
-    {label:'Male', value:'male'},
-    {label:'Female', value: 'female'}
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' }
   ];
   entityForm: FormGroup;
+  submitting: boolean;
+  submitted: boolean;
 
   constructor(
     private formBuilder: FormBuilder
@@ -22,10 +24,35 @@ export class InputsComponent implements OnInit {
   }
   createForm() {
     this.entityForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      company: 'Factor',
-      gender: ''
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      company: ['', Validators.required],
+      gender: ['', Validators.required],
+      message: ['', Validators.required],
+      streetAddress: '',
+      country: '',
+      state: '',
+      city: ''
+    });
+  }
+  submit() {
+    this.validateAllFormFields(this.entityForm);
+    if (this.entityForm.valid) {
+      this.submitted = true;
+      this.submitting = true;
+      setTimeout(() => {
+        this.submitting = false;
+      }, 2000);
+    }
+  }
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
     });
   }
 

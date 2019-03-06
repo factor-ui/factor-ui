@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { CommonModule as FactorCommonModule } from 'factor-common';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { StepperComponent } from './stepper/stepper.component';
+import { ContentComponent } from './content/content.component';
 
 @NgModule({
   declarations: [
     SidenavComponent,
-    StepperComponent
+    StepperComponent,
+    ContentComponent
   ],
   imports: [
     CommonModule,

@@ -143,6 +143,11 @@
       "sourceRoot": "projects/common/src",
       "projectType": "library",
       "prefix": "ft",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -178,6 +183,11 @@
       "sourceRoot": "projects/auth/src",
       "projectType": "library",
       "prefix": "ft",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -253,6 +263,11 @@
       "sourceRoot": "projects/utils/src",
       "projectType": "library",
       "prefix": "ft",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

@@ -1,4 +1,4 @@
-import { Component, Input, Inject, HostBinding, ElementRef, NgModule } from '@angular/core';
+import { Component, Input, Inject, HostBinding, ElementRef, Injectable, NgModule, Directive, HostListener, defineInjectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -25,14 +25,19 @@ class IconComponent {
             }
         }
         if (!this.path) {
-            this.path = 'assets/';
+            if (this.configuration.icon && this.configuration.icon.path) {
+                this.path = this.configuration.icon.path;
+            }
+            else {
+                this.path = 'assets';
+            }
         }
     }
 }
 IconComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ft-icon',
-                template: " <svg><use attr.xlink:href=\"{{ this.path }}{{ this.collection }}.svg#{{ name }}\" attr.href=\"{{ this.path }}{{ this.collection }}.svg#{{ name }}\" /></svg>\n",
+                template: " <svg><use attr.xlink:href=\"{{ this.path }}/{{ this.collection }}.svg#{{ name }}\" attr.href=\"{{ this.path }}/{{ this.collection }}.svg#{{ name }}\" /></svg>\n",
                 styles: [":host{line-height:0;display:inline-block}:host[size=\"1\"]{font-size:1rem}:host[size=\"2\"]{font-size:1.5rem}:host[size=\"3\"]{font-size:2rem}:host[size=\"4\"]{font-size:3rem}:host[size=\"5\"]{font-size:4.5rem}:host[size=\"6\"]{font-size:8rem}:host[size=\"7\"]{font-size:16rem}:host[size=\"8\"]{font-size:32rem}svg{width:1em;height:1em;vertical-align:middle;fill:currentColor}"]
             }] }
 ];
@@ -89,7 +94,7 @@ class ImageComponent {
                     }
                 });
             }, {
-                rootMargin: "0px 0px 0px 0px"
+                rootMargin: "0px 0px 200px 0px"
             });
             elementObserver.observe(this.element.nativeElement);
         }
@@ -120,6 +125,176 @@ ImageComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class ProgressComponent {
+    constructor() { }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+}
+ProgressComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'ft-progress',
+                template: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"120\" height=\"120\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"xMidYMid\">\n  <circle class=\"track\" cx=\"50\" cy=\"50\" r=\"40\" />\n  <circle class=\"bar\" cx=\"50\" cy=\"50\" r=\"40\">\n    <animate attributeName=\"stroke-dashoffset\" dur=\"2s\" repeatCount=\"indefinite\" from=\"0\" to=\"502\" />\n    <animate attributeName=\"stroke-dasharray\" dur=\"2s\" repeatCount=\"indefinite\" values=\"150.6 100.4;1 250;150.6 100.4\" />\n  </circle>\n</svg>\n",
+                styles: [":host{line-height:0;display:inline-block}:host[size=\"1\"]{font-size:1rem}:host[size=\"2\"]{font-size:1.5rem}:host[size=\"3\"]{font-size:2rem}:host[size=\"4\"]{font-size:3rem}:host[size=\"5\"]{font-size:4.5rem}:host[size=\"6\"]{font-size:8rem}:host[size=\"7\"]{font-size:16rem}:host[size=\"8\"]{font-size:32rem}svg{width:1em;height:1em;vertical-align:middle}svg .track{fill:none;stroke-opacity:.08;stroke-width:10;stroke:#000}svg .bar{fill:none;stroke-opacity:.9;stroke-width:6;stroke:#007bff}"]
+            }] }
+];
+/** @nocollapse */
+ProgressComponent.ctorParameters = () => [];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class MessageService {
+    constructor() { }
+    /**
+     * @param {?} content
+     * @param {?=} options
+     * @return {?}
+     */
+    show(content, options) {
+        if (this.element) ;
+        this.element = document.createElement('div');
+        switch (options.type) {
+            case 'toast':
+                this.element.classList.add('toast', 'fade');
+                this.element.style = 'position: fixed; bottom: 2rem; left: 2rem; right: 2rem; margin: auto;';
+                this.element.innerHTML = `
+            <div class="toast-body">${content}</div>
+          `;
+                document.body.appendChild(this.element);
+                $(this.element).toast('show');
+                break;
+            default:
+                this.element.classList.add('modal', 'fade');
+                this.element.innerHTML = `
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body">${content}</div>
+                <div class="modal-footer" style="padding-top: 0; border: 0;">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
+                </div>
+              </div>
+            </div>
+          `;
+                document.body.appendChild(this.element);
+                $(this.element).modal();
+                break;
+        }
+    }
+}
+MessageService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+MessageService.ctorParameters = () => [];
+/** @nocollapse */ MessageService.ngInjectableDef = defineInjectable({ factory: function MessageService_Factory() { return new MessageService(); }, token: MessageService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class RippleDirective {
+    /**
+     * @param {?} elementRef
+     */
+    constructor(elementRef) {
+        this.elementRef = elementRef;
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    showRipple(event) {
+        /** @type {?} */
+        let element = this.elementRef.nativeElement;
+        /** @type {?} */
+        let ripple = element.querySelector('.ripple');
+        /** @type {?} */
+        const eventType = event.type;
+        // Ripple
+        if (ripple === null) {
+            // Create ripple
+            ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            // Prepend ripple to element
+            element.insertBefore(ripple, element.firstChild);
+            // Set ripple this.size
+            if (!ripple.offsetHeight && !ripple.offsetWidth) {
+                this.size = Math.max(element.offsetWidth, element.offsetHeight);
+                ripple.style.width = this.size + 'px';
+                ripple.style.height = this.size + 'px';
+            }
+        }
+        // Remove animation effect
+        ripple.className = ripple.className.replace(/ ?(ripple-animate)/g, '');
+        // get click coordinates by event type
+        if (eventType === 'mousedown') {
+            this.x = event.pageX;
+            this.y = event.pageY;
+        }
+        else if (eventType === 'touchstart') {
+            try {
+                /** @type {?} */
+                let originalEvent;
+                if (typeof event.changedTouches !== 'undefined') {
+                    originalEvent = event.changedTouches[0];
+                }
+                else {
+                    originalEvent = event.originalEvent;
+                }
+                this.x = originalEvent.pageX;
+                this.y = originalEvent.pageY;
+            }
+            catch (e) {
+                // fall back to center of el
+                this.x = ripple.offsetWidth / 2;
+                this.y = ripple.offsetHeight / 2;
+            }
+        }
+        this.offsets = this.getPosition(element);
+        ripple.style.left = (this.x - this.offsets.left - this.size / 2) + 'px';
+        ripple.style.top = (this.y - this.offsets.top - this.size / 2) + 'px';
+        // Add animation effect
+        ripple.classList.add('ripple-animate');
+    }
+    /**
+     * @param {?} element
+     * @return {?}
+     */
+    getPosition(element) {
+        /** @type {?} */
+        const de = document.documentElement;
+        /** @type {?} */
+        const box = element.getBoundingClientRect();
+        /** @type {?} */
+        const top = box.top + window.pageYOffset - de.clientTop;
+        /** @type {?} */
+        const left = box.left + window.pageXOffset - de.clientLeft;
+        return { top: top, left: left };
+    }
+}
+RippleDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[ftRipple]'
+            },] }
+];
+/** @nocollapse */
+RippleDirective.ctorParameters = () => [
+    { type: ElementRef }
+];
+RippleDirective.propDecorators = {
+    showRipple: [{ type: HostListener, args: ['mousedown', ['$event'],] }, { type: HostListener, args: ['touchstart', ['$event'],] }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class CommonModule$1 {
     /**
      * @param {?} configuration
@@ -138,14 +313,18 @@ CommonModule$1.decorators = [
     { type: NgModule, args: [{
                 declarations: [
                     IconComponent,
-                    ImageComponent
+                    ImageComponent,
+                    RippleDirective,
+                    ProgressComponent
                 ],
                 imports: [
                     CommonModule
                 ],
                 exports: [
                     IconComponent,
-                    ImageComponent
+                    ImageComponent,
+                    RippleDirective,
+                    ProgressComponent
                 ]
             },] }
 ];
@@ -160,6 +339,6 @@ CommonModule$1.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { IconComponent, ImageComponent, CommonModule$1 as CommonModule };
+export { IconComponent, ImageComponent, ProgressComponent, MessageService, RippleDirective, CommonModule$1 as CommonModule };
 
 //# sourceMappingURL=factor-common.js.map
