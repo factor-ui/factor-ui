@@ -6,7 +6,7 @@ steps:
 
   # Build productive files
   - name: 'gcr.io/cloud-builders/yarn'
-    args: [ 'run', 'build', '--configuration=production' ]
+    args: [ 'build', '--configuration=production' ]
 
   # Deploy to google cloud app engine
   - name: 'gcr.io/cloud-builders/gcloud'

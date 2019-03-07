@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build auth && ng build common && ng build designer && ng build inputs && ng build navigation && ng build utils && ng build",
+    "build": "ng build auth && ng build common && ng build inputs && ng build navigation && ng build utils && ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

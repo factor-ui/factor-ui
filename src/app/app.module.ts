@@ -9,7 +9,6 @@ import { LayoutsModule } from './layouts/layouts.module';
 import { AppComponent } from './app.component';
 import { InputsModule } from 'factor-inputs';
 import { AuthModule } from 'factor-auth';
-import { DesignerModule } from 'factor-designer';
 import { UtilsModule } from 'factor-utils';
 import { CommonModule as FactorCommonModule } from 'factor-common';
 import { HomeComponent } from './home/home.component';
@@ -39,7 +38,6 @@ import { RippleComponent } from './ripple/ripple.component';
     FactorCommonModule.forRoot({ icon: { collection: 'factoricons-regular' } }),
     AuthModule.forRoot({ tokenUrl: 'token' }),
     UtilsModule,
-    DesignerModule,
     InputsModule,
     LayoutsModule
   ],

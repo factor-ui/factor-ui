@@ -8,6 +8,6 @@ export declare class AuthInterceptor {
     private refreshTokenSubject;
     constructor(injector: Injector);
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any> | any>;
-    handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<import("@angular/common/http/src/response").HttpEvent<any>>;
-    addAuthenticationToken(request: any): any;
+    handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<any>;
+    addAuthenticationToken(request: any): HttpRequest<any>;
 }
