@@ -64,6 +64,10 @@ export class Sidenav1Component implements OnInit {
         {
           label: 'List',
           url: '/inputs/list'
+        },
+        {
+          label: 'Sidenav',
+          url: '/components/navigation/sidenav'
         }
       ]
     },

@@ -45,6 +45,10 @@
       </div>
     </fieldset>
     <div class="form-group">
+      <ft-rating></ft-rating>
+      <ft-invalid-feedback [control]="entityForm.controls.message"></ft-invalid-feedback>
+    </div>
+    <div class="form-group">
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
     <pre>{{ entityForm.value | json }}</pre>

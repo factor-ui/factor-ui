@@ -7,7 +7,6 @@
   <ng-content select="[ftEnd]"></ng-content>
 </div>
 <div class="resizer" (click)="show()" *ngIf="!docked"></div>
-
 <ng-template #switch let-options="options">
   <ng-container *ngFor="let option of options" [ngSwitch]="option.type">
     <ng-container *ngSwitchCase="'collapsible'">
@@ -22,18 +21,22 @@
   </ng-container>
 </ng-template>
 <ng-template #action let-option="option">
-  <button type="button" ftRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="selectOption(option)">
-    <div class="d-flex align-items-center">
-      <ft-icon class="icon" *ngIf="option.icon" [name]="option.icon" [collection]="iconCollection" [title]="option[labelField? labelField : 'label']"></ft-icon>
-      <div class="label">{{ option[labelField? labelField : 'label'] }}</div>
-    </div>
-  </button>
+  <ng-container [ngSwitch]="getComponentType(option)">
+    <button *ngSwitchCase="'button'" type="button" ftRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="setOption(option)">
+      <ng-container *ngTemplateOutlet="text; context:{option:option}"></ng-container>
+    </button>
+    <a *ngSwitchCase="'link'" [routerLink]="option.url" routerLinkActive="active" ftRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="setOption(option)">
+      <ng-container *ngTemplateOutlet="text; context:{option:option}"></ng-container>
+    </a>
+  </ng-container>
 </ng-template>
 <ng-template #collapsible let-option="option">
-  <div class="collapsible-header list-group-item list-group-item-action d-flex align-items-center justify-content-between" [ngClass]="{show:option.show}" (click)="toggleShow(option)">
-    <div>{{ option[labelField? labelField : 'label'] }}</div>
-    <ft-icon class="toggle" name="angle-right" size="1"></ft-icon>
-  </div>
+  <button type="button" ftRipple class="collapsible-header list-group-item list-group-item-action" [ngClass]="{show:option.show}" (click)="toggleCollapsible(option)">
+    <div class="d-flex align-items-center justify-content-between">
+      <div>{{ option[labelField? labelField : 'label'] }}</div>
+      <ft-icon class="toggle" name="angle-right" size="1"></ft-icon>
+    </div>
+  </button>
   <div class="collapsible" [ngClass]="{show:option.show}" *ngIf="option.children">
     <ng-container *ngTemplateOutlet="switch; context:{options:option.children}"></ng-container>
   </div>
@@ -41,5 +44,11 @@
 <ng-template #header let-option="option">
   <div class="header" [ngClass]="option.class">
     {{ option[labelField? labelField : 'label'] }}
+  </div>
+</ng-template>
+<ng-template #text let-option="option">
+  <div class="d-flex align-items-center">
+    <ft-icon class="icon" *ngIf="option.icon" [name]="option.icon" [collection]="iconCollection" [title]="option[labelField? labelField : 'label']"></ft-icon>
+    <div class="label">{{ option[labelField? labelField : 'label'] }}</div>
   </div>
 </ng-template>

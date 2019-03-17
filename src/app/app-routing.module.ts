@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { EditorComponent } from 'factor-designer';
 import { StyleGuideComponent } from './style-guide/style-guide.component';
 import { IconComponent } from './icon/icon.component';
 import { ImageComponent } from './image/image.component';
@@ -14,10 +13,6 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-  },
-  {
-    path: 'designer/editor',
-    component: EditorComponent,
   },
   {
     path: 'components/common/icon',

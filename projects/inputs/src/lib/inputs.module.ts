@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { CommonModule as FactorCommonModule } from 'factor-common';
+
 import { FilePickerComponent } from './file-picker/file-picker.component';
 import { InvalidFeedbackComponent } from './invalid-feedback/invalid-feedback.component';
 import { ListComponent } from './list/list.component';
@@ -20,7 +22,8 @@ import { TextAreaComponent } from './text-area/text-area.component';
     TextAreaComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FactorCommonModule
   ],
   exports: [
     FilePickerComponent,

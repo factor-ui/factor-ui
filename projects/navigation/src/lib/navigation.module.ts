@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { CommonModule as FactorCommonModule } from 'factor-common';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -14,6 +15,7 @@ import { ContentComponent } from './content/content.component';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     FactorCommonModule
   ],
   exports: [

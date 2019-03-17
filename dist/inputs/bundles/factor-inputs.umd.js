@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/core'), require('@angular/forms')) :
-    typeof define === 'function' && define.amd ? define('factor-inputs', ['exports', '@angular/common', '@angular/core', '@angular/forms'], factory) :
-    (factory((global['factor-inputs'] = {}),global.ng.common,global.ng.core,global.ng.forms));
-}(this, (function (exports,common,core,forms) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('factor-common'), require('@angular/core'), require('@angular/forms')) :
+    typeof define === 'function' && define.amd ? define('factor-inputs', ['exports', '@angular/common', 'factor-common', '@angular/core', '@angular/forms'], factory) :
+    (factory((global['factor-inputs'] = {}),global.ng.common,global.factorCommon,global.ng.core,global.ng.forms));
+}(this, (function (exports,common,factorCommon,core,forms) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -331,6 +331,13 @@
      */
     var RatingComponent = /** @class */ (function () {
         function RatingComponent() {
+            this.stars = [
+                { value: 1 },
+                { value: 2 },
+                { value: 3 },
+                { value: 4 },
+                { value: 5 }
+            ];
         }
         /**
          * @return {?}
@@ -340,10 +347,29 @@
          */
             function () {
             };
+        /**
+         * @param {?} value
+         * @param {?=} isHover
+         * @return {?}
+         */
+        RatingComponent.prototype.setRating = /**
+         * @param {?} value
+         * @param {?=} isHover
+         * @return {?}
+         */
+            function (value, isHover) {
+                if (isHover) {
+                    this.overRating = value;
+                }
+                else {
+                    this.rating = value;
+                }
+            };
         RatingComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'ft-rating',
-                        template: "<p>\n  rating works!\n</p>\n",
+                        template: "<ft-icon name=\"star\" size=\"2\" (mouseover)=\"setRating(star.value, true)\" (click)=\"setRating(star.value)\" *ngFor=\"let star of stars\"></ft-icon>\n",
+                        host: { class: 'd-flex' },
                         styles: [""]
                     }] }
         ];
@@ -704,7 +730,8 @@
                             TextAreaComponent
                         ],
                         imports: [
-                            common.CommonModule
+                            common.CommonModule,
+                            factorCommon.CommonModule
                         ],
                         exports: [
                             FilePickerComponent,

@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { CommonModule as CommonModule$1 } from 'factor-common';
 import { Component, ElementRef, forwardRef, HostBinding, HostListener, Input, ViewChild, NgModule } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -254,17 +255,39 @@ ListComponent.ctorParameters = () => [];
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class RatingComponent {
-    constructor() { }
+    constructor() {
+        this.stars = [
+            { value: 1 },
+            { value: 2 },
+            { value: 3 },
+            { value: 4 },
+            { value: 5 }
+        ];
+    }
     /**
      * @return {?}
      */
     ngOnInit() {
     }
+    /**
+     * @param {?} value
+     * @param {?=} isHover
+     * @return {?}
+     */
+    setRating(value, isHover) {
+        if (isHover) {
+            this.overRating = value;
+        }
+        else {
+            this.rating = value;
+        }
+    }
 }
 RatingComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ft-rating',
-                template: "<p>\n  rating works!\n</p>\n",
+                template: "<ft-icon name=\"star\" size=\"2\" (mouseover)=\"setRating(star.value, true)\" (click)=\"setRating(star.value)\" *ngFor=\"let star of stars\"></ft-icon>\n",
+                host: { class: 'd-flex' },
                 styles: [""]
             }] }
 ];
@@ -555,7 +578,8 @@ InputsModule.decorators = [
                     TextAreaComponent
                 ],
                 imports: [
-                    CommonModule
+                    CommonModule,
+                    CommonModule$1
                 ],
                 exports: [
                     FilePickerComponent,

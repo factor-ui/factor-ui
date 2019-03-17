@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { tap, catchError, filter, take, switchMap, finalize, share } from 'rxjs/operators';
 import { Injectable, Injector, Inject, NgModule, defineInjectable, inject, INJECTOR } from '@angular/core';
-import { HttpClient, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /**
  * @fileoverview added by tsickle
