@@ -3,7 +3,7 @@ import { Injectable, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class StorageService {
     constructor() { }
@@ -66,7 +66,7 @@ StorageService.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class GoogleAnalyticsService {
     /**
@@ -74,23 +74,30 @@ class GoogleAnalyticsService {
      */
     constructor(router) {
         this.router = router;
-        router.events.subscribe(event => {
+        router.events.subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        event => {
             try {
                 if (typeof gtag === 'function') {
                     if (event instanceof NavigationEnd && this.trackingId) {
-                        setTimeout(() => {
+                        setTimeout((/**
+                         * @return {?}
+                         */
+                        () => {
                             gtag('config', this.trackingId, {
                                 'page_title': document.title,
                                 'page_path': event.urlAfterRedirects
                             });
-                        }, 100);
+                        }), 100);
                     }
                 }
             }
             catch (e) {
                 console.error(e);
             }
-        });
+        }));
     }
     /**
      * @param {?} trackingId
@@ -173,7 +180,7 @@ GoogleAnalyticsService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class UtilsModule {
     /**
@@ -199,12 +206,12 @@ UtilsModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { StorageService, GoogleAnalyticsService, UtilsModule };

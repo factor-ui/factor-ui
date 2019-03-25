@@ -5,7 +5,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class FilePickerComponent {
     /**
@@ -13,7 +13,11 @@ class FilePickerComponent {
      */
     constructor(elementRef) {
         this.elementRef = elementRef;
-        this.propagateChange = (_) => { };
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        (_) => { });
         this.createInput();
     }
     /**
@@ -51,11 +55,15 @@ class FilePickerComponent {
         this.fileInput = document.createElement('input');
         this.fileInput.style.display = 'none';
         this.fileInput.type = 'file';
-        this.fileInput.addEventListener('change', (event) => {
+        this.fileInput.addEventListener('change', (/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
             /** @type {?} */
             const reader = new FileReader();
             this.loadValue(event.target.files);
-        });
+        }));
         componentElement.appendChild(this.fileInput);
     }
     /**
@@ -72,7 +80,10 @@ class FilePickerComponent {
                 /** @type {?} */
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = () => {
+                reader.onload = (/**
+                 * @return {?}
+                 */
+                () => {
                     data.push({
                         data: reader.result,
                         lastModifiedDate: file.lastModifiedDate,
@@ -83,7 +94,7 @@ class FilePickerComponent {
                     if (data.length == files.length) {
                         this.value = data.length > 0 ? data : null;
                     }
-                };
+                });
             }
         }
     }
@@ -108,11 +119,6 @@ class FilePickerComponent {
         this.propagateChange(this._value);
     }
     /**
-     * @param {?} value
-     * @return {?}
-     */
-    writeValue(value) { }
-    /**
      * @param {?} fn
      * @return {?}
      */
@@ -120,9 +126,33 @@ class FilePickerComponent {
         this.propagateChange = fn;
     }
     /**
+     * @param {?} fn
      * @return {?}
      */
-    registerOnTouched() { }
+    registerOnTouched(fn) {
+        //this.propagateChange = fn;
+    }
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    setDisabledState(isDisabled) {
+        this.disabled = isDisabled;
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    updateValue(event) {
+        this.value = event.target.value;
+    }
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    writeValue(value) {
+        this.value = value;
+    }
 }
 FilePickerComponent.decorators = [
     { type: Component, args: [{
@@ -131,11 +161,14 @@ FilePickerComponent.decorators = [
                 providers: [
                     {
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => FilePickerComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => FilePickerComponent)),
                         multi: true
                     }
                 ],
-                styles: [""]
+                styles: [":host{display:inline-block}"]
             }] }
 ];
 /** @nocollapse */
@@ -147,12 +180,13 @@ FilePickerComponent.propDecorators = {
     disabled: [{ type: Input }],
     multiple: [{ type: Input }],
     dragover: [{ type: HostBinding, args: ['class.dragover',] }],
-    openDialog: [{ type: HostListener, args: ['click',] }]
+    openDialog: [{ type: HostListener, args: ['click',] }],
+    value: [{ type: Input }]
 };
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Componente para mostrar mensajes de error en los inputs
@@ -163,14 +197,46 @@ class InvalidFeedbackComponent {
          * Catálogo de mensajes según el tipo de error
          */
         this.defaultMessages = {
-            'required': (params) => 'Is required',
-            'min': (params) => 'Should be a valid',
-            'max': (params) => 'Should be a valid',
-            'minlength': (params) => '##FIELD## should be minimum ' + params.requiredLength + ' characters',
-            'maxlength': (params) => '##FIELD## should not be greater then ' + params.requiredLength + ' characters',
-            'pattern': (params) => 'Should be a valid',
-            'email': (params) => "Should be valid email.",
-            'file': (params) => 'File must be valid'
+            'required': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            (params) => 'Is required'),
+            'min': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            (params) => 'Should be a valid'),
+            'max': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            (params) => 'Should be a valid'),
+            'minlength': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            (params) => '##FIELD## should be minimum ' + params.requiredLength + ' characters'),
+            'maxlength': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            (params) => '##FIELD## should not be greater then ' + params.requiredLength + ' characters'),
+            'pattern': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            (params) => 'Should be a valid'),
+            'email': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            (params) => "Should be valid email."),
+            'file': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            (params) => 'File must be valid')
         };
         this.messages = {};
     }
@@ -184,7 +250,11 @@ class InvalidFeedbackComponent {
         if (objects !== null) {
             /** @type {?} */
             var errors = Object.keys(this.control.errors)
-                .map(field => this.getMessage(field, this.control.errors[field], this.control));
+                .map((/**
+             * @param {?} field
+             * @return {?}
+             */
+            field => this.getMessage(field, this.control.errors[field], this.control)));
             return errors[0];
         }
     }
@@ -200,7 +270,11 @@ class InvalidFeedbackComponent {
         /** @type {?} */
         var fname = this.getControlName(control);
         fname = fname.replace("_", " ").replace(" id", "").toLowerCase();
-        fname = fname.replace(/\b\w/g, l => l.toUpperCase());
+        fname = fname.replace(/\b\w/g, (/**
+         * @param {?} l
+         * @return {?}
+         */
+        l => l.toUpperCase()));
         /** @type {?} */
         var msg = this.messages[type] || this.defaultMessages[type](params) || 'Error';
         return control.dirty || control.touched ? msg.replace("##FIELD##", fname) : '';
@@ -213,7 +287,11 @@ class InvalidFeedbackComponent {
     getControlName(control) {
         /** @type {?} */
         const formGroup = control.parent.controls;
-        return Object.keys(formGroup).find(name => control === formGroup[name]) || null;
+        return Object.keys(formGroup).find((/**
+         * @param {?} name
+         * @return {?}
+         */
+        name => control === formGroup[name])) || null;
     }
 }
 InvalidFeedbackComponent.decorators = [
@@ -230,7 +308,7 @@ InvalidFeedbackComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ListComponent {
     constructor() { }
@@ -252,10 +330,15 @@ ListComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class RatingComponent {
     constructor() {
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        (_) => { });
         this.stars = [
             { value: 1 },
             { value: 2 },
@@ -263,44 +346,6 @@ class RatingComponent {
             { value: 4 },
             { value: 5 }
         ];
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-    }
-    /**
-     * @param {?} value
-     * @param {?=} isHover
-     * @return {?}
-     */
-    setRating(value, isHover) {
-        if (isHover) {
-            this.overRating = value;
-        }
-        else {
-            this.rating = value;
-        }
-    }
-}
-RatingComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ft-rating',
-                template: "<ft-icon name=\"star\" size=\"2\" (mouseover)=\"setRating(star.value, true)\" (click)=\"setRating(star.value)\" *ngFor=\"let star of stars\"></ft-icon>\n",
-                host: { class: 'd-flex' },
-                styles: [""]
-            }] }
-];
-/** @nocollapse */
-RatingComponent.ctorParameters = () => [];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class SelectComponent {
-    constructor() {
-        this.propagateChange = (_) => { };
     }
     /**
      * @return {?}
@@ -329,9 +374,124 @@ class SelectComponent {
         this.propagateChange = fn;
     }
     /**
+     * @param {?} fn
      * @return {?}
      */
-    registerOnTouched() { }
+    registerOnTouched(fn) {
+        this.propagateChange = fn;
+    }
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    setDisabledState(isDisabled) {
+        this.disabled = isDisabled;
+    }
+    /**
+     * @param {?} value
+     * @param {?=} isHover
+     * @return {?}
+     */
+    setRate(value, isHover) {
+        if (isHover) {
+            this.hover = value;
+        }
+        else {
+            this.value = value;
+        }
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    updateValue(event) {
+        this.value = event.target.value;
+    }
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    writeValue(value) {
+        this.value = value;
+    }
+}
+RatingComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'ft-rating',
+                template: "<ng-container *ngFor=\"let star of stars\">\n  <ng-container *ngTemplateOutlet=\"!readOnly? buttonTemplate : starTemplate; context:{star:star}\"></ng-container>\n</ng-container>\n<ng-template #buttonTemplate let-star=\"star\">\n  <button type=\"button\" *ngIf=\"!readOnly; else starTemplate\" [disabled]=\"disabled\" (mouseover)=\"setRate(star.value, true)\" (focus)=\"setRate(star.value, true)\" (blur)=\"setRate(0, true)\" (mouseout)=\"setRate(0, true)\" (click)=\"setRate(star.value)\">\n    <ng-container *ngTemplateOutlet=\"starTemplate; context:{star:star}\"></ng-container>\n  </button>\n</ng-template>\n<ng-template #starTemplate let-star=\"star\">\n  <svg [ngClass]=\"{hover: hover >= star.value, active: value >= star.value}\" viewBox=\"0 0 24 24\">\n    <path d=\"M17.93 21.315c-.534.408-5.22-3.186-5.881-3.181-.663 0-5.307 3.656-5.846 3.254-.537-.403 1.29-6.165 1.081-6.822-.209-.656-4.972-4.138-4.772-4.796.201-.658 6.015-.627 6.55-1.036.533-.41 2.233-6.215 2.895-6.219.663 0 2.43 5.779 2.968 6.182.539.403 6.352.297 6.56.953.21.656-4.513 4.197-4.714 4.856-.2.658 1.692 6.398 1.159 6.808z\" />\n  </svg>\n</ng-template>\n",
+                providers: [
+                    {
+                        provide: NG_VALUE_ACCESSOR,
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => RatingComponent)),
+                        multi: true
+                    }
+                ],
+                styles: [":host{line-height:0;display:inline-flex}:host:hover button{color:#007bff}:host:hover button svg:not(.hover){color:#6c757d}:host[size=\"1\"]{font-size:1rem}:host[size=\"2\"]{font-size:1.5rem}:host[size=\"3\"]{font-size:2rem}:host[size=\"4\"]{font-size:3rem}:host[size=\"5\"]{font-size:4.5rem}:host[size=\"6\"]{font-size:8rem}:host[size=\"7\"]{font-size:16rem}:host[size=\"8\"]{font-size:32rem}svg{width:1em;height:1em;display:block}svg path{fill:none;stroke-width:1;stroke:currentColor}svg.active path,svg.hover path{fill:currentColor}button{border:0;background:0 0;padding:0}button:active,button:focus{outline:0}"]
+            }] }
+];
+/** @nocollapse */
+RatingComponent.ctorParameters = () => [];
+RatingComponent.propDecorators = {
+    readOnly: [{ type: Input }],
+    value: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class SelectComponent {
+    constructor() {
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        (_) => { });
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+    /**
+     * @return {?}
+     */
+    get value() {
+        return this._value;
+    }
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    set value(value) {
+        //this.input.nativeElement.value = value;
+        this._value = value;
+        this.propagateChange(this._value);
+    }
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    setDisabledState(isDisabled) {
+        this.disabled = isDisabled;
+    }
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    registerOnChange(fn) {
+        this.propagateChange = fn;
+    }
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    registerOnTouched(fn) {
+        //this.propagateChange = fn;
+    }
     /**
      * @param {?} event
      * @return {?}
@@ -354,7 +514,10 @@ SelectComponent.decorators = [
                 providers: [
                     {
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => SelectComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => SelectComponent)),
                         multi: true
                     }
                 ],
@@ -364,28 +527,31 @@ SelectComponent.decorators = [
 /** @nocollapse */
 SelectComponent.ctorParameters = () => [];
 SelectComponent.propDecorators = {
-    disabled: [{ type: Input }],
     options: [{ type: Input }],
     label: [{ type: Input }],
     required: [{ type: Input }],
     style: [{ type: Input }],
-    select: [{ type: ViewChild, args: ['select',] }]
+    select: [{ type: ViewChild, args: ['select',] }],
+    value: [{ type: Input }]
 };
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class TextInputComponent {
     constructor() {
-        this.propagateChange = (_) => { };
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        (_) => { });
         this.type = 'text';
     }
     /**
      * @return {?}
      */
-    ngOnInit() {
-    }
+    ngOnInit() { }
     /**
      * @return {?}
      */
@@ -402,6 +568,13 @@ class TextInputComponent {
         this.propagateChange(this._value);
     }
     /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    setDisabledState(isDisabled) {
+        this.disabled = isDisabled;
+    }
+    /**
      * @param {?} fn
      * @return {?}
      */
@@ -409,9 +582,12 @@ class TextInputComponent {
         this.propagateChange = fn;
     }
     /**
+     * @param {?} fn
      * @return {?}
      */
-    registerOnTouched() { }
+    registerOnTouched(fn) {
+        //this.propagateChange = fn;
+    }
     /**
      * @param {?} event
      * @return {?}
@@ -434,7 +610,10 @@ TextInputComponent.decorators = [
                 providers: [
                     {
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => TextInputComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => TextInputComponent)),
                         multi: true
                     }
                 ],
@@ -445,7 +624,6 @@ TextInputComponent.decorators = [
 TextInputComponent.ctorParameters = () => [];
 TextInputComponent.propDecorators = {
     autofocus: [{ type: Input }],
-    disabled: [{ type: Input }],
     input: [{ type: ViewChild, args: ['input',] }],
     label: [{ type: Input }],
     max: [{ type: Input }],
@@ -459,11 +637,15 @@ TextInputComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class TextAreaComponent {
     constructor() {
-        this.propagateChange = (_) => { };
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        (_) => { });
     }
     /**
      * @return {?}
@@ -485,21 +667,11 @@ class TextAreaComponent {
         this.propagateChange(this._value);
     }
     /**
-     * @param {?} maxHeight
+     * @param {?} isDisabled
      * @return {?}
      */
-    fitToContent(maxHeight) {
-        /** @type {?} */
-        const input = this.input.nativeElement;
-        /** @type {?} */
-        let adjustedHeight = input.clientHeight;
-        if (!maxHeight || maxHeight > adjustedHeight) {
-            adjustedHeight = Math.max(input.scrollHeight, adjustedHeight);
-            if (maxHeight) {
-                adjustedHeight = Math.min(maxHeight, adjustedHeight);
-            }
-            input.style.height = adjustedHeight + "px";
-        }
+    setDisabledState(isDisabled) {
+        this.disabled = isDisabled;
     }
     /**
      * @param {?} fn
@@ -509,18 +681,19 @@ class TextAreaComponent {
         this.propagateChange = fn;
     }
     /**
+     * @param {?} fn
      * @return {?}
      */
-    registerOnTouched() { }
+    registerOnTouched(fn) {
+        //this.propagateChange = fn;
+    }
     /**
      * @param {?} event
      * @return {?}
      */
     updateValue(event) {
         this.value = event.target.value;
-        if (this.autosize) {
-            this.fitToContent(this.maxHeight);
-        }
+        if (this.autosize) ;
     }
     /**
      * @param {?} value
@@ -537,7 +710,10 @@ TextAreaComponent.decorators = [
                 providers: [
                     {
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => TextAreaComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => TextAreaComponent)),
                         multi: true
                     }
                 ],
@@ -549,7 +725,6 @@ TextAreaComponent.ctorParameters = () => [];
 TextAreaComponent.propDecorators = {
     autofocus: [{ type: Input }],
     autosize: [{ type: Input }, { type: HostBinding, args: ['class.autosize',] }],
-    disabled: [{ type: Input }],
     input: [{ type: ViewChild, args: ['input',] }],
     label: [{ type: Input }],
     maxHeight: [{ type: Input }],
@@ -562,7 +737,7 @@ TextAreaComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class InputsModule {
 }
@@ -595,12 +770,12 @@ InputsModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { InputsModule, FilePickerComponent, InvalidFeedbackComponent, ListComponent, RatingComponent, SelectComponent, TextAreaComponent, TextInputComponent };

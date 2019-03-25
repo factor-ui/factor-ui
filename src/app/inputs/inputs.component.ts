@@ -29,10 +29,13 @@ export class InputsComponent implements OnInit {
       company: ['', Validators.required],
       gender: ['', Validators.required],
       message: ['', Validators.required],
-      streetAddress: '',
-      country: '',
-      state: '',
-      city: ''
+      streetAddress: [''],
+      country: [''],
+      state: [''],
+      city: [''],
+      rating: [3],
+      ratingDisabled: [{value: 3, disabled: true}],
+      file: [null]
     });
   }
   submit() {

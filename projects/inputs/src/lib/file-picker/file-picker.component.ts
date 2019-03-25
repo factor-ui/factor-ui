@@ -26,7 +26,8 @@ export class FilePickerComponent implements OnInit, ControlValueAccessor {
   set multiple (value: boolean) {
     this.fileInput.multiple = value;
   }
-  @HostBinding('class.dragover') dragover: boolean;
+  @HostBinding('class.dragover')
+  dragover: boolean;
   fileInput: HTMLInputElement;
   _value: string;
   propagateChange = (_: any) => { };
@@ -78,13 +79,24 @@ export class FilePickerComponent implements OnInit, ControlValueAccessor {
   get value() {
     return this._value;
   }
+  @Input()
   set value(value: any) {
     this._value = value;
     this.propagateChange(this._value);
   }
-  writeValue(value: any) { }
   registerOnChange(fn) {
     this.propagateChange = fn;
   }
-  registerOnTouched() { }
+  registerOnTouched(fn) {
+    //this.propagateChange = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+  updateValue(event: any) {
+    this.value = event.target.value;
+  }
+  writeValue(value: string) {
+    this.value = value;
+  }
 }

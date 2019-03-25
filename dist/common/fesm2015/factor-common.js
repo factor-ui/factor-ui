@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class IconComponent {
     /**
@@ -53,7 +53,7 @@ IconComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ImageComponent {
     /**
@@ -68,32 +68,55 @@ class ImageComponent {
     ngOnInit() {
         if ("IntersectionObserver" in window) {
             /** @type {?} */
-            let elementObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach((entry) => {
+            let elementObserver = new IntersectionObserver((/**
+             * @param {?} entries
+             * @param {?} observer
+             * @return {?}
+             */
+            (entries, observer) => {
+                entries.forEach((/**
+                 * @param {?} entry
+                 * @return {?}
+                 */
+                (entry) => {
                     if (entry.isIntersecting) {
                         /** @type {?} */
                         let image = new Image();
                         image.src = this.src;
-                        this.loading = true;
-                        image.onerror = () => {
+                        setTimeout((/**
+                         * @return {?}
+                         */
+                        () => {
+                            this.loading = true;
+                        }), 100);
+                        image.onerror = (/**
+                         * @return {?}
+                         */
+                        () => {
                             this.error = true;
                             this.loading = false;
-                        };
-                        image.onload = () => {
+                        });
+                        image.onload = (/**
+                         * @return {?}
+                         */
+                        () => {
                             if ("decode" in image) {
-                                image.decode().then(() => {
+                                image.decode().then((/**
+                                 * @return {?}
+                                 */
+                                () => {
                                     this.loading = false;
                                     this.shown = true;
-                                });
+                                }));
                             }
                             else {
                                 console.error('Image.decode not available.');
                             }
-                        };
+                        });
                         elementObserver.unobserve(this.element.nativeElement);
                     }
-                });
-            }, {
+                }));
+            }), {
                 rootMargin: "0px 0px 200px 0px"
             });
             elementObserver.observe(this.element.nativeElement);
@@ -123,7 +146,7 @@ ImageComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ProgressComponent {
     constructor() { }
@@ -145,7 +168,7 @@ ProgressComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MessageService {
     constructor() { }
@@ -196,7 +219,7 @@ MessageService.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class RippleDirective {
     /**
@@ -293,7 +316,7 @@ RippleDirective.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class CommonModule$1 {
     /**
@@ -331,12 +354,12 @@ CommonModule$1.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { IconComponent, ImageComponent, ProgressComponent, MessageService, RippleDirective, CommonModule$1 as CommonModule };

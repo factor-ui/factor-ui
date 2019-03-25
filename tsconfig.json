@@ -19,17 +19,17 @@
       "dom"
     ],
     "paths": {
-      "factor-common": [
-        "dist/common"
-      ],
-      "factor-common/*": [
-        "dist/common/*"
-      ],
       "factor-auth": [
         "dist/auth"
       ],
       "factor-auth/*": [
         "dist/auth/*"
+      ],
+      "factor-common": [
+        "dist/common"
+      ],
+      "factor-common/*": [
+        "dist/common/*"
       ],
       "factor-inputs": [
         "dist/inputs"
@@ -37,17 +37,17 @@
       "factor-inputs/*": [
         "dist/inputs/*"
       ],
-      "factor-utils": [
-        "dist/utils"
-      ],
-      "factor-utils/*": [
-        "dist/utils/*"
-      ],
       "factor-navigation": [
         "dist/navigation"
       ],
       "factor-navigation/*": [
         "dist/navigation/*"
+      ],
+      "factor-utils": [
+        "dist/utils"
+      ],
+      "factor-utils/*": [
+        "dist/utils/*"
       ],
       "factor-designer": [
         "dist/designer"

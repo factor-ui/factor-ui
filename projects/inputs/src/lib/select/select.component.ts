@@ -14,7 +14,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class SelectComponent implements OnInit, ControlValueAccessor {
-  @Input()
   disabled: boolean;
   @Input()
   options: any[];
@@ -36,16 +35,23 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   get value() {
     return this._value;
   }
+  @Input()
   set value(value: any) {
+    //this.input.nativeElement.value = value;
     this._value = value;
     this.propagateChange(this._value);
   }
-  registerOnChange(fn) {
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+  registerOnChange(fn: any) {
     this.propagateChange = fn;
   }
-  registerOnTouched() { }
+  registerOnTouched(fn: any) {
+    //this.propagateChange = fn;
+  }
   updateValue(event: any) {
-    this.value =  event.target.value;
+    this.value = event.target.value;
   }
   writeValue(value: string) {
     this.value = value;

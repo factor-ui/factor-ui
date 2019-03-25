@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var IconComponent = /** @class */ (function () {
     function IconComponent(configuration) {
@@ -54,7 +54,7 @@ var IconComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ImageComponent = /** @class */ (function () {
     function ImageComponent(element) {
@@ -70,32 +70,55 @@ var ImageComponent = /** @class */ (function () {
         var _this = this;
         if ("IntersectionObserver" in window) {
             /** @type {?} */
-            var elementObserver_1 = new IntersectionObserver(function (entries, observer) {
-                entries.forEach(function (entry) {
+            var elementObserver_1 = new IntersectionObserver((/**
+             * @param {?} entries
+             * @param {?} observer
+             * @return {?}
+             */
+            function (entries, observer) {
+                entries.forEach((/**
+                 * @param {?} entry
+                 * @return {?}
+                 */
+                function (entry) {
                     if (entry.isIntersecting) {
                         /** @type {?} */
                         var image_1 = new Image();
                         image_1.src = _this.src;
-                        _this.loading = true;
-                        image_1.onerror = function () {
+                        setTimeout((/**
+                         * @return {?}
+                         */
+                        function () {
+                            _this.loading = true;
+                        }), 100);
+                        image_1.onerror = (/**
+                         * @return {?}
+                         */
+                        function () {
                             _this.error = true;
                             _this.loading = false;
-                        };
-                        image_1.onload = function () {
+                        });
+                        image_1.onload = (/**
+                         * @return {?}
+                         */
+                        function () {
                             if ("decode" in image_1) {
-                                image_1.decode().then(function () {
+                                image_1.decode().then((/**
+                                 * @return {?}
+                                 */
+                                function () {
                                     _this.loading = false;
                                     _this.shown = true;
-                                });
+                                }));
                             }
                             else {
                                 console.error('Image.decode not available.');
                             }
-                        };
+                        });
                         elementObserver_1.unobserve(_this.element.nativeElement);
                     }
-                });
-            }, {
+                }));
+            }), {
                 rootMargin: "0px 0px 200px 0px"
             });
             elementObserver_1.observe(this.element.nativeElement);
@@ -126,7 +149,7 @@ var ImageComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ProgressComponent = /** @class */ (function () {
     function ProgressComponent() {
@@ -153,7 +176,7 @@ var ProgressComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var MessageService = /** @class */ (function () {
     function MessageService() {
@@ -200,7 +223,7 @@ var MessageService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var RippleDirective = /** @class */ (function () {
     function RippleDirective(elementRef) {
@@ -303,7 +326,7 @@ var RippleDirective = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var CommonModule$1 = /** @class */ (function () {
     function CommonModule$$1() {
@@ -348,12 +371,12 @@ var CommonModule$1 = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { IconComponent, ImageComponent, ProgressComponent, MessageService, RippleDirective, CommonModule$1 as CommonModule };

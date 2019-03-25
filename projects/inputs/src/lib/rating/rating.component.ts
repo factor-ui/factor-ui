@@ -1,12 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding, forwardRef, ElementRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'ft-rating',
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.component.scss'],
-  host: { class: 'd-flex' }
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => RatingComponent),
+      multi: true
+    }
+  ]
 })
-export class RatingComponent implements OnInit {
+export class RatingComponent implements OnInit, ControlValueAccessor {
+  disabled: boolean;
+  hover: number;
+  propagateChange = (_: any) => { };
+  @Input()
+  readOnly: boolean;
   stars: any[] = [
     { value: 1 },
     { value: 2 },
@@ -14,20 +26,41 @@ export class RatingComponent implements OnInit {
     { value: 4 },
     { value: 5 }
   ];
-  overRating: number;
-  rating: number;
+  _value: number;
 
   constructor() { }
 
   ngOnInit() {
   }
-  setRating(value, isHover?) {
+  get value() {
+    return this._value;
+  }
+  @Input()
+  set value(value: any) {
+    this._value = value;
+    this.propagateChange(this._value);
+  }
+  registerOnChange(fn) {
+    this.propagateChange = fn;
+  }
+  registerOnTouched(fn) {
+    this.propagateChange = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+  setRate(value, isHover?) {
     if (isHover) {
-      this.overRating = value;
+      this.hover = value;
     } else {
-      this.rating = value;
+      this.value = value;
     }
-
+  }
+  updateValue(event: any) {
+    this.value = event.target.value;
+  }
+  writeValue(value: string) {
+    this.value = value;
   }
 
 }

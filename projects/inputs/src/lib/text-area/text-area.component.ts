@@ -19,7 +19,6 @@ export class TextAreaComponent implements OnInit, ControlValueAccessor {
   @Input()
   @HostBinding('class.autosize')
   autosize: boolean;
-  @Input()
   disabled: boolean;
   @ViewChild('input')
   input: ElementRef<any>;
@@ -50,25 +49,19 @@ export class TextAreaComponent implements OnInit, ControlValueAccessor {
     this._value = value;
     this.propagateChange(this._value);
   }
-  fitToContent(maxHeight: number) {
-    const input = this.input.nativeElement;
-    let adjustedHeight = input.clientHeight;
-    if (!maxHeight || maxHeight > adjustedHeight) {
-      adjustedHeight = Math.max(input.scrollHeight, adjustedHeight);
-      if (maxHeight) {
-        adjustedHeight = Math.min(maxHeight, adjustedHeight);
-      }
-      input.style.height = adjustedHeight + "px";
-    }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
   registerOnChange(fn: any) {
     this.propagateChange = fn;
   }
-  registerOnTouched() { }
+  registerOnTouched(fn: any) {
+    //this.propagateChange = fn;
+  }
   updateValue(event: any) {
     this.value = event.target.value;
     if (this.autosize) {
-      this.fitToContent(this.maxHeight);
+      //this.fitToContent(this.maxHeight);
     }
   }
   writeValue(value: string) {

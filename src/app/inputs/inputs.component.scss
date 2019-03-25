@@ -1,0 +1,21 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+ft-file-picker {
+  cursor: pointer;
+  .placeholder {
+    display: inline-block;
+    border-radius: 0.25rem;
+    border: 2px dashed rgba(0,0,0,.3);
+    cursor: pointer;
+    &:hover {
+      border-color: $primary;
+      color: $primary;
+    }
+  }
+  ft-image {
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+}

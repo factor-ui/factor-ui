@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { tap, catchError, filter, take, switchMap, finalize, share } from 'rxjs/operators';
 import { Injectable, Injector, Inject, NgModule, defineInjectable, inject, INJECTOR } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AuthService {
     /**
@@ -40,13 +40,17 @@ class AuthService {
             username: form.username,
             password: form.password
         };
-        return this.http.post(this.configuration.tokenUrl, params).pipe(tap((token) => {
+        return this.http.post(this.configuration.tokenUrl, params).pipe(tap((/**
+         * @param {?} token
+         * @return {?}
+         */
+        (token) => {
             this.storageService.set('token', token, localStorage);
             this.loggedInSource.next(true);
             if (redirect) {
                 this.router.navigate([redirect]);
             }
-        }));
+        })));
     }
     /**
      * @param {?=} redirect
@@ -79,9 +83,13 @@ class AuthService {
             grant_type: 'refresh_token',
             refresh_token: token.refresh_token
         };
-        return this.http.get(url, { params: params }).pipe(tap((token) => {
+        return this.http.get(url, { params: params }).pipe(tap((/**
+         * @param {?} token
+         * @return {?}
+         */
+        (token) => {
             this.storageService.set('token', token, localStorage);
-        }));
+        })));
     }
 }
 AuthService.decorators = [
@@ -100,7 +108,7 @@ AuthService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AuthGuard {
     /**
@@ -138,7 +146,7 @@ AuthGuard.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LoginGuard {
     /**
@@ -178,7 +186,7 @@ LoginGuard.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AuthInterceptor {
     /**
@@ -196,7 +204,11 @@ class AuthInterceptor {
      */
     intercept(request, next) {
         this.authService = this.injector.get(AuthService);
-        return next.handle(this.addAuthenticationToken(request)).pipe(catchError(error => {
+        return next.handle(this.addAuthenticationToken(request)).pipe(catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
             if (error instanceof HttpErrorResponse) {
                 switch (((/** @type {?} */ (error))).status) {
                     case 401:
@@ -210,7 +222,7 @@ class AuthInterceptor {
             else {
                 return throwError(error);
             }
-        }));
+        })));
     }
     /**
      * @param {?} request
@@ -221,7 +233,11 @@ class AuthInterceptor {
         if (!this.refreshTokenInProgress) {
             this.refreshTokenInProgress = true;
             this.refreshTokenSubject.next(null);
-            return this.authService.refreshToken().pipe(switchMap((newToken) => {
+            return this.authService.refreshToken().pipe(switchMap((/**
+             * @param {?} newToken
+             * @return {?}
+             */
+            (newToken) => {
                 if (newToken) {
                     this.refreshTokenSubject.next(newToken);
                     return next.handle(this.addAuthenticationToken(request));
@@ -229,18 +245,33 @@ class AuthInterceptor {
                 // If we don't get a new token, we are in trouble so logout.
                 this.authService.logout();
                 return throwError('');
-            }), catchError(error => {
+            })), catchError((/**
+             * @param {?} error
+             * @return {?}
+             */
+            error => {
                 // If there is an exception calling 'refreshToken', bad news so logout.
                 this.authService.logout();
                 return throwError(error);
-            }), share(), finalize(() => {
+            })), share(), finalize((/**
+             * @return {?}
+             */
+            () => {
                 this.refreshTokenInProgress = false;
-            }));
+            })));
         }
         else {
-            return this.refreshTokenSubject.pipe(filter(token => token != null), take(1), switchMap(token => {
+            return this.refreshTokenSubject.pipe(filter((/**
+             * @param {?} token
+             * @return {?}
+             */
+            token => token != null)), take(1), switchMap((/**
+             * @param {?} token
+             * @return {?}
+             */
+            token => {
                 return next.handle(this.addAuthenticationToken(request));
-            }));
+            })));
         }
     }
     /**
@@ -273,7 +304,7 @@ AuthInterceptor.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AuthModule {
     /**
@@ -300,12 +331,12 @@ AuthModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { AuthService, AuthGuard, LoginGuard, AuthInterceptor, AuthModule };

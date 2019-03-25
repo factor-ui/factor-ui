@@ -2,12 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { StyleGuideComponent } from './style-guide/style-guide.component';
-import { IconComponent } from './icon/icon.component';
-import { ImageComponent } from './image/image.component';
+import { CommonComponent } from './common/common.component';
 import { InputsComponent } from './inputs/inputs.component';
-import { Sidenav1Component } from './layouts/sidenav1/sidenav1.component';
-import { RippleComponent } from './ripple/ripple.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 const routes: Routes = [
   {
@@ -15,28 +12,16 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'components/common/icon',
-    component: IconComponent,
+    path: 'common',
+    component: CommonComponent,
   },
   {
-    path: 'components/common/image',
-    component: ImageComponent,
-  },
-  {
-    path: 'components/navigation/sidenav',
-    component: Sidenav1Component,
-  },
-  {
-    path: 'components/inputs',
+    path: 'inputs',
     component: InputsComponent,
   },
   {
-    path: 'style-guide',
-    component: StyleGuideComponent,
-  },
-  {
-    path: 'ripple',
-    component: RippleComponent,
+    path: 'sidenav',
+    component: SidenavComponent,
   }
 ];
 

@@ -6,7 +6,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var StorageService = /** @class */ (function () {
         function StorageService() {
@@ -87,29 +87,34 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleAnalyticsService = /** @class */ (function () {
         function GoogleAnalyticsService(router) {
             var _this = this;
             this.router = router;
-            router.events.subscribe(function (event) {
+            router.events.subscribe(( /**
+             * @param {?} event
+             * @return {?}
+             */function (event) {
                 try {
                     if (typeof gtag === 'function') {
                         if (event instanceof i1.NavigationEnd && _this.trackingId) {
-                            setTimeout(function () {
+                            setTimeout(( /**
+                             * @return {?}
+                             */function () {
                                 gtag('config', _this.trackingId, {
                                     'page_title': document.title,
                                     'page_path': event.urlAfterRedirects
                                 });
-                            }, 100);
+                            }), 100);
                         }
                     }
                 }
                 catch (e) {
                     console.error(e);
                 }
-            });
+            }));
         }
         /**
          * @param {?} trackingId
@@ -219,7 +224,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var UtilsModule = /** @class */ (function () {
         function UtilsModule() {
@@ -252,12 +257,12 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.StorageService = StorageService;

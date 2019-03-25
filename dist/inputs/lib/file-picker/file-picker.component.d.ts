@@ -15,7 +15,9 @@ export declare class FilePickerComponent implements OnInit, ControlValueAccessor
     loadValue(files: any): void;
     openDialog(): void;
     value: any;
-    writeValue(value: any): void;
     registerOnChange(fn: any): void;
-    registerOnTouched(): void;
+    registerOnTouched(fn: any): void;
+    setDisabledState(isDisabled: boolean): void;
+    updateValue(event: any): void;
+    writeValue(value: string): void;
 }

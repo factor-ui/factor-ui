@@ -6,7 +6,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var AuthService = /** @class */ (function () {
         function AuthService(http, injector, storageService, configuration) {
@@ -39,13 +39,16 @@
                     username: form.username,
                     password: form.password
                 };
-                return this.http.post(this.configuration.tokenUrl, params).pipe(operators.tap(function (token) {
+                return this.http.post(this.configuration.tokenUrl, params).pipe(operators.tap(( /**
+                 * @param {?} token
+                 * @return {?}
+                 */function (token) {
                     _this.storageService.set('token', token, localStorage);
                     _this.loggedInSource.next(true);
                     if (redirect) {
                         _this.router.navigate([redirect]);
                     }
-                }));
+                })));
             };
         /**
          * @param {?=} redirect
@@ -89,9 +92,12 @@
                     grant_type: 'refresh_token',
                     refresh_token: token.refresh_token
                 };
-                return this.http.get(url, { params: params }).pipe(operators.tap(function (token) {
+                return this.http.get(url, { params: params }).pipe(operators.tap(( /**
+                 * @param {?} token
+                 * @return {?}
+                 */function (token) {
                     _this.storageService.set('token', token, localStorage);
-                }));
+                })));
             };
         AuthService.decorators = [
             { type: i0.Injectable, args: [{
@@ -113,7 +119,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var AuthGuard = /** @class */ (function () {
         function AuthGuard(authService) {
@@ -156,7 +162,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LoginGuard = /** @class */ (function () {
         function LoginGuard(authService, router) {
@@ -200,7 +206,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var AuthInterceptor = /** @class */ (function () {
         function AuthInterceptor(injector) {
@@ -221,7 +227,10 @@
             function (request, next) {
                 var _this = this;
                 this.authService = this.injector.get(AuthService);
-                return next.handle(this.addAuthenticationToken(request)).pipe(operators.catchError(function (error) {
+                return next.handle(this.addAuthenticationToken(request)).pipe(operators.catchError(( /**
+                 * @param {?} error
+                 * @return {?}
+                 */function (error) {
                     if (error instanceof i1.HttpErrorResponse) {
                         switch ((( /** @type {?} */(error))).status) {
                             case 401:
@@ -235,7 +244,7 @@
                     else {
                         return rxjs.throwError(error);
                     }
-                }));
+                })));
             };
         /**
          * @param {?} request
@@ -252,7 +261,10 @@
                 if (!this.refreshTokenInProgress) {
                     this.refreshTokenInProgress = true;
                     this.refreshTokenSubject.next(null);
-                    return this.authService.refreshToken().pipe(operators.switchMap(function (newToken) {
+                    return this.authService.refreshToken().pipe(operators.switchMap(( /**
+                     * @param {?} newToken
+                     * @return {?}
+                     */function (newToken) {
                         if (newToken) {
                             _this.refreshTokenSubject.next(newToken);
                             return next.handle(_this.addAuthenticationToken(request));
@@ -260,18 +272,29 @@
                         // If we don't get a new token, we are in trouble so logout.
                         _this.authService.logout();
                         return rxjs.throwError('');
-                    }), operators.catchError(function (error) {
+                    })), operators.catchError(( /**
+                     * @param {?} error
+                     * @return {?}
+                     */function (error) {
                         // If there is an exception calling 'refreshToken', bad news so logout.
                         _this.authService.logout();
                         return rxjs.throwError(error);
-                    }), operators.share(), operators.finalize(function () {
+                    })), operators.share(), operators.finalize(( /**
+                     * @return {?}
+                     */function () {
                         _this.refreshTokenInProgress = false;
-                    }));
+                    })));
                 }
                 else {
-                    return this.refreshTokenSubject.pipe(operators.filter(function (token) { return token != null; }), operators.take(1), operators.switchMap(function (token) {
+                    return this.refreshTokenSubject.pipe(operators.filter(( /**
+                     * @param {?} token
+                     * @return {?}
+                     */function (token) { return token != null; })), operators.take(1), operators.switchMap(( /**
+                     * @param {?} token
+                     * @return {?}
+                     */function (token) {
                         return next.handle(_this.addAuthenticationToken(request));
-                    }));
+                    })));
                 }
             };
         /**
@@ -311,7 +334,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var AuthModule = /** @class */ (function () {
         function AuthModule() {
@@ -345,12 +368,12 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.AuthService = AuthService;

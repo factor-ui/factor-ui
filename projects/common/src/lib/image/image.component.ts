@@ -25,7 +25,9 @@ export class ImageComponent implements OnInit {
           if (entry.isIntersecting) {
             let image = new Image();
             image.src = this.src;
-            this.loading = true;
+            setTimeout(() => {
+              this.loading = true;
+            }, 100);
             image.onerror = () => {
               this.error = true;
               this.loading = false;

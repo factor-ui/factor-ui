@@ -5,12 +5,16 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var FilePickerComponent = /** @class */ (function () {
     function FilePickerComponent(elementRef) {
         this.elementRef = elementRef;
-        this.propagateChange = function (_) { };
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        function (_) { });
         this.createInput();
     }
     Object.defineProperty(FilePickerComponent.prototype, "accept", {
@@ -67,11 +71,15 @@ var FilePickerComponent = /** @class */ (function () {
         this.fileInput = document.createElement('input');
         this.fileInput.style.display = 'none';
         this.fileInput.type = 'file';
-        this.fileInput.addEventListener('change', function (event) {
+        this.fileInput.addEventListener('change', (/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) {
             /** @type {?} */
             var reader = new FileReader();
             _this.loadValue(event.target.files);
-        });
+        }));
         componentElement.appendChild(this.fileInput);
     };
     /**
@@ -93,7 +101,10 @@ var FilePickerComponent = /** @class */ (function () {
                 /** @type {?} */
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = function () {
+                reader.onload = (/**
+                 * @return {?}
+                 */
+                function () {
                     data_1.push({
                         data: reader.result,
                         lastModifiedDate: file.lastModifiedDate,
@@ -104,7 +115,7 @@ var FilePickerComponent = /** @class */ (function () {
                     if (data_1.length == files.length) {
                         _this.value = data_1.length > 0 ? data_1 : null;
                     }
-                };
+                });
             };
             for (var i = 0; i < files.length; i++) {
                 _loop_1(i);
@@ -139,15 +150,6 @@ var FilePickerComponent = /** @class */ (function () {
         configurable: true
     });
     /**
-     * @param {?} value
-     * @return {?}
-     */
-    FilePickerComponent.prototype.writeValue = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) { };
-    /**
      * @param {?} fn
      * @return {?}
      */
@@ -159,12 +161,49 @@ var FilePickerComponent = /** @class */ (function () {
         this.propagateChange = fn;
     };
     /**
+     * @param {?} fn
      * @return {?}
      */
     FilePickerComponent.prototype.registerOnTouched = /**
+     * @param {?} fn
      * @return {?}
      */
-    function () { };
+    function (fn) {
+        //this.propagateChange = fn;
+    };
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    FilePickerComponent.prototype.setDisabledState = /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    function (isDisabled) {
+        this.disabled = isDisabled;
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    FilePickerComponent.prototype.updateValue = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        this.value = event.target.value;
+    };
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    FilePickerComponent.prototype.writeValue = /**
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        this.value = value;
+    };
     FilePickerComponent.decorators = [
         { type: Component, args: [{
                     selector: 'ft-file-picker',
@@ -172,11 +211,14 @@ var FilePickerComponent = /** @class */ (function () {
                     providers: [
                         {
                             provide: NG_VALUE_ACCESSOR,
-                            useExisting: forwardRef(function () { return FilePickerComponent; }),
+                            useExisting: forwardRef((/**
+                             * @return {?}
+                             */
+                            function () { return FilePickerComponent; })),
                             multi: true
                         }
                     ],
-                    styles: [""]
+                    styles: [":host{display:inline-block}"]
                 }] }
     ];
     /** @nocollapse */
@@ -188,14 +230,15 @@ var FilePickerComponent = /** @class */ (function () {
         disabled: [{ type: Input }],
         multiple: [{ type: Input }],
         dragover: [{ type: HostBinding, args: ['class.dragover',] }],
-        openDialog: [{ type: HostListener, args: ['click',] }]
+        openDialog: [{ type: HostListener, args: ['click',] }],
+        value: [{ type: Input }]
     };
     return FilePickerComponent;
 }());
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Componente para mostrar mensajes de error en los inputs
@@ -206,14 +249,46 @@ var InvalidFeedbackComponent = /** @class */ (function () {
          * Catálogo de mensajes según el tipo de error
          */
         this.defaultMessages = {
-            'required': function (params) { return 'Is required'; },
-            'min': function (params) { return 'Should be a valid'; },
-            'max': function (params) { return 'Should be a valid'; },
-            'minlength': function (params) { return '##FIELD## should be minimum ' + params.requiredLength + ' characters'; },
-            'maxlength': function (params) { return '##FIELD## should not be greater then ' + params.requiredLength + ' characters'; },
-            'pattern': function (params) { return 'Should be a valid'; },
-            'email': function (params) { return "Should be valid email."; },
-            'file': function (params) { return 'File must be valid'; }
+            'required': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            function (params) { return 'Is required'; }),
+            'min': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            function (params) { return 'Should be a valid'; }),
+            'max': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            function (params) { return 'Should be a valid'; }),
+            'minlength': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            function (params) { return '##FIELD## should be minimum ' + params.requiredLength + ' characters'; }),
+            'maxlength': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            function (params) { return '##FIELD## should not be greater then ' + params.requiredLength + ' characters'; }),
+            'pattern': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            function (params) { return 'Should be a valid'; }),
+            'email': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            function (params) { return "Should be valid email."; }),
+            'file': (/**
+             * @param {?} params
+             * @return {?}
+             */
+            function (params) { return 'File must be valid'; })
         };
         this.messages = {};
     }
@@ -235,7 +310,11 @@ var InvalidFeedbackComponent = /** @class */ (function () {
         if (objects !== null) {
             /** @type {?} */
             var errors = Object.keys(this.control.errors)
-                .map(function (field) { return _this.getMessage(field, _this.control.errors[field], _this.control); });
+                .map((/**
+             * @param {?} field
+             * @return {?}
+             */
+            function (field) { return _this.getMessage(field, _this.control.errors[field], _this.control); }));
             return errors[0];
         }
     };
@@ -262,7 +341,11 @@ var InvalidFeedbackComponent = /** @class */ (function () {
         /** @type {?} */
         var fname = this.getControlName(control);
         fname = fname.replace("_", " ").replace(" id", "").toLowerCase();
-        fname = fname.replace(/\b\w/g, function (l) { return l.toUpperCase(); });
+        fname = fname.replace(/\b\w/g, (/**
+         * @param {?} l
+         * @return {?}
+         */
+        function (l) { return l.toUpperCase(); }));
         /** @type {?} */
         var msg = this.messages[type] || this.defaultMessages[type](params) || 'Error';
         return control.dirty || control.touched ? msg.replace("##FIELD##", fname) : '';
@@ -284,7 +367,11 @@ var InvalidFeedbackComponent = /** @class */ (function () {
     function (control) {
         /** @type {?} */
         var formGroup = control.parent.controls;
-        return Object.keys(formGroup).find(function (name) { return control === formGroup[name]; }) || null;
+        return Object.keys(formGroup).find((/**
+         * @param {?} name
+         * @return {?}
+         */
+        function (name) { return control === formGroup[name]; })) || null;
     };
     InvalidFeedbackComponent.decorators = [
         { type: Component, args: [{
@@ -302,7 +389,7 @@ var InvalidFeedbackComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ListComponent = /** @class */ (function () {
     function ListComponent() {
@@ -329,10 +416,15 @@ var ListComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var RatingComponent = /** @class */ (function () {
     function RatingComponent() {
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        function (_) { });
         this.stars = [
             { value: 1 },
             { value: 2 },
@@ -349,54 +441,7 @@ var RatingComponent = /** @class */ (function () {
      */
     function () {
     };
-    /**
-     * @param {?} value
-     * @param {?=} isHover
-     * @return {?}
-     */
-    RatingComponent.prototype.setRating = /**
-     * @param {?} value
-     * @param {?=} isHover
-     * @return {?}
-     */
-    function (value, isHover) {
-        if (isHover) {
-            this.overRating = value;
-        }
-        else {
-            this.rating = value;
-        }
-    };
-    RatingComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'ft-rating',
-                    template: "<ft-icon name=\"star\" size=\"2\" (mouseover)=\"setRating(star.value, true)\" (click)=\"setRating(star.value)\" *ngFor=\"let star of stars\"></ft-icon>\n",
-                    host: { class: 'd-flex' },
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    RatingComponent.ctorParameters = function () { return []; };
-    return RatingComponent;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var SelectComponent = /** @class */ (function () {
-    function SelectComponent() {
-        this.propagateChange = function (_) { };
-    }
-    /**
-     * @return {?}
-     */
-    SelectComponent.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
-    };
-    Object.defineProperty(SelectComponent.prototype, "value", {
+    Object.defineProperty(RatingComponent.prototype, "value", {
         get: /**
          * @return {?}
          */
@@ -418,6 +463,155 @@ var SelectComponent = /** @class */ (function () {
      * @param {?} fn
      * @return {?}
      */
+    RatingComponent.prototype.registerOnChange = /**
+     * @param {?} fn
+     * @return {?}
+     */
+    function (fn) {
+        this.propagateChange = fn;
+    };
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    RatingComponent.prototype.registerOnTouched = /**
+     * @param {?} fn
+     * @return {?}
+     */
+    function (fn) {
+        this.propagateChange = fn;
+    };
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    RatingComponent.prototype.setDisabledState = /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    function (isDisabled) {
+        this.disabled = isDisabled;
+    };
+    /**
+     * @param {?} value
+     * @param {?=} isHover
+     * @return {?}
+     */
+    RatingComponent.prototype.setRate = /**
+     * @param {?} value
+     * @param {?=} isHover
+     * @return {?}
+     */
+    function (value, isHover) {
+        if (isHover) {
+            this.hover = value;
+        }
+        else {
+            this.value = value;
+        }
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    RatingComponent.prototype.updateValue = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        this.value = event.target.value;
+    };
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    RatingComponent.prototype.writeValue = /**
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        this.value = value;
+    };
+    RatingComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'ft-rating',
+                    template: "<ng-container *ngFor=\"let star of stars\">\n  <ng-container *ngTemplateOutlet=\"!readOnly? buttonTemplate : starTemplate; context:{star:star}\"></ng-container>\n</ng-container>\n<ng-template #buttonTemplate let-star=\"star\">\n  <button type=\"button\" *ngIf=\"!readOnly; else starTemplate\" [disabled]=\"disabled\" (mouseover)=\"setRate(star.value, true)\" (focus)=\"setRate(star.value, true)\" (blur)=\"setRate(0, true)\" (mouseout)=\"setRate(0, true)\" (click)=\"setRate(star.value)\">\n    <ng-container *ngTemplateOutlet=\"starTemplate; context:{star:star}\"></ng-container>\n  </button>\n</ng-template>\n<ng-template #starTemplate let-star=\"star\">\n  <svg [ngClass]=\"{hover: hover >= star.value, active: value >= star.value}\" viewBox=\"0 0 24 24\">\n    <path d=\"M17.93 21.315c-.534.408-5.22-3.186-5.881-3.181-.663 0-5.307 3.656-5.846 3.254-.537-.403 1.29-6.165 1.081-6.822-.209-.656-4.972-4.138-4.772-4.796.201-.658 6.015-.627 6.55-1.036.533-.41 2.233-6.215 2.895-6.219.663 0 2.43 5.779 2.968 6.182.539.403 6.352.297 6.56.953.21.656-4.513 4.197-4.714 4.856-.2.658 1.692 6.398 1.159 6.808z\" />\n  </svg>\n</ng-template>\n",
+                    providers: [
+                        {
+                            provide: NG_VALUE_ACCESSOR,
+                            useExisting: forwardRef((/**
+                             * @return {?}
+                             */
+                            function () { return RatingComponent; })),
+                            multi: true
+                        }
+                    ],
+                    styles: [":host{line-height:0;display:inline-flex}:host:hover button{color:#007bff}:host:hover button svg:not(.hover){color:#6c757d}:host[size=\"1\"]{font-size:1rem}:host[size=\"2\"]{font-size:1.5rem}:host[size=\"3\"]{font-size:2rem}:host[size=\"4\"]{font-size:3rem}:host[size=\"5\"]{font-size:4.5rem}:host[size=\"6\"]{font-size:8rem}:host[size=\"7\"]{font-size:16rem}:host[size=\"8\"]{font-size:32rem}svg{width:1em;height:1em;display:block}svg path{fill:none;stroke-width:1;stroke:currentColor}svg.active path,svg.hover path{fill:currentColor}button{border:0;background:0 0;padding:0}button:active,button:focus{outline:0}"]
+                }] }
+    ];
+    /** @nocollapse */
+    RatingComponent.ctorParameters = function () { return []; };
+    RatingComponent.propDecorators = {
+        readOnly: [{ type: Input }],
+        value: [{ type: Input }]
+    };
+    return RatingComponent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var SelectComponent = /** @class */ (function () {
+    function SelectComponent() {
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        function (_) { });
+    }
+    /**
+     * @return {?}
+     */
+    SelectComponent.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+    };
+    Object.defineProperty(SelectComponent.prototype, "value", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this._value;
+        },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            //this.input.nativeElement.value = value;
+            this._value = value;
+            this.propagateChange(this._value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    SelectComponent.prototype.setDisabledState = /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    function (isDisabled) {
+        this.disabled = isDisabled;
+    };
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
     SelectComponent.prototype.registerOnChange = /**
      * @param {?} fn
      * @return {?}
@@ -426,12 +620,16 @@ var SelectComponent = /** @class */ (function () {
         this.propagateChange = fn;
     };
     /**
+     * @param {?} fn
      * @return {?}
      */
     SelectComponent.prototype.registerOnTouched = /**
+     * @param {?} fn
      * @return {?}
      */
-    function () { };
+    function (fn) {
+        //this.propagateChange = fn;
+    };
     /**
      * @param {?} event
      * @return {?}
@@ -461,7 +659,10 @@ var SelectComponent = /** @class */ (function () {
                     providers: [
                         {
                             provide: NG_VALUE_ACCESSOR,
-                            useExisting: forwardRef(function () { return SelectComponent; }),
+                            useExisting: forwardRef((/**
+                             * @return {?}
+                             */
+                            function () { return SelectComponent; })),
                             multi: true
                         }
                     ],
@@ -471,23 +672,27 @@ var SelectComponent = /** @class */ (function () {
     /** @nocollapse */
     SelectComponent.ctorParameters = function () { return []; };
     SelectComponent.propDecorators = {
-        disabled: [{ type: Input }],
         options: [{ type: Input }],
         label: [{ type: Input }],
         required: [{ type: Input }],
         style: [{ type: Input }],
-        select: [{ type: ViewChild, args: ['select',] }]
+        select: [{ type: ViewChild, args: ['select',] }],
+        value: [{ type: Input }]
     };
     return SelectComponent;
 }());
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var TextInputComponent = /** @class */ (function () {
     function TextInputComponent() {
-        this.propagateChange = function (_) { };
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        function (_) { });
         this.type = 'text';
     }
     /**
@@ -496,8 +701,7 @@ var TextInputComponent = /** @class */ (function () {
     TextInputComponent.prototype.ngOnInit = /**
      * @return {?}
      */
-    function () {
-    };
+    function () { };
     Object.defineProperty(TextInputComponent.prototype, "value", {
         get: /**
          * @return {?}
@@ -518,6 +722,17 @@ var TextInputComponent = /** @class */ (function () {
         configurable: true
     });
     /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    TextInputComponent.prototype.setDisabledState = /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    function (isDisabled) {
+        this.disabled = isDisabled;
+    };
+    /**
      * @param {?} fn
      * @return {?}
      */
@@ -529,12 +744,16 @@ var TextInputComponent = /** @class */ (function () {
         this.propagateChange = fn;
     };
     /**
+     * @param {?} fn
      * @return {?}
      */
     TextInputComponent.prototype.registerOnTouched = /**
+     * @param {?} fn
      * @return {?}
      */
-    function () { };
+    function (fn) {
+        //this.propagateChange = fn;
+    };
     /**
      * @param {?} event
      * @return {?}
@@ -564,7 +783,10 @@ var TextInputComponent = /** @class */ (function () {
                     providers: [
                         {
                             provide: NG_VALUE_ACCESSOR,
-                            useExisting: forwardRef(function () { return TextInputComponent; }),
+                            useExisting: forwardRef((/**
+                             * @return {?}
+                             */
+                            function () { return TextInputComponent; })),
                             multi: true
                         }
                     ],
@@ -575,7 +797,6 @@ var TextInputComponent = /** @class */ (function () {
     TextInputComponent.ctorParameters = function () { return []; };
     TextInputComponent.propDecorators = {
         autofocus: [{ type: Input }],
-        disabled: [{ type: Input }],
         input: [{ type: ViewChild, args: ['input',] }],
         label: [{ type: Input }],
         max: [{ type: Input }],
@@ -591,11 +812,15 @@ var TextInputComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var TextAreaComponent = /** @class */ (function () {
     function TextAreaComponent() {
-        this.propagateChange = function (_) { };
+        this.propagateChange = (/**
+         * @param {?} _
+         * @return {?}
+         */
+        function (_) { });
     }
     /**
      * @return {?}
@@ -624,25 +849,15 @@ var TextAreaComponent = /** @class */ (function () {
         configurable: true
     });
     /**
-     * @param {?} maxHeight
+     * @param {?} isDisabled
      * @return {?}
      */
-    TextAreaComponent.prototype.fitToContent = /**
-     * @param {?} maxHeight
+    TextAreaComponent.prototype.setDisabledState = /**
+     * @param {?} isDisabled
      * @return {?}
      */
-    function (maxHeight) {
-        /** @type {?} */
-        var input = this.input.nativeElement;
-        /** @type {?} */
-        var adjustedHeight = input.clientHeight;
-        if (!maxHeight || maxHeight > adjustedHeight) {
-            adjustedHeight = Math.max(input.scrollHeight, adjustedHeight);
-            if (maxHeight) {
-                adjustedHeight = Math.min(maxHeight, adjustedHeight);
-            }
-            input.style.height = adjustedHeight + "px";
-        }
+    function (isDisabled) {
+        this.disabled = isDisabled;
     };
     /**
      * @param {?} fn
@@ -656,12 +871,16 @@ var TextAreaComponent = /** @class */ (function () {
         this.propagateChange = fn;
     };
     /**
+     * @param {?} fn
      * @return {?}
      */
     TextAreaComponent.prototype.registerOnTouched = /**
+     * @param {?} fn
      * @return {?}
      */
-    function () { };
+    function (fn) {
+        //this.propagateChange = fn;
+    };
     /**
      * @param {?} event
      * @return {?}
@@ -672,9 +891,7 @@ var TextAreaComponent = /** @class */ (function () {
      */
     function (event) {
         this.value = event.target.value;
-        if (this.autosize) {
-            this.fitToContent(this.maxHeight);
-        }
+        if (this.autosize) ;
     };
     /**
      * @param {?} value
@@ -694,7 +911,10 @@ var TextAreaComponent = /** @class */ (function () {
                     providers: [
                         {
                             provide: NG_VALUE_ACCESSOR,
-                            useExisting: forwardRef(function () { return TextAreaComponent; }),
+                            useExisting: forwardRef((/**
+                             * @return {?}
+                             */
+                            function () { return TextAreaComponent; })),
                             multi: true
                         }
                     ],
@@ -706,7 +926,6 @@ var TextAreaComponent = /** @class */ (function () {
     TextAreaComponent.propDecorators = {
         autofocus: [{ type: Input }],
         autosize: [{ type: Input }, { type: HostBinding, args: ['class.autosize',] }],
-        disabled: [{ type: Input }],
         input: [{ type: ViewChild, args: ['input',] }],
         label: [{ type: Input }],
         maxHeight: [{ type: Input }],
@@ -721,7 +940,7 @@ var TextAreaComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var InputsModule = /** @class */ (function () {
     function InputsModule() {
@@ -757,12 +976,12 @@ var InputsModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { InputsModule, FilePickerComponent, InvalidFeedbackComponent, ListComponent, RatingComponent, SelectComponent, TextAreaComponent, TextInputComponent };

@@ -16,7 +16,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class TextInputComponent implements OnInit, ControlValueAccessor {
   @Input()
   autofocus: boolean;
-  @Input()
   disabled: boolean;
   @ViewChild('input')
   input: ElementRef<any>;
@@ -39,8 +38,7 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
   get value() {
     return this._value;
   }
@@ -50,12 +48,17 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
     this._value = value;
     this.propagateChange(this._value);
   }
-  registerOnChange(fn) {
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+  registerOnChange(fn: any) {
     this.propagateChange = fn;
   }
-  registerOnTouched() { }
+  registerOnTouched(fn: any) {
+    //this.propagateChange = fn;
+  }
   updateValue(event: any) {
-    this.value =  event.target.value;
+    this.value = event.target.value;
   }
   writeValue(value: string) {
     this.value = value;

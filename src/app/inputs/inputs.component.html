@@ -12,10 +12,6 @@
       </div>
     </div>
     <div class="form-group">
-      <ft-text-input label="Company" formControlName="company"></ft-text-input>
-      <ft-invalid-feedback [control]="entityForm.controls.company"></ft-invalid-feedback>
-    </div>
-    <div class="form-group">
       <ft-select label="Gender" [options]="options" formControlName="gender" [required]="true"></ft-select>
       <ft-invalid-feedback [control]="entityForm.controls.gender"></ft-invalid-feedback>
     </div>
@@ -44,13 +40,27 @@
         </div>
       </div>
     </fieldset>
+
     <div class="form-group">
-      <ft-rating></ft-rating>
-      <ft-invalid-feedback [control]="entityForm.controls.message"></ft-invalid-feedback>
+      <ft-rating formControlName="rating" size="2"></ft-rating>
     </div>
+    <div class="form-group">
+      <ft-file-picker formControlName="file">
+        <div class="placeholder p-4 text-center d-flex flex-column justify-content-center align-items-center" style="width:200px; height:200px;" *ngIf="!entityForm.value.file; else image">
+          <ft-icon name="media-image" collection="factoricons-slim" size="4"></ft-icon>
+          <div class="text-center small">Click to upload a picture</div>
+        </div>
+      </ft-file-picker>
+
+      <ng-template #image>
+        <img [src]="entityForm.value.file[0].data" style="max-width:200px;" />
+      </ng-template>
+    </div>
+
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
+
     <pre>{{ entityForm.value | json }}</pre>
   </fieldset>
 </form>
