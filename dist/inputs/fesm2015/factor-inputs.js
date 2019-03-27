@@ -378,7 +378,7 @@ class RatingComponent {
      * @return {?}
      */
     registerOnTouched(fn) {
-        this.propagateChange = fn;
+        //this.propagateChange = fn;
     }
     /**
      * @param {?} isDisabled

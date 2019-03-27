@@ -7,6 +7,9 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./inputs.component.scss']
 })
 export class InputsComponent implements OnInit {
+  file: any[] = [
+    
+  ];
   options: any[] = [
     { label: 'Male', value: 'male' },
     { label: 'Female', value: 'female' }
@@ -26,7 +29,6 @@ export class InputsComponent implements OnInit {
     this.entityForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      company: ['', Validators.required],
       gender: ['', Validators.required],
       message: ['', Validators.required],
       streetAddress: [''],

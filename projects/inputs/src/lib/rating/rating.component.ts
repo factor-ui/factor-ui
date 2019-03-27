@@ -44,7 +44,7 @@ export class RatingComponent implements OnInit, ControlValueAccessor {
     this.propagateChange = fn;
   }
   registerOnTouched(fn) {
-    this.propagateChange = fn;
+    //this.propagateChange = fn;
   }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;

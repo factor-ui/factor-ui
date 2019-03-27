@@ -22,7 +22,7 @@ export class EditorComponent implements OnInit {
       group: 'layout',
       component: {
         type: 'box',
-        properties: {
+        attributes: {
           class: 'container'
         }
       }
@@ -33,19 +33,19 @@ export class EditorComponent implements OnInit {
       group: 'layout',
       component: {
         type: 'box',
-        properties: {
+        attributes: {
           class: 'row'
         },
         children: [
           {
             type: 'box',
-            properties: {
+            attributes: {
               class: 'col'
             }
           },
           {
             type: 'box',
-            properties: {
+            attributes: {
               class: 'col'
             }
           }
@@ -58,7 +58,7 @@ export class EditorComponent implements OnInit {
       group: 'components',
       component: {
         type: 'box',
-        properties: {
+        attributes: {
           class: 'alert alert-primary'
         }
       }
@@ -69,7 +69,7 @@ export class EditorComponent implements OnInit {
       group: 'components',
       component: {
         type: 'text',
-        properties: {
+        attributes: {
           class: 'badge badge-secondary'
         }
       }
@@ -80,7 +80,7 @@ export class EditorComponent implements OnInit {
       group: 'components',
       component: {
         type: 'box',
-        properties: {
+        attributes: {
           class: 'btn-group'
         },
         children: [
@@ -99,19 +99,19 @@ export class EditorComponent implements OnInit {
       group: 'components',
       component: {
         type: 'box',
-        properties: {
+        attributes: {
           class: 'card'
         },
         children: [
           {
             type: 'box',
-            properties: {
+            attributes: {
               class: 'card-header'
             }
           },
           {
             type: 'box',
-            properties: {
+            attributes: {
               class: 'card-body'
             }
           }
@@ -124,13 +124,13 @@ export class EditorComponent implements OnInit {
       group: 'forms',
       component: {
         type: 'box',
-        properties: {
+        attributes: {
           class: 'form-group'
         },
         children: [
           {
             type: 'text',
-            properties: {
+            attributes: {
               class: 'd-block'
             }
           },
@@ -146,21 +146,21 @@ export class EditorComponent implements OnInit {
       group: 'components',
       component: {
         type: 'box',
-        properties: {
+        attributes: {
           class: 'jumbotron'
         },
         children: [
           {
             type: 'heading',
             value: 'Hello, world!',
-            properties: {
+            attributes: {
               class: 'display-4'
             }
           },
           {
             type: 'paragraph',
             value: 'This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.',
-            properties: {
+            attributes: {
               class: 'lead'
             }
           }
@@ -173,25 +173,25 @@ export class EditorComponent implements OnInit {
       group: 'navigation',
       component: {
         type: 'box',
-        properties: {
+        attributes: {
           class: 'list-group'
         },
         children: [
           {
             type: 'box',
-            properties: {
+            attributes: {
               class: 'list-group-item'
             }
           },
           {
             type: 'box',
-            properties: {
+            attributes: {
               class: 'list-group-item'
             }
           },
           {
             type: 'box',
-            properties: {
+            attributes: {
               class: 'list-group-item'
             }
           }
@@ -204,14 +204,14 @@ export class EditorComponent implements OnInit {
       group: 'navigation',
       component: {
         type: 'nav',
-        properties: {
+        attributes: {
           class: 'nav-tabs'
         },
         children: [
           {
             type: 'navItem',
             value: 'Tab 1',
-            properties: {
+            attributes: {
               class: 'active'
             }
           },
@@ -328,11 +328,11 @@ export class EditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.component = this.mapComponent({ type: 'box', properties: { class: 'container' } });
+    this.component = this.mapComponent({ type: 'box', attributes: { class: 'container' } });
   }
   add(option, parent) {
     let newComponent: any = JSON.parse(JSON.stringify(option.component));
-    newComponent.properties = newComponent.properties || {};
+    newComponent.attributes = newComponent.attributes || {};
     if (newComponent.type == 'button') {
       const label = prompt('Type a label');
       if (label) {
@@ -340,10 +340,10 @@ export class EditorComponent implements OnInit {
       }
     }
     if (newComponent.type == 'icon') {
-      newComponent.properties.name = prompt('Type an icon name');
+      newComponent.attributes.name = prompt('Type an icon name');
     }
     if (newComponent.type == 'image') {
-      newComponent.properties.src = prompt('Type a url');
+      newComponent.attributes.src = prompt('Type a url');
     }
     if (['link', 'text', 'heading', 'paragraph'].indexOf(newComponent.type)>=0) {
       newComponent.value = prompt('Type text');
@@ -362,7 +362,7 @@ export class EditorComponent implements OnInit {
   mapComponent(component): any {
     if (component) {
       component.template = this[component.type];
-      component.properties = component.properties || {};
+      component.attributes = component.attributes || {};
       component.children = component.children || [];
       component.children.forEach((child) => {
         this.mapComponent(child);

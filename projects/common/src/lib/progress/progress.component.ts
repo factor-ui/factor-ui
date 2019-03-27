@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'ft-progress',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./progress.component.scss']
 })
 export class ProgressComponent implements OnInit {
+  @Input()
+  mode: 'determinate' | 'indeterminate' = 'indeterminate';
+  @Input()
+  value: number = 0;
 
   constructor() { }
 

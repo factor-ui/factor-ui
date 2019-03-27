@@ -459,7 +459,7 @@
          * @return {?}
          */
             function (fn) {
-                this.propagateChange = fn;
+                //this.propagateChange = fn;
             };
         /**
          * @param {?} isDisabled
