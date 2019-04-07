@@ -4,13 +4,15 @@ import { IconComponent } from './icon/icon.component';
 import { ImageComponent } from './image/image.component';
 import { RippleDirective } from './ripple.directive';
 import { ProgressComponent } from './progress/progress.component';
+import { ObserveIntersectingDirective } from './observe-intersecting.directive';
 
 @NgModule({
   declarations: [
     IconComponent,
     ImageComponent,
     RippleDirective,
-    ProgressComponent
+    ProgressComponent,
+    ObserveIntersectingDirective
   ],
   imports: [
     AngularCommonModule
@@ -19,7 +21,8 @@ import { ProgressComponent } from './progress/progress.component';
     IconComponent,
     ImageComponent,
     RippleDirective,
-    ProgressComponent
+    ProgressComponent,
+    ObserveIntersectingDirective
   ]
 })
 export class CommonModule {

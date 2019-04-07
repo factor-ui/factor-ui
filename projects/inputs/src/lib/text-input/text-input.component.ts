@@ -16,6 +16,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class TextInputComponent implements OnInit, ControlValueAccessor {
   @Input()
   autofocus: boolean;
+  @Input()
+  autoselect: boolean;
+  @Input()
+  clearButton: boolean;
   disabled: boolean;
   @ViewChild('input')
   input: ElementRef<any>;

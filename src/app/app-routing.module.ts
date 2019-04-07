@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { CommonComponent } from './common/common.component';
 import { InputsComponent } from './inputs/inputs.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'common',
     component: CommonComponent,
+  },
+  {
+    path: 'infinite-scroll',
+    component: InfiniteScrollComponent,
   },
   {
     path: 'inputs',

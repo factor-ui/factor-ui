@@ -1,0 +1,19 @@
+<ng-container *ngIf="children?.length>0">
+  <ng-container *ngFor="let option of children">
+    <button type="button" class="btn btn-light p-2" [ngClass]="option.class" *ngIf="!option.children" (click)="option['click']($event)" title="{{ option.label }}">
+      <div class="d-flex">
+        <ft-icon *ngIf="option.iconName" size="2" [name]="option.iconName"></ft-icon>
+        <span *ngIf="option.label" class="label d-none d-sm-inline-block ml-1">{{ option.label }}</span>
+      </div>
+    </button>
+    <div class="dropdown" *ngIf="option.children">
+      <button type="button" class="btn btn-light p-2" [ngClass]="option.class" data-toggle="dropdown" title="{{ option.label }}">
+        <ft-icon *ngIf="option.iconName" size="2" [name]="option.iconName"></ft-icon>
+        <span *ngIf="option.label" class="label d-none d-sm-inline-block ml-1">{{ option.label }}</span>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <button type="button" class="dropdown-item" *ngFor="let suboption of option.children" (click)="suboption['click']($event)">{{ suboption.label }}</button>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

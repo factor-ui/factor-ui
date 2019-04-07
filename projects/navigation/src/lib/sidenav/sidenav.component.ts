@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Option } from '../models/option';
+
 @Component({
   selector: 'ft-sidenav',
   templateUrl: './sidenav.component.html',
@@ -8,17 +10,16 @@ import { Router } from '@angular/router';
 })
 export class SidenavComponent implements OnInit {
   @Input()
-  docked: boolean;
-  @Input()
   iconCollection: string;
   @Input()
-  options: any[];
+  labelField: string = 'label';
   @Input()
-  labelField: string;
+  mode: 'docked' | 'collapsed';
+  @Input()
+  children: Option[];
   @Input()
   position: 'left' | 'right' = 'left';
   @Input()
-  collapseMode: 'menu' | null;
   shown: boolean;
 
   constructor(
@@ -33,9 +34,8 @@ export class SidenavComponent implements OnInit {
   @HostBinding('class')
   get hostClasses(): string {
     return [
-      this.docked ? 'docked' : '',
+      this.mode,
       this.position,
-      this.collapseMode,
       this.shown ? 'show' : ''
     ].join(' ');
   }

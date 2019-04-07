@@ -1,4 +1,4 @@
-import { Component, Input, Inject, HostBinding, ElementRef, Injectable, NgModule, Directive, HostListener, defineInjectable } from '@angular/core';
+import { Component, Input, Inject, HostBinding, ElementRef, Injectable, Directive, EventEmitter, Output, NgModule, HostListener, defineInjectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -325,6 +325,59 @@ RippleDirective.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class ObserveIntersectingDirective {
+    /**
+     * @param {?} element
+     */
+    constructor(element) {
+        this.element = element;
+        this.event = new EventEmitter();
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        if ("IntersectionObserver" in window) {
+            /** @type {?} */
+            const elementObserver = new IntersectionObserver((/**
+             * @param {?} entries
+             * @param {?} observer
+             * @return {?}
+             */
+            (entries, observer) => {
+                entries.forEach((/**
+                 * @param {?} entry
+                 * @return {?}
+                 */
+                (entry) => {
+                    this.event.emit(entry.isIntersecting);
+                }));
+            }), this.options);
+            elementObserver.observe(this.element.nativeElement);
+        }
+        else {
+            console.error('ftObserveIntersecting not available in this browser.');
+        }
+    }
+}
+ObserveIntersectingDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[ftObserveIntersecting]'
+            },] }
+];
+/** @nocollapse */
+ObserveIntersectingDirective.ctorParameters = () => [
+    { type: ElementRef }
+];
+ObserveIntersectingDirective.propDecorators = {
+    options: [{ type: Input, args: ['ftObserveIntersectingOptions',] }],
+    event: [{ type: Output, args: ['ftObserveIntersecting',] }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class CommonModule$1 {
     /**
      * @param {?} configuration
@@ -345,7 +398,8 @@ CommonModule$1.decorators = [
                     IconComponent,
                     ImageComponent,
                     RippleDirective,
-                    ProgressComponent
+                    ProgressComponent,
+                    ObserveIntersectingDirective
                 ],
                 imports: [
                     CommonModule
@@ -354,7 +408,8 @@ CommonModule$1.decorators = [
                     IconComponent,
                     ImageComponent,
                     RippleDirective,
-                    ProgressComponent
+                    ProgressComponent,
+                    ObserveIntersectingDirective
                 ]
             },] }
 ];
@@ -369,6 +424,6 @@ CommonModule$1.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { IconComponent, ImageComponent, ProgressComponent, MessageService, RippleDirective, CommonModule$1 as CommonModule };
+export { IconComponent, ImageComponent, ProgressComponent, MessageService, RippleDirective, ObserveIntersectingDirective, CommonModule$1 as CommonModule };
 
 //# sourceMappingURL=factor-common.js.map

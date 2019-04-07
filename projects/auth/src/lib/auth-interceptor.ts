@@ -22,7 +22,7 @@ export class AuthInterceptor {
         if (error instanceof HttpErrorResponse) {
           switch ((<HttpErrorResponse>error).status) {
             case 401:
-              return this.handle401Error(request, next);
+              return this.authService.getToken().refresh_token? this.handle401Error(request, next) : throwError(error);
               break;
             default:
               return throwError(error);

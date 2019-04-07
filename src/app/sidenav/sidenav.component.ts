@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+
+import { SidenavComponent as FactorSidenavComponent } from 'factor-navigation';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,104 +8,57 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
-  options: any[] = [
-    {
-      label: 'About',
-      url: '/about'
-    },
-    {
-      label: 'Contributing',
-      url: '/contributing'
-    },
-    {
-      label: 'Guidelines',
-      type: 'collapsible'
-    },
-    {
-      label: 'Components',
-      type: 'collapsible',
-      children: [
-        {
-          label: 'Common',
-          type: 'header'
-        },
-        {
-          label: 'Icon',
-          url: '/common/icon'
-        },
-        {
-          label: 'Image',
-          url: '/common/image'
-        },
-        {
-          label: 'Inputs',
-          type: 'header'
-        },
-        {
-          label: 'Text input',
-          url: '/inputs/text-input'
-        },
-        {
-          label: 'Text area',
-          url: '/inputs/text-area'
-        },
-        {
-          label: 'Select',
-          url: '/inputs/select'
-        },
-        {
-          label: 'File picker',
-          url: '/inputs/file-picker'
-        },
-        {
-          label: 'Rating',
-          url: '/inputs/rating'
-        },
-        {
-          label: 'List',
-          url: '/inputs/list'
-        },
-        {
-          label: 'Sidenav',
-          url: '/components/navigation/sidenav'
-        }
-      ]
-    },
-    {
-      label: 'Templates',
-      type: 'collapsible',
-      children: [
-        {
-          label: 'Workflow task',
-          url: '/templates/workflow-task'
-        },
-        {
-          label: 'Search',
-          url: '/templates/search'
-        },
-        {
-          label: 'Login',
-          url: '/templates/login'
-        },
-        {
-          label: 'Wizard',
-          url: '/inputs/text-area'
-        }
-      ]
-    },
-    {
-      label: 'Icons',
-      type: '/icons'
-    },
-    {
-      label: 'Style guide',
-      type: '/style-guide'
-    }
-  ];
-  
+  options: any[];
+  pageOptions: any[];
+
   constructor() { }
 
   ngOnInit() {
+    this.options = [
+      {label:'Dashboard', iconName:'dashboard'},
+      {label:'Calendar', iconName:'calendar'},
+      {label:'Contacts', iconName:'contacts', url: '/sidenav'},
+      {label:'Notifications', iconName:'bell'},
+      {label:'Settings', iconName:'gear'},
+      {label:'Help', iconName:'help'}
+    ];
+    this.pageOptions = [
+      {
+        id: 'search',
+        label: 'Search',
+        iconName: 'search',
+        click: ()=>{
+
+        }
+      },
+      {
+        id: 'add',
+        label: 'Add',
+        iconName: 'plus',
+        click: ()=>{
+
+        }
+      },
+      {
+        id: 'information',
+        label: 'Info',
+        iconName: 'information',
+        click: ()=>{
+
+        }
+      },
+      {
+        id: 'menu',
+        iconName: 'ellipsis-vertical',
+        children: [
+          {
+            label: 'Refresh',
+            click: ()=>{
+            }
+          }
+        ]
+      }
+    ];
   }
 
 }

@@ -1,31 +1,44 @@
-<ft-sidenav #sidenav [options]="options" [docked]="true" labelField="label" iconCollection="factoricons-slim">
-  <div class="brand bg-primary text-white p-3" ftStart>
-    <div class="logo">Brand</div>
-    <div class="iso">B</div>
-  </div>
-  <div class="mt-auto text-center p-2" ftEnd>
-    <button type="button" class="btn-profile btn btn-light btn-block p-2">
-      <div class="d-flex align-items-center">
-        <div class="icon">
-          <ft-icon name="user-profile" collection="factoricons-slim"></ft-icon>
-        </div>
-        <div class="label ml-2 text-left">
-          John Doe
-          <div class="text-muted small">john.doe@email.com</div>
-        </div>
+<ft-sidenav #sidenav [children]="options" mode="collapsed" [shown]="sidenavShown">
+  <div class="m-2" ftStart>
+    <button class="btn btn-light btn-block d-none d-md-block" ftRipple type="button" (click)="sidenav.toggle()">
+      <div class="d-flex align-items-center justify-content-center">
+        <ft-icon name="menu" size="2" title="Menu"></ft-icon>
       </div>
     </button>
   </div>
 </ft-sidenav>
-<div class="content">
-  <div class="container">
-    <div class="d-flex align-items-center my-4">
-      <div class="mr-1">
-        <button class="btn btn-secundary p-2" (click)="sidenav.toggle()"><ft-icon name="menu" class="d-block"></ft-icon></button>
-      </div>
-      <div>
-        <h1 class="m-0">App</h1>
+<div class="content sidenav-collapsed" [ngClass]="{'sidenav-show': sidenav.shown}">
+  <div class="toolbar">
+    <div class="container p-2 pt-sm-5 pb-sm-3 px-sm-auto">
+      <div class="d-flex align-items-center">
+        <button class="btn btn-light p-2 mr-2 d-md-none" (click)="sidenav.toggle()"><ft-icon name="menu" size="2" class="d-block"></ft-icon></button>
+        <h1 class="m-0">Contacts</h1>
+        <ft-toolbar [children]="pageOptions" class="ml-auto"></ft-toolbar>
       </div>
     </div>
+  </div>
+  <div class="container">
+    <table class="table table-borderless table-hover mx-n3">
+      <thead>
+        <tr><th>Name</th><th>Identity</th><th>Phone</th><th>Email</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr style="vertical-align:middle;" *ngFor="let contact of [1,2,3,4,5,6,7,8,9,10]">
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="mr-2">
+                <div class="avatar bg-light rounded-circle" style="width:3rem; height:3rem;"></div>
+              </div>
+              <div>John Doe</div>
+            </div>
+          </td>
+          <td>098654327001</td>
+          <td><a href="tel:+593984477939">+593 9 8447 7939</a></td><td><a href="mailto:john.doe@gmail.com">john.doe@gmail.com</a></td>
+          <td class="text-right p-0">
+            <button class="btn btn-light p-2 mr-n3"><ft-icon name="ellipsis-vertical" size="2"></ft-icon></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

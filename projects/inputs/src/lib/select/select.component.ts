@@ -14,6 +14,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class SelectComponent implements OnInit, ControlValueAccessor {
+  @Input()
+  clearButton: boolean;
   disabled: boolean;
   @Input()
   options: any[];

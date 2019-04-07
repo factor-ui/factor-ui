@@ -1,14 +1,14 @@
 <div class="backdrop" (click)="hide()"></div>
 <div class="content d-flex flex-column">
   <ng-content select="[ftStart]"></ng-content>
-  <div class="list-group" *ngIf="options">
-    <ng-container *ngTemplateOutlet="switch; context:{options:options}"></ng-container>
+  <div class="list-group" *ngIf="children">
+    <ng-container *ngTemplateOutlet="switch; context:{children:children}"></ng-container>
   </div>
   <ng-content select="[ftEnd]"></ng-content>
 </div>
-<div class="resizer" (click)="show()" *ngIf="!docked"></div>
-<ng-template #switch let-options="options">
-  <ng-container *ngFor="let option of options" [ngSwitch]="option.type">
+<div class="resizer" (click)="show()" *ngIf="mode && mode == 'collapsed'"></div>
+<ng-template #switch let-children="children">
+  <ng-container *ngFor="let option of children" [ngSwitch]="option.type">
     <ng-container *ngSwitchCase="'collapsible'">
       <ng-container *ngTemplateOutlet="collapsible; context:{option:option}"></ng-container>
     </ng-container>
@@ -33,22 +33,22 @@
 <ng-template #collapsible let-option="option">
   <button type="button" ftRipple class="collapsible-header list-group-item list-group-item-action" [ngClass]="{show:option.show}" (click)="toggleCollapsible(option)">
     <div class="d-flex align-items-center justify-content-between">
-      <div>{{ option[labelField? labelField : 'label'] }}</div>
+      <div>{{ option[labelField] }}</div>
       <ft-icon class="toggle" name="angle-right" size="1"></ft-icon>
     </div>
   </button>
   <div class="collapsible" [ngClass]="{show:option.show}" *ngIf="option.children">
-    <ng-container *ngTemplateOutlet="switch; context:{options:option.children}"></ng-container>
+    <ng-container *ngTemplateOutlet="switch; context:{children:option.children}"></ng-container>
   </div>
 </ng-template>
 <ng-template #header let-option="option">
   <div class="header" [ngClass]="option.class">
-    {{ option[labelField? labelField : 'label'] }}
+    {{ option[labelField] }}
   </div>
 </ng-template>
 <ng-template #text let-option="option">
   <div class="d-flex align-items-center">
-    <ft-icon class="icon" *ngIf="option.icon" [name]="option.icon" [collection]="iconCollection" [title]="option[labelField? labelField : 'label']"></ft-icon>
-    <div class="label">{{ option[labelField? labelField : 'label'] }}</div>
+    <ft-icon class="icon" *ngIf="option.iconName" [name]="option.iconName" [collection]="iconCollection" [title]="option[labelField]"></ft-icon>
+    <div class="label">{{ option[labelField] }}</div>
   </div>
 </ng-template>

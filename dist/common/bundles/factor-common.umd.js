@@ -337,6 +337,61 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var ObserveIntersectingDirective = /** @class */ (function () {
+        function ObserveIntersectingDirective(element) {
+            this.element = element;
+            this.event = new i0.EventEmitter();
+        }
+        /**
+         * @return {?}
+         */
+        ObserveIntersectingDirective.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                if ("IntersectionObserver" in window) {
+                    /** @type {?} */
+                    var elementObserver = new IntersectionObserver(( /**
+                     * @param {?} entries
+                     * @param {?} observer
+                     * @return {?}
+                     */function (entries, observer) {
+                        entries.forEach(( /**
+                         * @param {?} entry
+                         * @return {?}
+                         */function (entry) {
+                            _this.event.emit(entry.isIntersecting);
+                        }));
+                    }), this.options);
+                    elementObserver.observe(this.element.nativeElement);
+                }
+                else {
+                    console.error('ftObserveIntersecting not available in this browser.');
+                }
+            };
+        ObserveIntersectingDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: '[ftObserveIntersecting]'
+                    },] }
+        ];
+        /** @nocollapse */
+        ObserveIntersectingDirective.ctorParameters = function () {
+            return [
+                { type: i0.ElementRef }
+            ];
+        };
+        ObserveIntersectingDirective.propDecorators = {
+            options: [{ type: i0.Input, args: ['ftObserveIntersectingOptions',] }],
+            event: [{ type: i0.Output, args: ['ftObserveIntersecting',] }]
+        };
+        return ObserveIntersectingDirective;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var CommonModule = /** @class */ (function () {
         function CommonModule() {
         }
@@ -362,7 +417,8 @@
                             IconComponent,
                             ImageComponent,
                             RippleDirective,
-                            ProgressComponent
+                            ProgressComponent,
+                            ObserveIntersectingDirective
                         ],
                         imports: [
                             common.CommonModule
@@ -371,7 +427,8 @@
                             IconComponent,
                             ImageComponent,
                             RippleDirective,
-                            ProgressComponent
+                            ProgressComponent,
+                            ObserveIntersectingDirective
                         ]
                     },] }
         ];
@@ -393,6 +450,7 @@
     exports.ProgressComponent = ProgressComponent;
     exports.MessageService = MessageService;
     exports.RippleDirective = RippleDirective;
+    exports.ObserveIntersectingDirective = ObserveIntersectingDirective;
     exports.CommonModule = CommonModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });

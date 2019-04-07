@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 
 import { CommonModule as FactorCommonModule } from 'factor-common';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
-    SidenavComponent
+    SidenavComponent,
+    ToolbarComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     FactorCommonModule
   ],
   exports: [
-    SidenavComponent
+    SidenavComponent,
+    ToolbarComponent
   ]
 })
 export class NavigationModule { }

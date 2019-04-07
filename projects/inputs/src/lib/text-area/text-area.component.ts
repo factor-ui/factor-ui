@@ -17,8 +17,12 @@ export class TextAreaComponent implements OnInit, ControlValueAccessor {
   @Input()
   autofocus: boolean;
   @Input()
+  autoselect: boolean;
+  @Input()
   @HostBinding('class.autosize')
   autosize: boolean;
+  @Input()
+  clearButton: boolean;
   disabled: boolean;
   @ViewChild('input')
   input: ElementRef<any>;

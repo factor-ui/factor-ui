@@ -14,6 +14,7 @@ import { InputsComponent } from './inputs/inputs.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { CommonComponent } from './common/common.component';
 import { HomeComponent } from './home/home.component';
+import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HomeComponent } from './home/home.component';
     InputsComponent,
     SidenavComponent,
     CommonComponent,
-    HomeComponent
+    HomeComponent,
+    InfiniteScrollComponent
   ],
   imports: [
     AppRoutingModule,

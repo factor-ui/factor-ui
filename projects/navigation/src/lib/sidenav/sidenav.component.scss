@@ -1,7 +1,7 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/_mixins";
-$sidenav-collapsed-width: 3.75rem;
+$sidenav-collapsed-width: 4rem;
 $sidenav-show-width: 16rem;
 .content {
   background-color: map-get($theme-colors, light);
@@ -16,25 +16,9 @@ $sidenav-show-width: 16rem;
   z-index: $zindex-fixed;
   font-size: 0.875rem;
   @include media-breakpoint-up(md) {
-    :host.menu:not(.show) & {
-      background-color: map-get($theme-colors, dark);
+    :host.collapsed:not(.show) & {
       transform: translateX(0);
       width: $sidenav-collapsed-width;
-      .list-group-item {
-        @include media-breakpoint-up(md) {
-          color: #FFF;
-          &:hover {
-            background: darken(map-get($theme-colors, light), 80%);
-          }
-          &.active {
-            background-color: map-get($theme-colors, light);
-            color: $body-color;
-          }
-        }
-        .icon {
-          margin-left: 0.125rem;
-        }
-      }
     }
   }
   :host.right & {
@@ -49,7 +33,7 @@ $sidenav-show-width: 16rem;
   :host.docked & {
     @include media-breakpoint-up(md) {
       box-shadow: 1px 0 4px rgba(0,0,0,.1);
-      &.menu {
+      &.collapsed {
         transform: translateX(0);
       }
     }
@@ -62,13 +46,14 @@ $sidenav-show-width: 16rem;
       border-radius: 0;
       border: 0;
       outline: none;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, color 0.3s;
       &:not(.active) {
         color: $body-color;
         background-color: transparent;
       }
-      &:hover {
-        background: darken(map-get($theme-colors, light), 7.5%);
+      &:hover:not(.active) {
+        background: darken($light, 7.5%);
+        color: $body-color;
       }
       .icon+.label {
         display: block;
@@ -147,7 +132,7 @@ $sidenav-show-width: 16rem;
     display: block;
   }
   &:hover {
-    background-color: map-get($theme-colors, primary);
+    background-color: darken($light, 10);
   }
   :host.show & {
     display: none;
