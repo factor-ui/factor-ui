@@ -15,7 +15,10 @@
             this.storageService = storageService;
             this.configuration = configuration;
             this.loggedInSource = new rxjs.BehaviorSubject(false);
-            this.loggedIn$ = this.loggedInSource.asObservable();
+            this.loggedIn = this.loggedInSource.asObservable();
+            if (this.getToken() && this.getToken().access_token) {
+                this.loggedInSource.next(true);
+            }
         }
         /**
          * @param {?} form
@@ -234,7 +237,7 @@
                     if (error instanceof i1.HttpErrorResponse) {
                         switch ((( /** @type {?} */(error))).status) {
                             case 401:
-                                return _this.handle401Error(request, next);
+                                return _this.authService.getToken().refresh_token ? _this.handle401Error(request, next) : rxjs.throwError(error);
                                 break;
                             default:
                                 return rxjs.throwError(error);

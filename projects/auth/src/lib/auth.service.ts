@@ -11,7 +11,7 @@ import { StorageService } from 'factor-utils';
 })
 export class AuthService {
   private loggedInSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public loggedIn$: Observable<boolean> = this.loggedInSource.asObservable();
+  public loggedIn: Observable<boolean> = this.loggedInSource.asObservable();
   private router: Router;
 
   constructor(
@@ -19,7 +19,11 @@ export class AuthService {
     private injector: Injector,
     private storageService: StorageService,
     @Inject('FactorAuthConfiguration') private configuration
-  ) { }
+  ) {
+    if (this.getToken() && this.getToken().access_token) {
+      this.loggedInSource.next(true);
+    }
+  }
 
   login(form: any, redirect?: string): Observable<any> {
     this.router = this.router || this.injector.get(Router);

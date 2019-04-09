@@ -48,7 +48,7 @@
 </ng-template>
 <ng-template #text let-option="option">
   <div class="d-flex align-items-center">
-    <ft-icon class="icon" *ngIf="option.iconName" [name]="option.iconName" [collection]="iconCollection" [title]="option[labelField]"></ft-icon>
+    <ft-icon class="icon" *ngIf="option[iconNameField]" [name]="option[iconNameField]" [collection]="iconCollection" [title]="option[labelField]"></ft-icon>
     <div class="label">{{ option[labelField] }}</div>
   </div>
 </ng-template>

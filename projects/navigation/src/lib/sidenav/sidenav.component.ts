@@ -12,6 +12,8 @@ export class SidenavComponent implements OnInit {
   @Input()
   iconCollection: string;
   @Input()
+  iconNameField: string = 'iconName';
+  @Input()
   labelField: string = 'label';
   @Input()
   mode: 'docked' | 'collapsed';

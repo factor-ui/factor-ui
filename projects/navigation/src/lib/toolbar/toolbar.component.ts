@@ -10,6 +10,12 @@ import { Option } from '../models/option';
 })
 export class ToolbarComponent implements OnInit {
   @Input()
+  iconCollection: string;
+  @Input()
+  iconNameField: string = 'iconName';
+  @Input()
+  labelField: string = 'label';
+  @Input()
   children: Option[];
 
   constructor() { }

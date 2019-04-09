@@ -1,7 +1,9 @@
+import { Option } from './option';
+
 export interface OptionGroup {
-  children?: Action[];
-  iconName?: string;
+  children?: Option[];
+  iconNameField?: string;
   iconCollection?: string;
   labelField?: string;
-  type?: string;  
+  type?: string;
 }

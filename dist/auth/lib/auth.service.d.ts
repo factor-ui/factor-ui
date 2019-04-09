@@ -8,7 +8,7 @@ export declare class AuthService {
     private storageService;
     private configuration;
     private loggedInSource;
-    loggedIn$: Observable<boolean>;
+    loggedIn: Observable<boolean>;
     private router;
     constructor(http: HttpClient, injector: Injector, storageService: StorageService, configuration: any);
     login(form: any, redirect?: string): Observable<any>;

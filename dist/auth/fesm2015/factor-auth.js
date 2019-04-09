@@ -22,7 +22,10 @@ class AuthService {
         this.storageService = storageService;
         this.configuration = configuration;
         this.loggedInSource = new BehaviorSubject(false);
-        this.loggedIn$ = this.loggedInSource.asObservable();
+        this.loggedIn = this.loggedInSource.asObservable();
+        if (this.getToken() && this.getToken().access_token) {
+            this.loggedInSource.next(true);
+        }
     }
     /**
      * @param {?} form
@@ -212,7 +215,7 @@ class AuthInterceptor {
             if (error instanceof HttpErrorResponse) {
                 switch (((/** @type {?} */ (error))).status) {
                     case 401:
-                        return this.handle401Error(request, next);
+                        return this.authService.getToken().refresh_token ? this.handle401Error(request, next) : throwError(error);
                         break;
                     default:
                         return throwError(error);
