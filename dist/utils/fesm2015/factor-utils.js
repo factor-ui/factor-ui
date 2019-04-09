@@ -182,6 +182,58 @@ GoogleAnalyticsService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class GoogleTagManagerService {
+    constructor() { }
+    /**
+     * @param {?} trackingId
+     * @return {?}
+     */
+    appendTrackingCode(trackingId) {
+        try {
+            if (trackingId) {
+                this.trackingId = trackingId;
+                /** @type {?} */
+                const s1 = document.createElement('script');
+                s1.innerHTML = `
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','${trackingId}');
+        `;
+                document.head.appendChild(s1);
+                /** @type {?} */
+                const s2 = document.createElement('noscript');
+                /** @type {?} */
+                const s3 = document.createElement('iframe');
+                s3.width = '0';
+                s3.height = '0';
+                s3.style.display = 'none';
+                s3.style.visibility = 'hidden';
+                s3.src = `https://www.googletagmanager.com/ns.html?id=${trackingId}`;
+                s2.appendChild(s3);
+                ((/** @type {?} */ (document.body))).prepend(s2);
+            }
+        }
+        catch (ex) {
+            console.error('Error appending google tag manager');
+            console.error(ex);
+        }
+    }
+}
+GoogleTagManagerService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+GoogleTagManagerService.ctorParameters = () => [];
+/** @nocollapse */ GoogleTagManagerService.ngInjectableDef = defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(); }, token: GoogleTagManagerService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class UtilsModule {
     /**
      * @param {?} configuration
@@ -214,6 +266,6 @@ UtilsModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { StorageService, GoogleAnalyticsService, UtilsModule };
+export { StorageService, GoogleAnalyticsService, GoogleTagManagerService, UtilsModule };
 
 //# sourceMappingURL=factor-utils.js.map

@@ -226,6 +226,58 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var GoogleTagManagerService = /** @class */ (function () {
+        function GoogleTagManagerService() {
+        }
+        /**
+         * @param {?} trackingId
+         * @return {?}
+         */
+        GoogleTagManagerService.prototype.appendTrackingCode = /**
+         * @param {?} trackingId
+         * @return {?}
+         */
+            function (trackingId) {
+                try {
+                    if (trackingId) {
+                        this.trackingId = trackingId;
+                        /** @type {?} */
+                        var s1 = document.createElement('script');
+                        s1.innerHTML = "\n          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n          })(window,document,'script','dataLayer','" + trackingId + "');\n        ";
+                        document.head.appendChild(s1);
+                        /** @type {?} */
+                        var s2 = document.createElement('noscript');
+                        /** @type {?} */
+                        var s3 = document.createElement('iframe');
+                        s3.width = '0';
+                        s3.height = '0';
+                        s3.style.display = 'none';
+                        s3.style.visibility = 'hidden';
+                        s3.src = "https://www.googletagmanager.com/ns.html?id=" + trackingId;
+                        s2.appendChild(s3);
+                        (( /** @type {?} */(document.body))).prepend(s2);
+                    }
+                }
+                catch (ex) {
+                    console.error('Error appending google tag manager');
+                    console.error(ex);
+                }
+            };
+        GoogleTagManagerService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        GoogleTagManagerService.ctorParameters = function () { return []; };
+        /** @nocollapse */ GoogleTagManagerService.ngInjectableDef = i0.defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(); }, token: GoogleTagManagerService, providedIn: "root" });
+        return GoogleTagManagerService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var UtilsModule = /** @class */ (function () {
         function UtilsModule() {
         }
@@ -267,6 +319,7 @@
 
     exports.StorageService = StorageService;
     exports.GoogleAnalyticsService = GoogleAnalyticsService;
+    exports.GoogleTagManagerService = GoogleTagManagerService;
     exports.UtilsModule = UtilsModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
