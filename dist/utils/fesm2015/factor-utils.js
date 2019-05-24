@@ -1,23 +1,43 @@
+import { AES, enc } from 'crypto-js';
 import { NavigationEnd, Router } from '@angular/router';
-import { Injectable, NgModule, defineInjectable, inject } from '@angular/core';
+import { isPlatformBrowser, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID, Injector, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+// Only works on client storage
 class StorageService {
-    constructor() { }
+    /**
+     * @param {?} platformId
+     * @param {?} configuration
+     */
+    constructor(platformId, configuration) {
+        this.platformId = platformId;
+        this.configuration = configuration;
+    }
     /**
      * @param {?} key
      * @param {?=} storage
      * @return {?}
      */
     delete(key, storage) {
-        if (storage) {
-            delete storage[key];
-        }
-        else {
-            delete sessionStorage[key];
+        if (isPlatformBrowser(this.platformId)) {
+            if (!storage || typeof storage == 'string') {
+                switch (storage) {
+                    case 'localStorage':
+                        delete localStorage[key];
+                        break;
+                    default:
+                        delete sessionStorage[key];
+                        break;
+                }
+            }
+            else if (typeof storage == 'object') {
+                delete storage[key];
+            }
         }
     }
     /**
@@ -28,17 +48,70 @@ class StorageService {
     get(key, storage) {
         /** @type {?} */
         let parsedValue;
-        /** @type {?} */
-        let value = storage ? storage[key] : sessionStorage[key];
-        if (value) {
+        if (isPlatformBrowser(this.platformId)) {
             try {
-                parsedValue = JSON.parse(value);
+                parsedValue = JSON.parse(this.getValue(key, storage));
             }
             catch (err) {
-                parsedValue = value;
+                parsedValue = this.getValue(key, storage);
             }
         }
         return parsedValue;
+    }
+    /**
+     * @param {?} key
+     * @param {?=} storage
+     * @return {?}
+     */
+    getValue(key, storage) {
+        /** @type {?} */
+        let value;
+        if (!storage || typeof storage == 'string') {
+            switch (storage) {
+                case 'localStorage':
+                    value = localStorage[key];
+                    break;
+                default:
+                    value = sessionStorage[key];
+                    break;
+            }
+        }
+        else if (typeof storage == 'object') {
+            value = storage[key];
+        }
+        return this.decrypt(value);
+    }
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    decrypt(value) {
+        if (value !== null &&
+            value !== undefined &&
+            value !== '' &&
+            this.configuration &&
+            this.configuration.storage &&
+            this.configuration.storage.encryptionSecret) {
+            /** @type {?} */
+            const decryptedValue = AES.decrypt(value, this.configuration.storage.encryptionSecret);
+            value = decryptedValue.toString(enc.Utf8);
+        }
+        return value;
+    }
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    encrypt(value) {
+        if (value !== null &&
+            value !== undefined &&
+            value !== '' &&
+            this.configuration &&
+            this.configuration.storage &&
+            this.configuration.storage.encryptionSecret) {
+            value = AES.encrypt(value, this.configuration.storage.encryptionSecret);
+        }
+        return value.toString();
     }
     /**
      * @param {?} key
@@ -47,11 +120,22 @@ class StorageService {
      * @return {?}
      */
     set(key, value, storage) {
-        if (storage) {
-            storage[key] = JSON.stringify(value);
-        }
-        else {
-            sessionStorage[key] = JSON.stringify(value);
+        if (isPlatformBrowser(this.platformId)) {
+            /** @type {?} */
+            const valueEncrypted = this.encrypt(JSON.stringify(value));
+            if (!storage || typeof storage == 'string') {
+                switch (storage) {
+                    case 'localStorage':
+                        localStorage[key] = valueEncrypted;
+                        break;
+                    default:
+                        sessionStorage[key] = valueEncrypted;
+                        break;
+                }
+            }
+            else {
+                storage[key] = valueEncrypted;
+            }
         }
     }
 }
@@ -61,8 +145,11 @@ StorageService.decorators = [
             },] }
 ];
 /** @nocollapse */
-StorageService.ctorParameters = () => [];
-/** @nocollapse */ StorageService.ngInjectableDef = defineInjectable({ factory: function StorageService_Factory() { return new StorageService(); }, token: StorageService, providedIn: "root" });
+StorageService.ctorParameters = () => [
+    { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+    { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
+];
+/** @nocollapse */ StorageService.ngInjectableDef = defineInjectable({ factory: function StorageService_Factory() { return new StorageService(inject(PLATFORM_ID), inject("FactorUtilsConfiguration")); }, token: StorageService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -74,30 +161,6 @@ class GoogleAnalyticsService {
      */
     constructor(router) {
         this.router = router;
-        router.events.subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
-            try {
-                if (typeof gtag === 'function') {
-                    if (event instanceof NavigationEnd && this.trackingId) {
-                        setTimeout((/**
-                         * @return {?}
-                         */
-                        () => {
-                            gtag('config', this.trackingId, {
-                                'page_title': document.title,
-                                'page_path': event.urlAfterRedirects
-                            });
-                        }), 100);
-                    }
-                }
-            }
-            catch (e) {
-                console.error(e);
-            }
-        }));
     }
     /**
      * @param {?} trackingId
@@ -121,12 +184,43 @@ class GoogleAnalyticsService {
          gtag('config', '${trackingId}');
        `;
                 document.head.appendChild(s2);
+                this.initSubscribers();
             }
         }
         catch (ex) {
             console.error('Error appending google analytics');
             console.error(ex);
         }
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    initSubscribers() {
+        this.router.events.subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        event => {
+            try {
+                if (typeof gtag === 'function') {
+                    if (event instanceof NavigationEnd && this.trackingId) {
+                        setTimeout((/**
+                         * @return {?}
+                         */
+                        () => {
+                            gtag('config', this.trackingId, {
+                                'page_title': document.title,
+                                'page_path': event.urlAfterRedirects
+                            });
+                        }), 100);
+                    }
+                }
+            }
+            catch (e) {
+                console.error(e);
+            }
+        }));
     }
     /**
      * @param {?} action
@@ -177,6 +271,103 @@ GoogleAnalyticsService.ctorParameters = () => [
     { type: Router }
 ];
 /** @nocollapse */ GoogleAnalyticsService.ngInjectableDef = defineInjectable({ factory: function GoogleAnalyticsService_Factory() { return new GoogleAnalyticsService(inject(Router)); }, token: GoogleAnalyticsService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class GoogleAnalyticsErrorHandler {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        this.injector = injector;
+    }
+    /**
+     * @param {?} error
+     * @return {?}
+     */
+    handleError(error) {
+        /** @type {?} */
+        const googleAnalyticsService = this.injector.get(GoogleAnalyticsService);
+        if (error instanceof HttpErrorResponse) {
+            if (navigator.onLine) {
+                /** @type {?} */
+                const message = error.error ? JSON.stringify(error.error) : error.message;
+                googleAnalyticsService.trackEvent(error.url, 'Http Error', `${error.status} - ${message}`);
+            }
+        }
+        else {
+            /** @type {?} */
+            const location = this.injector.get(LocationStrategy);
+            /** @type {?} */
+            const message = error.message ? error.message : error.toString();
+            /** @type {?} */
+            const stack = error.stack ? error.stack : error.toString();
+            /** @type {?} */
+            const url = location instanceof PathLocationStrategy ? location.path() : '';
+            googleAnalyticsService.trackEvent(message, 'Javascript Error', stack);
+        }
+        throw error;
+    }
+}
+GoogleAnalyticsErrorHandler.decorators = [
+    { type: Injectable }
+];
+/** @nocollapse */
+GoogleAnalyticsErrorHandler.ctorParameters = () => [
+    { type: Injector }
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class GoogleTagManagerErrorHandler {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        this.injector = injector;
+    }
+    /**
+     * @param {?} error
+     * @return {?}
+     */
+    handleError(error) {
+        if (error instanceof HttpErrorResponse) {
+            if (navigator.onLine) {
+                /** @type {?} */
+                const message = error.error ? JSON.stringify(error.error) : error.message;
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'http_error',
+                    error_message: message,
+                    error_status: error.status,
+                    error_url: error.url
+                });
+            }
+        }
+        else {
+            /** @type {?} */
+            const location = this.injector.get(LocationStrategy);
+            /** @type {?} */
+            const message = error.message ? error.message : error.toString();
+            /** @type {?} */
+            const stack = error.stack ? error.stack : error.toString();
+            /** @type {?} */
+            const url = location instanceof PathLocationStrategy ? location.path() : '';
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'javascript_error',
+                error_message: message,
+                error_stack: stack,
+                error_url: url
+            });
+        }
+        throw error;
+    }
+}
 
 /**
  * @fileoverview added by tsickle
@@ -266,6 +457,6 @@ UtilsModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { StorageService, GoogleAnalyticsService, GoogleTagManagerService, UtilsModule };
+export { StorageService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, UtilsModule };
 
 //# sourceMappingURL=factor-utils.js.map
