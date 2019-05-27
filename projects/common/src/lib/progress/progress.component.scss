@@ -43,7 +43,6 @@ svg {
     fill: none;
     stroke-opacity: 0.9;
     stroke-width: 6;
-    stroke: $primary;
     &.determinate {
       stroke-dasharray: calc(2 * 3.1415926536 * 40);
     }

@@ -7,6 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProgressComponent implements OnInit {
   @Input()
+  color: string = 'var(--primary)';
+  @Input()
   mode: 'determinate' | 'indeterminate' = 'indeterminate';
   @Input()
   value: number = 0;

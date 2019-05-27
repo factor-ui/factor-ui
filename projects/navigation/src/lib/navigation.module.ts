@@ -3,22 +3,27 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { CommonModule as FactorCommonModule } from 'factor-common';
-import { SidenavComponent } from './sidenav/sidenav.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
-    SidenavComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    NavbarComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    FactorCommonModule
+    FactorCommonModule,
+    MatMenuModule,
+    MatButtonModule
   ],
   exports: [
-    SidenavComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    NavbarComponent
   ]
 })
 export class NavigationModule { }

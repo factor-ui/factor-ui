@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { Option } from '../models/option';
 
 @Component({
-  selector: 'ft-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss']
+  selector: 'ft-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class SidenavComponent implements OnInit {
+export class NavbarComponent implements OnInit {
   @Input()
   iconCollection: string;
   @Input()
@@ -16,7 +16,7 @@ export class SidenavComponent implements OnInit {
   @Input()
   labelField: string = 'label';
   @Input()
-  mode: 'docked' | 'collapsed';
+  mode: 'docked' | 'collapsed' = 'collapsed';
   @Input()
   children: Option[];
   @Input()

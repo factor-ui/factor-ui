@@ -5,22 +5,26 @@ import { Option } from '../models/option';
 @Component({
   selector: 'ft-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss'],
-  host: { class: 'd-flex' }
+  styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  @Input()
-  iconCollection: string;
-  @Input()
-  iconNameField: string = 'iconName';
-  @Input()
-  labelField: string = 'label';
-  @Input()
-  children: Option[];
+  @Input() actionOptions: Option[];
+  @Input() title: string;
+  @Input() titleOptions: Option[];
+  @Input() titleSearchbox: boolean;
+  overlapped: boolean;
+  rootMargin: any = { rootMargin: '32px 0px 0px 0px' };
 
-  constructor() { }
+  constructor() {
+    const breakpointSm = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--breakpoint-sm'));
+    if (window.innerWidth < breakpointSm) {
+      this.rootMargin = { rootMargin: '0px 0px 0px 0px' };
+    }
+  }
 
-  ngOnInit() {
+  ngOnInit() { }
+  setOverlapped(overlapped) {
+    this.overlapped = !overlapped;
   }
 
 }

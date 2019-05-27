@@ -33,7 +33,8 @@ export class AuthService {
       grant_type: 'password',
       response_type: 'token',
       username: form.username,
-      password: form.password
+      password: form.password,
+      state: Date.now()
     };
     return this.http.post(this.configuration.tokenUrl, params).pipe(tap((token: any) => {
       this.storageService.set('token', token, localStorage);

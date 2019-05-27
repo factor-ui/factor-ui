@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { fromEvent } from 'rxjs';
 
 declare var gtag: Function;
 
@@ -11,24 +12,7 @@ export class GoogleAnalyticsService {
 
   constructor(
     public router: Router
-  ) {
-    router.events.subscribe(event => {
-      try {
-        if (typeof gtag === 'function') {
-          if (event instanceof NavigationEnd && this.trackingId) {
-            setTimeout(() => {
-              gtag('config', this.trackingId, {
-                'page_title': document.title,
-                'page_path': event.urlAfterRedirects
-              });
-            }, 100);
-          }
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    });
-  }
+  ) { }
   public appendTrackingCode(trackingId: string) {
     try {
       if (trackingId) {
@@ -45,11 +29,30 @@ export class GoogleAnalyticsService {
          gtag('config', '${trackingId}');
        `;
         document.head.appendChild(s2);
+        this.initSubscribers();
       }
     } catch (ex) {
       console.error('Error appending google analytics');
       console.error(ex);
     }
+  }
+  private initSubscribers() {
+    this.router.events.subscribe(event => {
+      try {
+        if (typeof gtag === 'function') {
+          if (event instanceof NavigationEnd && this.trackingId) {
+            setTimeout(() => {
+              gtag('config', this.trackingId, {
+                'page_title': document.title,
+                'page_path': event.urlAfterRedirects
+              });
+            }, 100);
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    });
   }
   public trackEvent(action: string, category: string = null, label: string = null, value: number = null) {
     if (typeof gtag === 'function') {

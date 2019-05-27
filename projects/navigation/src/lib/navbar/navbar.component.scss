@@ -1,24 +1,27 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/_mixins";
-$sidenav-collapsed-width: 4rem;
-$sidenav-show-width: 16rem;
+$collapsed-width: 4rem;
+$show-width: 16rem;
 .content {
-  background-color: map-get($theme-colors, light);
+  background-color: #FFF;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
   position: fixed;
-  top: 0;
   left: 0;
   bottom: 0;
-  width: $sidenav-show-width;
-  max-width: calc(100vw - #{$sidenav-collapsed-width});
-  transform: translateX(-100vw);
   transition: transform 0.3s ease-in-out, width 0.3s, color 0.3s, background-color 0.3s;
-  z-index: $zindex-fixed;
+  z-index: 980;
   font-size: 0.875rem;
+  @include media-breakpoint-down(md) {
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, .14), 0 -1px 3px 0 rgba(0, 0, 0, .12);
+  }
   @include media-breakpoint-up(md) {
+    top: 0;
+    width: $show-width;
+    max-width: calc(100vw - #{$collapsed-width});
     :host.collapsed:not(.show) & {
       transform: translateX(0);
-      width: $sidenav-collapsed-width;
+      width: $collapsed-width;
     }
   }
   :host.right & {
@@ -31,10 +34,30 @@ $sidenav-show-width: 16rem;
     box-shadow: rgba(15, 15, 15, 0.05) 0 0 0 1px, rgba(15, 15, 15, 0.1) 0 3px 6px, rgba(15, 15, 15, 0.2) 0 9px 24px;
   }
   :host.docked & {
+    transform: translateX(-100vw);
     @include media-breakpoint-up(md) {
       box-shadow: 1px 0 4px rgba(0,0,0,.1);
       &.collapsed {
         transform: translateX(0);
+      }
+    }
+  }
+  :host.collapsed & {
+    @include media-breakpoint-down(sm) {
+      max-width: 100vw;
+      width: 100vw;
+      > .list-group {
+        display: flex;
+        flex-direction: row;
+        > .list-group-item {
+          padding: 1rem;
+          > div {
+            justify-content: center;
+            .label {
+              display: none;
+            }
+          }
+        }
       }
     }
   }
@@ -52,7 +75,7 @@ $sidenav-show-width: 16rem;
         background-color: transparent;
       }
       &:hover:not(.active) {
-        background: darken($light, 7.5%);
+        background: var(--light);
         color: $body-color;
       }
       .icon+.label {
@@ -123,7 +146,7 @@ $sidenav-show-width: 16rem;
   width: 0.25rem;
   top: 0;
   bottom: 0;
-  left: $sidenav-collapsed-width;
+  left: $collapsed-width;
   transition: background-color 0.3s, left 0.3s;
   z-index: $zindex-fixed;
   cursor: e-resize;
@@ -132,7 +155,7 @@ $sidenav-show-width: 16rem;
     display: block;
   }
   &:hover {
-    background-color: darken($light, 10);
+    background-color: rgba(var(--dark), 0.5);
   }
   :host.show & {
     display: none;
@@ -140,6 +163,6 @@ $sidenav-show-width: 16rem;
   :host.right & {
     cursor: w-resize;
     left: inherit;
-    right: $sidenav-collapsed-width;
+    right: $collapsed-width;
   }
 }
