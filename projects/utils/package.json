@@ -1,6 +1,6 @@
 {
   "name": "factor-utils",
-  "version": "0.0.6",
+  "version": "0.1.3",
   "license": "CC-BY-NC-ND-4.0",
   "author": "Factor",
   "repository": {
@@ -18,6 +18,9 @@
   ],
   "homepage": "https://github.com/juanca202/factor-ui#readme",
   "private": false,
+  "dependencies": {
+    "crypto-js": "^3.1.9-1"
+  },
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",
