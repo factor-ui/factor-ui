@@ -9,9 +9,9 @@ import { Option } from '../models/option';
 })
 export class ToolbarComponent implements OnInit {
   @Input() actionOptions: Option[];
+  @Input() currentTitleOption: Option;
   @Input() title: string;
   @Input() titleOptions: Option[];
-  @Input() titleSearchbox: boolean;
   overlapped: boolean;
   rootMargin: any = { rootMargin: '32px 0px 0px 0px' };
 
@@ -22,7 +22,11 @@ export class ToolbarComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.titleOptions && !this.currentTitleOption) {
+      this.currentTitleOption = this.titleOptions[0];
+    }
+  }
   setOverlapped(overlapped) {
     this.overlapped = !overlapped;
   }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { HTMLElementExtended } from './html-element-extended';
 
+declare var window: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,5 +39,9 @@ export class GoogleTagManagerService {
       console.error('Error appending google tag manager');
       console.error(ex);
     }
+  }
+  public addVariable(variable) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(variable);
   }
 }

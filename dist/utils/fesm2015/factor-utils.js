@@ -1,7 +1,8 @@
 import { AES, enc } from 'crypto-js';
-import { NavigationEnd, Router } from '@angular/router';
 import { isPlatformBrowser, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { NavigationEnd, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 import { Inject, Injectable, PLATFORM_ID, Injector, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
@@ -342,32 +343,22 @@ class GoogleTagManagerErrorHandler {
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     event: 'http_error',
-                    error_message: message,
-                    error_status: error.status,
-                    error_url: error.url
+                    'gtm.errorMessage': message,
+                    'gtm.errorUrl': error.url,
+                    'error_status': error.status
                 });
             }
-        }
-        else {
-            /** @type {?} */
-            const location = this.injector.get(LocationStrategy);
-            /** @type {?} */
-            const message = error.message ? error.message : error.toString();
-            /** @type {?} */
-            const stack = error.stack ? error.stack : error.toString();
-            /** @type {?} */
-            const url = location instanceof PathLocationStrategy ? location.path() : '';
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                event: 'javascript_error',
-                error_message: message,
-                error_stack: stack,
-                error_url: url
-            });
         }
         throw error;
     }
 }
+GoogleTagManagerErrorHandler.decorators = [
+    { type: Injectable }
+];
+/** @nocollapse */
+GoogleTagManagerErrorHandler.ctorParameters = () => [
+    { type: Injector }
+];
 
 /**
  * @fileoverview added by tsickle
@@ -411,6 +402,14 @@ class GoogleTagManagerService {
             console.error(ex);
         }
     }
+    /**
+     * @param {?} variable
+     * @return {?}
+     */
+    addVariable(variable) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(variable);
+    }
 }
 GoogleTagManagerService.decorators = [
     { type: Injectable, args: [{
@@ -420,6 +419,74 @@ GoogleTagManagerService.decorators = [
 /** @nocollapse */
 GoogleTagManagerService.ctorParameters = () => [];
 /** @nocollapse */ GoogleTagManagerService.ngInjectableDef = defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(); }, token: GoogleTagManagerService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class FilesList {
+    /**
+     * @param {?} options
+     */
+    constructor(options) {
+        this.valueChangesSubject = new BehaviorSubject(null);
+        this.valueChanges = this.valueChangesSubject.asObservable();
+        this.fileInput = document.createElement('input');
+        this.fileInput.style.display = 'none';
+        this.fileInput.type = 'file';
+        this.fileInput.accept = options && options.accept ? options.accept : '';
+        this.fileInput.multiple = options && options.multiple;
+        this.fileInput.addEventListener('change', (/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
+            /** @type {?} */
+            const reader = new FileReader();
+            this.loadValue(event.target.files);
+        }));
+        document.body.appendChild(this.fileInput);
+    }
+    /**
+     * @private
+     * @param {?} files
+     * @return {?}
+     */
+    loadValue(files) {
+        if (files && files.length > 0) {
+            /** @type {?} */
+            let data = [];
+            for (let i = 0; i < files.length; i++) {
+                /** @type {?} */
+                const file = files.item(i);
+                /** @type {?} */
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (/**
+                 * @return {?}
+                 */
+                () => {
+                    data.push({
+                        data: reader.result,
+                        lastModifiedDate: file.lastModifiedDate,
+                        name: file.name,
+                        size: file.size /*,
+                        type: file.type*/
+                    });
+                    if (data.length == files.length) {
+                        this.valueChangesSubject.next(data.length > 0 ? data : null);
+                    }
+                });
+            }
+        }
+    }
+    /**
+     * @return {?}
+     */
+    open() {
+        this.fileInput.click();
+    }
+}
 
 /**
  * @fileoverview added by tsickle
@@ -457,6 +524,6 @@ UtilsModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { StorageService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, UtilsModule };
+export { StorageService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, FilesList, UtilsModule };
 
 //# sourceMappingURL=factor-utils.js.map

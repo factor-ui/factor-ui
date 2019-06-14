@@ -2,10 +2,9 @@ import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { GoogleTagManagerService } from './google-tag-manager.service';
-
 declare var window: any;
 
+@Injectable()
 export class GoogleTagManagerErrorHandler implements ErrorHandler {
 
   constructor(
@@ -19,12 +18,13 @@ export class GoogleTagManagerErrorHandler implements ErrorHandler {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: 'http_error',
-          error_message: message,
-          error_status: error.status,
-          error_url: error.url
+          'gtm.errorMessage': message,
+          'gtm.errorUrl': error.url,
+          'error_status': error.status
         });
       }
-    } else {
+    } /* else {
+      // DEPRECATED: Google Tag Manager automatically collect javascript errors this not neccesary now
       const location = this.injector.get(LocationStrategy);
       const message = error.message ? error.message : error.toString();
       const stack = error.stack ? error.stack : error.toString();
@@ -32,11 +32,12 @@ export class GoogleTagManagerErrorHandler implements ErrorHandler {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'javascript_error',
-        error_message: message,
-        error_stack: stack,
-        error_url: url
+        'gtm.errorMessage': message,
+        'gtm.errorUrl': url,
+        'error_stack': stack,
+
       });
-    }
+    }*/
     throw error;
   }
 }

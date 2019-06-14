@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('crypto-js'), require('@angular/router'), require('@angular/common'), require('@angular/common/http'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('factor-utils', ['exports', 'crypto-js', '@angular/router', '@angular/common', '@angular/common/http', '@angular/core'], factory) :
-    (factory((global['factor-utils'] = {}),global.CryptoJS,global.ng.router,global.ng.common,global.ng.common.http,global.ng.core));
-}(this, (function (exports,CryptoJS,i1,common,http,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('crypto-js'), require('@angular/common'), require('@angular/router'), require('@angular/common/http'), require('rxjs'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('factor-utils', ['exports', 'crypto-js', '@angular/common', '@angular/router', '@angular/common/http', 'rxjs', '@angular/core'], factory) :
+    (factory((global['factor-utils'] = {}),global.CryptoJS,global.ng.common,global.ng.router,global.ng.common.http,global.rxjs,global.ng.core));
+}(this, (function (exports,CryptoJS,common,i1,http,rxjs,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -402,31 +402,23 @@
                         window.dataLayer = window.dataLayer || [];
                         window.dataLayer.push({
                             event: 'http_error',
-                            error_message: message,
-                            error_status: error.status,
-                            error_url: error.url
+                            'gtm.errorMessage': message,
+                            'gtm.errorUrl': error.url,
+                            'error_status': error.status
                         });
                     }
                 }
-                else {
-                    /** @type {?} */
-                    var location_1 = this.injector.get(common.LocationStrategy);
-                    /** @type {?} */
-                    var message = error.message ? error.message : error.toString();
-                    /** @type {?} */
-                    var stack = error.stack ? error.stack : error.toString();
-                    /** @type {?} */
-                    var url = location_1 instanceof common.PathLocationStrategy ? location_1.path() : '';
-                    window.dataLayer = window.dataLayer || [];
-                    window.dataLayer.push({
-                        event: 'javascript_error',
-                        error_message: message,
-                        error_stack: stack,
-                        error_url: url
-                    });
-                }
                 throw error;
             };
+        GoogleTagManagerErrorHandler.decorators = [
+            { type: i0.Injectable }
+        ];
+        /** @nocollapse */
+        GoogleTagManagerErrorHandler.ctorParameters = function () {
+            return [
+                { type: i0.Injector }
+            ];
+        };
         return GoogleTagManagerErrorHandler;
     }());
 
@@ -471,6 +463,18 @@
                     console.error(ex);
                 }
             };
+        /**
+         * @param {?} variable
+         * @return {?}
+         */
+        GoogleTagManagerService.prototype.addVariable = /**
+         * @param {?} variable
+         * @return {?}
+         */
+            function (variable) {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push(variable);
+            };
         GoogleTagManagerService.decorators = [
             { type: i0.Injectable, args: [{
                         providedIn: 'root'
@@ -480,6 +484,83 @@
         GoogleTagManagerService.ctorParameters = function () { return []; };
         /** @nocollapse */ GoogleTagManagerService.ngInjectableDef = i0.defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(); }, token: GoogleTagManagerService, providedIn: "root" });
         return GoogleTagManagerService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var FilesList = /** @class */ (function () {
+        function FilesList(options) {
+            var _this = this;
+            this.valueChangesSubject = new rxjs.BehaviorSubject(null);
+            this.valueChanges = this.valueChangesSubject.asObservable();
+            this.fileInput = document.createElement('input');
+            this.fileInput.style.display = 'none';
+            this.fileInput.type = 'file';
+            this.fileInput.accept = options && options.accept ? options.accept : '';
+            this.fileInput.multiple = options && options.multiple;
+            this.fileInput.addEventListener('change', ( /**
+             * @param {?} event
+             * @return {?}
+             */function (event) {
+                /** @type {?} */
+                var reader = new FileReader();
+                _this.loadValue(event.target.files);
+            }));
+            document.body.appendChild(this.fileInput);
+        }
+        /**
+         * @private
+         * @param {?} files
+         * @return {?}
+         */
+        FilesList.prototype.loadValue = /**
+         * @private
+         * @param {?} files
+         * @return {?}
+         */
+            function (files) {
+                var _this = this;
+                if (files && files.length > 0) {
+                    /** @type {?} */
+                    var data_1 = [];
+                    var _loop_1 = function (i) {
+                        /** @type {?} */
+                        var file = files.item(i);
+                        /** @type {?} */
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = ( /**
+                         * @return {?}
+                         */function () {
+                            data_1.push({
+                                data: reader.result,
+                                lastModifiedDate: file.lastModifiedDate,
+                                name: file.name,
+                                size: file.size /*,
+                                type: file.type*/
+                            });
+                            if (data_1.length == files.length) {
+                                _this.valueChangesSubject.next(data_1.length > 0 ? data_1 : null);
+                            }
+                        });
+                    };
+                    for (var i = 0; i < files.length; i++) {
+                        _loop_1(i);
+                    }
+                }
+            };
+        /**
+         * @return {?}
+         */
+        FilesList.prototype.open = /**
+         * @return {?}
+         */
+            function () {
+                this.fileInput.click();
+            };
+        return FilesList;
     }());
 
     /**
@@ -530,6 +611,7 @@
     exports.GoogleAnalyticsService = GoogleAnalyticsService;
     exports.GoogleTagManagerErrorHandler = GoogleTagManagerErrorHandler;
     exports.GoogleTagManagerService = GoogleTagManagerService;
+    exports.FilesList = FilesList;
     exports.UtilsModule = UtilsModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
