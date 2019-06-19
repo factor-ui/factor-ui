@@ -1,7 +1,7 @@
 <div class="backdrop" (click)="hide()"></div>
-<div class="content d-flex flex-column">
+<div class="content d-flex flex-md-column">
   <ng-content select="[ftStart]"></ng-content>
-  <div class="list-group" *ngIf="children">
+  <div class="list-group flex-grow-1" *ngIf="children">
     <ng-container *ngTemplateOutlet="switch; context:{children:children}"></ng-container>
   </div>
   <ng-content select="[ftEnd]"></ng-content>
@@ -22,16 +22,16 @@
 </ng-template>
 <ng-template #action let-option="option">
   <ng-container [ngSwitch]="getComponentType(option)">
-    <button *ngSwitchCase="'button'" type="button" ftRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="setOption(option)">
+    <button *ngSwitchCase="'button'" type="button" matRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="setOption(option)">
       <ng-container *ngTemplateOutlet="text; context:{option:option}"></ng-container>
     </button>
-    <a *ngSwitchCase="'link'" [routerLink]="option.url" routerLinkActive="active" ftRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="setOption(option)">
+    <a *ngSwitchCase="'link'" [routerLink]="option.url" routerLinkActive="active" matRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="setOption(option)">
       <ng-container *ngTemplateOutlet="text; context:{option:option}"></ng-container>
     </a>
   </ng-container>
 </ng-template>
 <ng-template #collapsible let-option="option">
-  <button type="button" ftRipple class="collapsible-header list-group-item list-group-item-action" [ngClass]="{show:option.show}" (click)="toggleCollapsible(option)">
+  <button type="button" matRipple class="collapsible-header list-group-item list-group-item-action" [ngClass]="{show:option.show}" (click)="toggleCollapsible(option)">
     <div class="d-flex align-items-center justify-content-between">
       <div>{{ option[labelField] }}</div>
       <ft-icon class="toggle" name="angle-right" size="1"></ft-icon>

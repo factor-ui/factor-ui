@@ -71,7 +71,6 @@ $show-width: 16rem;
       outline: none;
       transition: background-color 0.3s, color 0.3s;
       &:not(.active) {
-        color: $body-color;
         background-color: transparent;
       }
       &:hover:not(.active) {
@@ -125,7 +124,7 @@ $show-width: 16rem;
   }
 }
 .backdrop {
-  z-index: $zindex-fixed;
+  z-index: 980;
   :host.show & {
     position: fixed;
     top: 0;

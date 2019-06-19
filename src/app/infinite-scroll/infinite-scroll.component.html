@@ -3,3 +3,27 @@
   <div style="height:800px;"></div>
   <div (ftObserveIntersecting)="observeIntersecting($event)">test: {{ observeStatus | json }}</div>
 </div>
+
+<ng-container>
+  <ft-navbar #navbar [children]="menu" mode="collapsed" labelField="name" iconNameField="icon">
+    <div class="brand d-none d-md-flex" ftStart>
+      <img src="assets/iso-factor.svg" />
+    </div>
+    <div class="list-group list-group-flush mt-auto d-none d-md-block" ftEnd>
+      <a routerLink="/profile" class="btn-profile list-group-item list-group-item-action p-3" title="Profile">
+        <div class="d-flex align-items-center">
+          <div class="picture" *ngIf="!configuration?.user_parameters.picture; else picture">
+            <ft-icon name="user-profile" size="2"></ft-icon>
+          </div>
+          <ng-template #picture>
+            <div class="picture"><img [src]="configuration?.user_parameters.picture" class="rounded-circle" /></div>
+          </ng-template>
+          <div class="label ml-2">
+            {{ configuration?.user.username }}
+            <div class="text-muted small">{{ configuration?.user.email }}</div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </ft-navbar>
+</ng-container>
