@@ -1,167 +1,146 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/_mixins";
-$collapsed-width: 4rem;
-$show-width: 16rem;
-.content {
-  background-color: #FFF;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+:host {
+  --min-width: 4rem;
+  --min-height: 3.5rem;
+  --background-color: #FFF;
+  --text-color: #333;
+  --hover-background-color: rgba(0, 0, 0, .10);
+  --hover-text-color: #333;
+  --active-background-color: rgba(0, 0, 0, .10);
+  --active-text-color: #FFF;
+  --z-index: 980;
+  background-color: var(--background-color);
   position: fixed;
-  left: 0;
-  bottom: 0;
   transition: transform 0.3s ease-in-out, width 0.3s, color 0.3s, background-color 0.3s;
-  z-index: 980;
+  z-index: var(--z-index);
   font-size: 0.875rem;
-  @include media-breakpoint-down(md) {
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, .14), 0 -1px 3px 0 rgba(0, 0, 0, .12);
+  display: flex;
+}
+:host.left,
+:host.right {
+  top: 0;
+  bottom: 0;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+  min-width: var(--min-width);
+}
+:host.left {
+  left: 0;
+}
+:host.right {
+  right: 0;
+}
+:host.bottom,
+:host.top {
+  left: 0;
+  right: 0;
+  min-height: var(--min-height);
+  .list {
+    display: flex;
+    &__item {
+      flex-grow: 1;
+      justify-content: center;
+    }
   }
+}
+:host.bottom {
+  bottom: 0;
+  box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 -1px 3px 0 rgba(0,0,0,.12);
+}
+:host.top {
+  top: 0;
+  box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+:host.auto {
   @include media-breakpoint-up(md) {
+    left: 0;
     top: 0;
-    width: $show-width;
-    max-width: calc(100vw - #{$collapsed-width});
-    :host.collapsed:not(.show) & {
-      transform: translateX(0);
-      width: $collapsed-width;
-    }
+    bottom: 0;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+    min-width: var(--min-width);
+    flex-direction: column;
   }
-  :host.right & {
-    left: inherit;
+  @include media-breakpoint-down(sm) {
+    bottom: 0;
+    left: 0;
     right: 0;
-    transform: translateX(100vw);
-  }
-  :host.show & {
-    transform: translateX(0);
-    box-shadow: rgba(15, 15, 15, 0.05) 0 0 0 1px, rgba(15, 15, 15, 0.1) 0 3px 6px, rgba(15, 15, 15, 0.2) 0 9px 24px;
-  }
-  :host.docked & {
-    transform: translateX(-100vw);
-    @include media-breakpoint-up(md) {
-      box-shadow: 1px 0 4px rgba(0,0,0,.1);
-      &.collapsed {
-        transform: translateX(0);
-      }
-    }
-  }
-  :host.collapsed & {
-    @include media-breakpoint-down(sm) {
-      max-width: 100vw;
-      width: 100vw;
-      > .list-group {
-        display: flex;
-        flex-direction: row;
-        > .list-group-item {
-          padding: 1rem;
-          > div {
-            justify-content: center;
-            .label {
-              display: none;
-            }
-          }
+    box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 -1px 3px 0 rgba(0,0,0,.12);
+    min-height: var(--min-height);
+    .list {
+      display: flex;
+      &__item {
+        flex-grow: 1;
+        padding: 0;
+        justify-content: center;
+        .item__label {
+          display: none;
         }
       }
     }
   }
-  .list-group {
-    display: block;
-    overflow: auto;
-    .list-group-item {
-      cursor: pointer;
-      border-radius: 0;
-      border: 0;
-      outline: none;
-      transition: background-color 0.3s, color 0.3s;
+}
+.list {
+  display: block;
+  flex-grow: 1;
+  overflow: auto;
+  &__item {
+    border: 0;
+    color: var(--text-color);
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem 0.75rem 1rem;
+    &:hover {
+      text-decoration: none;
       &:not(.active) {
-        background-color: transparent;
+        background: var(--hover-background-color);
+        color: var(--hover-text-color);
       }
-      &:hover:not(.active) {
-        background: var(--light);
-        color: $body-color;
+    }
+    &.active {
+      background: var(--active-background-color);
+      color: var(--active-text-color);
+    }
+    &.list__item--column {
+      justify-content: center;
+      .item {
+        flex-direction: column;
       }
-      .icon+.label {
+    }
+    &.list__item--icon {
+      justify-content: center;
+      .item__label {
+        display: none;
+      }
+    }
+    &:not(.list__item--column) {
+      .item__label {
+        margin-left: 0.5rem;
+      }
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      &__icon {
+        font-size: 1.5rem;
+      }
+      &__label {
         display: block;
-        margin-left: 0.25rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .icon,
-      .label {
-        transition: margin-left 0.3s;
-      }
-    }
-  }
-  .icon {
-    font-size: 1.5rem;
-  }
-  .collapsible {
-    overflow: hidden;
-    transition: max-height 0.2s;
-    max-height: 100vh;
-    background-color: rgba(0, 0, 0, .01);
-    box-shadow: inset 0 4px 9px -7px rgba(0,0,0,0.4);
-    &-header {
-      font-weight: 500;
-    }
-    &:not(.show) {
-      max-height: 0;
-      background-color: transparent;
-    }
-  }
-  .header {
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 1.5rem .5rem;
-    padding-bottom: 0;
-    margin: 0 0.75rem;
-    font-size: .75rem;
-  }
-  .toggle {
-    transform: rotate(0);
-    transition: transform 0.2s;
-    .show & {
-      transform: rotate(90deg);
     }
   }
 }
-.backdrop {
-  z-index: 980;
-  :host.show & {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,.1);
-  }
-  :host.docked & {
-    @include media-breakpoint-up(md) {
-      display: none;
-    }
-  }
-}
-.resizer {
-  display: none;
-  position: fixed;
-  width: 0.25rem;
-  top: 0;
-  bottom: 0;
-  left: $collapsed-width;
-  transition: background-color 0.3s, left 0.3s;
-  z-index: $zindex-fixed;
-  cursor: e-resize;
-  background-color: transparent;
-  @include media-breakpoint-up(md) {
-    display: block;
-  }
-  &:hover {
-    background-color: rgba(var(--dark), 0.5);
-  }
-  :host.show & {
-    display: none;
-  }
-  :host.right & {
-    cursor: w-resize;
-    left: inherit;
-    right: $collapsed-width;
-  }
+.icon-placeholder {
+  background: var(--text-color);
+  border-radius: 100vh;
+  min-height: 1em;
+  min-width: 1em;
+  opacity: 0.2;
 }

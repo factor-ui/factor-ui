@@ -1,0 +1,8 @@
+<h1 mat-dialog-title *ngIf="data.options.title">{{ data.options.title }}</h1>
+<div mat-dialog-content>
+  <ft-icon *ngIf="data.options.icon" [name]="data.options.icon.name" [collection]="data.options.icon.collection" size="data.options.icon.size"></ft-icon>
+  <div>{{ data.message }}</div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close color="primary">Accept</button>
+</div>

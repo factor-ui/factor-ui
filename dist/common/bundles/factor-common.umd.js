@@ -1,12 +1,12 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common')) :
-    typeof define === 'function' && define.amd ? define('factor-common', ['exports', '@angular/core', '@angular/common'], factory) :
-    (factory((global['factor-common'] = {}),global.ng.core,global.ng.common));
-}(this, (function (exports,i0,common) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs'), require('@angular/core'), require('@angular/common'), require('@angular/material/button'), require('@angular/material/dialog'), require('@angular/material/snack-bar')) :
+    typeof define === 'function' && define.amd ? define('factor-common', ['exports', 'rxjs', '@angular/core', '@angular/common', '@angular/material/button', '@angular/material/dialog', '@angular/material/snack-bar'], factory) :
+    (factory((global['factor-common'] = {}),global.rxjs,global.ng.core,global.ng.common,global.ng.material.button,global.ng.material.dialog,global.ng.material['snack-bar']));
+}(this, (function (exports,rxjs,i0,common,button,i2,i1) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var IconComponent = /** @class */ (function () {
         function IconComponent(configuration) {
@@ -59,7 +59,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var ImageComponent = /** @class */ (function () {
         function ImageComponent(element) {
@@ -131,7 +131,7 @@
             { type: i0.Component, args: [{
                         selector: 'ft-image',
                         template: "<img *ngIf=\"shown\" [src]=\"src\" />\n",
-                        styles: [":host{display:inline-block;overflow:hidden;display:flex;align-items:center;justify-content:center}:host.loading{background-color:rgba(0,0,0,.03)}:host.loading::after{content:'';display:block;background-image:linear-gradient(to right,transparent,rgba(255,255,255,.3),transparent);height:100%;width:50%;-webkit-animation:.8s linear infinite placeholder-loading;animation:.8s linear infinite placeholder-loading}:host.error{background-color:rgba(255,0,0,.03)}img{max-width:100%;-webkit-animation:.3s fade-in;animation:.3s fade-in}@-webkit-keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes fade-in{from{opacity:0}to{opacity:1}}@-webkit-keyframes placeholder-loading{from{-webkit-transform:translate3d(-200%,0,0);transform:translate3d(-200%,0,0)}to{-webkit-transform:translate3d(200%,0,0);transform:translate3d(200%,0,0)}}@keyframes placeholder-loading{from{-webkit-transform:translate3d(-200%,0,0);transform:translate3d(-200%,0,0)}to{-webkit-transform:translate3d(200%,0,0);transform:translate3d(200%,0,0)}}"]
+                        styles: [":host{display:inline-block;overflow:hidden;display:flex;align-items:center;justify-content:center}:host.loading{background-color:rgba(0,0,0,.03)}:host.loading::after{content:'';display:block;background-image:linear-gradient(to right,transparent,rgba(255,255,255,.3),transparent);height:100%;width:50%;-webkit-animation:.8s linear infinite placeholder-loading;animation:.8s linear infinite placeholder-loading}:host.error{background-color:rgba(255,0,0,.03)}img{max-width:100%;-webkit-animation:.3s fade-in;animation:.3s fade-in}@-webkit-keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes fade-in{from{opacity:0}to{opacity:1}}@-webkit-keyframes placeholder-loading{from{transform:translate3d(-200%,0,0)}to{transform:translate3d(200%,0,0)}}@keyframes placeholder-loading{from{transform:translate3d(-200%,0,0)}to{transform:translate3d(200%,0,0)}}"]
                     }] }
         ];
         /** @nocollapse */
@@ -150,7 +150,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var ProgressComponent = /** @class */ (function () {
         function ProgressComponent() {
@@ -185,39 +185,94 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var MessageService = /** @class */ (function () {
-        function MessageService() {
+    var MessageComponent = /** @class */ (function () {
+        function MessageComponent(dialogRef, data) {
+            this.dialogRef = dialogRef;
+            this.data = data;
         }
         /**
-         * @param {?} content
+         * @return {?}
+         */
+        MessageComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        Object.defineProperty(MessageComponent.prototype, "hostClasses", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return [].join(' ');
+            },
+            enumerable: true,
+            configurable: true
+        });
+        MessageComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'ft-message',
+                        template: "<h1 mat-dialog-title *ngIf=\"data.options.title\">{{ data.options.title }}</h1>\n<div mat-dialog-content>\n  <ft-icon *ngIf=\"data.options.icon\" [name]=\"data.options.icon.name\" [collection]=\"data.options.icon.collection\" size=\"data.options.icon.size\"></ft-icon>\n  <div>{{ data.message }}</div>\n</div>\n<div mat-dialog-actions>\n  <button mat-button mat-dialog-close color=\"primary\">Accept</button>\n</div>\n",
+                        styles: ["[mat-dialog-content]{display:flex;align-items:center;margin-bottom:1rem}[mat-dialog-actions]{justify-content:flex-end;padding:.5rem;margin-left:-1.5rem;margin-right:-1.5rem}"]
+                    }] }
+        ];
+        /** @nocollapse */
+        MessageComponent.ctorParameters = function () {
+            return [
+                { type: i2.MatDialogRef },
+                { type: undefined, decorators: [{ type: i0.Inject, args: [i2.MAT_DIALOG_DATA,] }] }
+            ];
+        };
+        MessageComponent.propDecorators = {
+            hostClasses: [{ type: i0.HostBinding, args: ['class',] }]
+        };
+        return MessageComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var MessageService = /** @class */ (function () {
+        function MessageService(snackBar, dialog) {
+            this.snackBar = snackBar;
+            this.dialog = dialog;
+        }
+        /**
+         * @param {?} message
          * @param {?=} options
          * @return {?}
          */
         MessageService.prototype.show = /**
-         * @param {?} content
+         * @param {?} message
          * @param {?=} options
          * @return {?}
          */
-            function (content, options) {
-                if (this.element) ;
-                this.element = document.createElement('div');
+            function (message, options) {
+                /** @type {?} */
+                var defaults = {
+                    type: null,
+                    duration: 2000
+                };
+                options = Object.assign(defaults, options);
                 switch (options.type) {
-                    case 'toast':
-                        this.element.classList.add('toast', 'fade');
-                        this.element.style = 'position: fixed; bottom: 2rem; left: 2rem; right: 2rem; margin: auto;';
-                        this.element.innerHTML = "\n            <div class=\"toast-body\">" + content + "</div>\n          ";
-                        document.body.appendChild(this.element);
-                        $(this.element).toast('show');
-                        break;
                     default:
-                        this.element.classList.add('modal', 'fade');
-                        this.element.innerHTML = "\n            <div class=\"modal-dialog modal-dialog-centered\">\n              <div class=\"modal-content\">\n                <div class=\"modal-body\">" + content + "</div>\n                <div class=\"modal-footer\" style=\"padding-top: 0; border: 0;\">\n                  <button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\">Accept</button>\n                </div>\n              </div>\n            </div>\n          ";
-                        document.body.appendChild(this.element);
-                        $(this.element).modal();
+                    case 'notification':
+                        this.snackBar.open(message, '', {
+                            duration: options.duration || 2000,
+                        });
+                        break;
+                    case 'modal':
+                        /** @type {?} */
+                        var dialogRef = this.dialog.open(MessageComponent, {
+                            width: '250px',
+                            data: { message: message, options: options },
+                            disableClose: true
+                        });
+                        this.snackBar.dismiss();
                         break;
                 }
+                return rxjs.of(null);
             };
         MessageService.decorators = [
             { type: i0.Injectable, args: [{
@@ -225,119 +280,19 @@
                     },] }
         ];
         /** @nocollapse */
-        MessageService.ctorParameters = function () { return []; };
-        /** @nocollapse */ MessageService.ngInjectableDef = i0.defineInjectable({ factory: function MessageService_Factory() { return new MessageService(); }, token: MessageService, providedIn: "root" });
+        MessageService.ctorParameters = function () {
+            return [
+                { type: i1.MatSnackBar },
+                { type: i2.MatDialog }
+            ];
+        };
+        /** @nocollapse */ MessageService.ngInjectableDef = i0.defineInjectable({ factory: function MessageService_Factory() { return new MessageService(i0.inject(i1.MatSnackBar), i0.inject(i2.MatDialog)); }, token: MessageService, providedIn: "root" });
         return MessageService;
     }());
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var RippleDirective = /** @class */ (function () {
-        function RippleDirective(elementRef) {
-            this.elementRef = elementRef;
-        }
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        RippleDirective.prototype.showRipple = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                /** @type {?} */
-                var element = this.elementRef.nativeElement;
-                /** @type {?} */
-                var ripple = element.querySelector('.ripple');
-                /** @type {?} */
-                var eventType = event.type;
-                // Ripple
-                if (ripple === null) {
-                    // Create ripple
-                    ripple = document.createElement('span');
-                    ripple.classList.add('ripple');
-                    // Prepend ripple to element
-                    element.insertBefore(ripple, element.firstChild);
-                    // Set ripple this.size
-                    if (!ripple.offsetHeight && !ripple.offsetWidth) {
-                        this.size = Math.max(element.offsetWidth, element.offsetHeight);
-                        ripple.style.width = this.size + 'px';
-                        ripple.style.height = this.size + 'px';
-                    }
-                }
-                // Remove animation effect
-                ripple.className = ripple.className.replace(/ ?(ripple-animate)/g, '');
-                // get click coordinates by event type
-                if (eventType === 'mousedown') {
-                    this.x = event.pageX;
-                    this.y = event.pageY;
-                }
-                else if (eventType === 'touchstart') {
-                    try {
-                        /** @type {?} */
-                        var originalEvent = void 0;
-                        if (typeof event.changedTouches !== 'undefined') {
-                            originalEvent = event.changedTouches[0];
-                        }
-                        else {
-                            originalEvent = event.originalEvent;
-                        }
-                        this.x = originalEvent.pageX;
-                        this.y = originalEvent.pageY;
-                    }
-                    catch (e) {
-                        // fall back to center of el
-                        this.x = ripple.offsetWidth / 2;
-                        this.y = ripple.offsetHeight / 2;
-                    }
-                }
-                this.offsets = this.getPosition(element);
-                ripple.style.left = (this.x - this.offsets.left - this.size / 2) + 'px';
-                ripple.style.top = (this.y - this.offsets.top - this.size / 2) + 'px';
-                // Add animation effect
-                ripple.classList.add('ripple-animate');
-            };
-        /**
-         * @param {?} element
-         * @return {?}
-         */
-        RippleDirective.prototype.getPosition = /**
-         * @param {?} element
-         * @return {?}
-         */
-            function (element) {
-                /** @type {?} */
-                var de = document.documentElement;
-                /** @type {?} */
-                var box = element.getBoundingClientRect();
-                /** @type {?} */
-                var top = box.top + window.pageYOffset - de.clientTop;
-                /** @type {?} */
-                var left = box.left + window.pageXOffset - de.clientLeft;
-                return { top: top, left: left };
-            };
-        RippleDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[ftRipple]'
-                    },] }
-        ];
-        /** @nocollapse */
-        RippleDirective.ctorParameters = function () {
-            return [
-                { type: i0.ElementRef }
-            ];
-        };
-        RippleDirective.propDecorators = {
-            showRipple: [{ type: i0.HostListener, args: ['mousedown', ['$event'],] }, { type: i0.HostListener, args: ['touchstart', ['$event'],] }]
-        };
-        return RippleDirective;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var ObserveIntersectingDirective = /** @class */ (function () {
         function ObserveIntersectingDirective(element) {
@@ -392,7 +347,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var CommonModule = /** @class */ (function () {
         function CommonModule() {
@@ -418,19 +373,24 @@
                         declarations: [
                             IconComponent,
                             ImageComponent,
-                            RippleDirective,
                             ProgressComponent,
-                            ObserveIntersectingDirective
+                            ObserveIntersectingDirective,
+                            MessageComponent
                         ],
                         imports: [
-                            common.CommonModule
+                            common.CommonModule,
+                            button.MatButtonModule,
+                            i2.MatDialogModule,
+                            i1.MatSnackBarModule
                         ],
                         exports: [
                             IconComponent,
                             ImageComponent,
-                            RippleDirective,
                             ProgressComponent,
                             ObserveIntersectingDirective
+                        ],
+                        entryComponents: [
+                            MessageComponent
                         ]
                     },] }
         ];
@@ -439,21 +399,21 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.IconComponent = IconComponent;
     exports.ImageComponent = ImageComponent;
     exports.ProgressComponent = ProgressComponent;
     exports.MessageService = MessageService;
-    exports.RippleDirective = RippleDirective;
     exports.ObserveIntersectingDirective = ObserveIntersectingDirective;
     exports.CommonModule = CommonModule;
+    exports.ɵa = MessageComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

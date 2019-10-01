@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { CommonComponent } from './common/common.component';
-import { InputsComponent } from './inputs/inputs.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { ListComponent } from './list/list.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 import { EditorComponent } from 'factor-designer';
+import { MessagesComponent } from './messages/messages.component';
 
 const routes: Routes = [
   {
@@ -21,12 +23,20 @@ const routes: Routes = [
     component: InfiniteScrollComponent,
   },
   {
-    path: 'inputs',
-    component: InputsComponent,
-  },
-  {
     path: 'designer/editor',
     component: EditorComponent,
+  },
+  {
+    path: 'navbar',
+    component: NavbarComponent,
+  },
+  {
+    path: 'list',
+    component: ListComponent,
+  },
+  {
+    path: 'messages',
+    component: MessagesComponent,
   }
 ];
 

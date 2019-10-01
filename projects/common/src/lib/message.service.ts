@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
-declare var $: any;
+import { MessageComponent } from './message/message.component';
 
+export interface Action {
+  label: string;
+  value: any;
+}
 export interface Options {
-  type?: string,
-  actions?: any[]
+  type?: 'modal' | 'notification';
+  actions?: Action[];
+  duration?: number;
+  title?: string;
 }
 
 @Injectable({
@@ -13,38 +22,33 @@ export interface Options {
 export class MessageService {
   element: any;
 
-  constructor() { }
+  constructor(
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) { }
 
-  show(content, options?: Options) {
-    if (this.element) {
-
-    }
-    this.element = document.createElement('div');
+  show(message: string, options?: Options): Observable<any> {
+    const defaults: any = {
+      type: null,
+      duration: 2000
+    };
+    options = Object.assign(defaults, options);
     switch (options.type) {
-      case 'toast':
-        this.element.classList.add('toast', 'fade');
-        this.element.style = 'position: fixed; bottom: 2rem; left: 2rem; right: 2rem; margin: auto;';
-        this.element.innerHTML = `
-            <div class="toast-body">${content}</div>
-          `;
-        document.body.appendChild(this.element);
-        $(this.element).toast('show');
-        break;
       default:
-        this.element.classList.add('modal', 'fade');
-        this.element.innerHTML = `
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-body">${content}</div>
-                <div class="modal-footer" style="padding-top: 0; border: 0;">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
-                </div>
-              </div>
-            </div>
-          `;
-        document.body.appendChild(this.element);
-        $(this.element).modal();
+      case 'notification':
+        this.snackBar.open(message, '', {
+          duration: options.duration || 2000,
+        });
+        break;
+      case 'modal':
+        const dialogRef = this.dialog.open(MessageComponent, {
+          width: '250px',
+          data: { message, options },
+          disableClose: true
+        });
+        this.snackBar.dismiss();
         break;
     }
+    return of(null);
   }
 }

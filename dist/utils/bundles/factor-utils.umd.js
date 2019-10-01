@@ -1,12 +1,12 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('crypto-js'), require('@angular/common'), require('@angular/router'), require('@angular/common/http'), require('rxjs'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('factor-utils', ['exports', 'crypto-js', '@angular/common', '@angular/router', '@angular/common/http', 'rxjs', '@angular/core'], factory) :
-    (factory((global['factor-utils'] = {}),global.CryptoJS,global.ng.common,global.ng.router,global.ng.common.http,global.rxjs,global.ng.core));
-}(this, (function (exports,CryptoJS,common,i1,http,rxjs,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('crypto-js'), require('@angular/router'), require('@angular/common/http'), require('@angular/common'), require('rxjs'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('factor-utils', ['exports', 'crypto-js', '@angular/router', '@angular/common/http', '@angular/common', 'rxjs', '@angular/core'], factory) :
+    (factory((global['factor-utils'] = {}),global.CryptoJS,global.ng.router,global.ng.common.http,global.ng.common,global.rxjs,global.ng.core));
+}(this, (function (exports,CryptoJS,i1,http,common,rxjs,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     // Only works on client storage
     var StorageService = /** @class */ (function () {
@@ -28,8 +28,12 @@
                 if (common.isPlatformBrowser(this.platformId)) {
                     if (!storage || typeof storage == 'string') {
                         switch (storage) {
+                            case 'local':
                             case 'localStorage':
                                 delete localStorage[key];
+                                break;
+                            case 'memory':
+                                delete this.memoryStorage[key];
                                 break;
                             default:
                                 delete sessionStorage[key];
@@ -65,11 +69,13 @@
                 return parsedValue;
             };
         /**
+         * @private
          * @param {?} key
          * @param {?=} storage
          * @return {?}
          */
         StorageService.prototype.getValue = /**
+         * @private
          * @param {?} key
          * @param {?=} storage
          * @return {?}
@@ -79,8 +85,12 @@
                 var value;
                 if (!storage || typeof storage == 'string') {
                     switch (storage) {
+                        case 'local':
                         case 'localStorage':
                             value = localStorage[key];
+                            break;
+                        case 'memory':
+                            value = this.memoryStorage[key];
                             break;
                         default:
                             value = sessionStorage[key];
@@ -93,10 +103,12 @@
                 return this.decrypt(value);
             };
         /**
+         * @private
          * @param {?} value
          * @return {?}
          */
         StorageService.prototype.decrypt = /**
+         * @private
          * @param {?} value
          * @return {?}
          */
@@ -114,10 +126,12 @@
                 return value;
             };
         /**
+         * @private
          * @param {?} value
          * @return {?}
          */
         StorageService.prototype.encrypt = /**
+         * @private
          * @param {?} value
          * @return {?}
          */
@@ -129,8 +143,11 @@
                     this.configuration.storage &&
                     this.configuration.storage.encryptionSecret) {
                     value = CryptoJS.AES.encrypt(value, this.configuration.storage.encryptionSecret);
+                    return value.toString();
                 }
-                return value.toString();
+                else {
+                    return value;
+                }
             };
         /**
          * @param {?} key
@@ -150,8 +167,12 @@
                     var valueEncrypted = this.encrypt(JSON.stringify(value));
                     if (!storage || typeof storage == 'string') {
                         switch (storage) {
+                            case 'local':
                             case 'localStorage':
                                 localStorage[key] = valueEncrypted;
+                                break;
+                            case 'memory':
+                                this.memoryStorage[key] = valueEncrypted;
                                 break;
                             default:
                                 sessionStorage[key] = valueEncrypted;
@@ -181,7 +202,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleAnalyticsService = /** @class */ (function () {
         function GoogleAnalyticsService(router) {
@@ -329,7 +350,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleAnalyticsErrorHandler = /** @class */ (function () {
         function GoogleAnalyticsErrorHandler(injector) {
@@ -380,7 +401,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleTagManagerErrorHandler = /** @class */ (function () {
         function GoogleTagManagerErrorHandler(injector) {
@@ -407,7 +428,21 @@
                             'error_status': error.status
                         });
                     }
-                }
+                } /* else {
+                  // DEPRECATED: Google Tag Manager automatically collect javascript errors this not neccesary now
+                  const location = this.injector.get(LocationStrategy);
+                  const message = error.message ? error.message : error.toString();
+                  const stack = error.stack ? error.stack : error.toString();
+                  const url = location instanceof PathLocationStrategy ? location.path() : '';
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({
+                    event: 'javascript_error',
+                    'gtm.errorMessage': message,
+                    'gtm.errorUrl': url,
+                    'error_stack': stack,
+            
+                  });
+                }*/
                 throw error;
             };
         GoogleTagManagerErrorHandler.decorators = [
@@ -424,10 +459,11 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleTagManagerService = /** @class */ (function () {
-        function GoogleTagManagerService() {
+        function GoogleTagManagerService(platformId) {
+            this.platformId = platformId;
         }
         /**
          * @param {?} trackingId
@@ -439,7 +475,7 @@
          */
             function (trackingId) {
                 try {
-                    if (trackingId) {
+                    if (common.isPlatformBrowser(this.platformId) && trackingId) {
                         this.trackingId = trackingId;
                         /** @type {?} */
                         var s1 = document.createElement('script');
@@ -481,14 +517,18 @@
                     },] }
         ];
         /** @nocollapse */
-        GoogleTagManagerService.ctorParameters = function () { return []; };
-        /** @nocollapse */ GoogleTagManagerService.ngInjectableDef = i0.defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(); }, token: GoogleTagManagerService, providedIn: "root" });
+        GoogleTagManagerService.ctorParameters = function () {
+            return [
+                { type: Object, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] }
+            ];
+        };
+        /** @nocollapse */ GoogleTagManagerService.ngInjectableDef = i0.defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(i0.inject(i0.PLATFORM_ID)); }, token: GoogleTagManagerService, providedIn: "root" });
         return GoogleTagManagerService;
     }());
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var FilesList = /** @class */ (function () {
         function FilesList(options) {
@@ -565,7 +605,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var UtilsModule = /** @class */ (function () {
         function UtilsModule() {
@@ -598,12 +638,12 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.StorageService = StorageService;

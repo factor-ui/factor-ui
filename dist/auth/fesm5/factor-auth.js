@@ -2,17 +2,16 @@ import { StorageService } from 'factor-utils';
 import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { tap, catchError, filter, take, switchMap, finalize, share } from 'rxjs/operators';
-import { Injectable, Injector, Inject, NgModule, defineInjectable, inject, INJECTOR } from '@angular/core';
+import { Inject, Injectable, NgModule, Injector, defineInjectable, inject } from '@angular/core';
 import { HttpClient, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var AuthService = /** @class */ (function () {
-    function AuthService(http, injector, storageService, configuration) {
+    function AuthService(http, storageService, configuration) {
         this.http = http;
-        this.injector = injector;
         this.storageService = storageService;
         this.configuration = configuration;
         this.loggedInSource = new BehaviorSubject(false);
@@ -22,52 +21,19 @@ var AuthService = /** @class */ (function () {
         }
     }
     /**
-     * @param {?} form
-     * @param {?=} redirect
      * @return {?}
      */
-    AuthService.prototype.login = /**
-     * @param {?} form
-     * @param {?=} redirect
+    AuthService.prototype.checkLoggedIn = /**
      * @return {?}
      */
-    function (form, redirect) {
-        var _this = this;
-        this.router = this.router || this.injector.get(Router);
-        /** @type {?} */
-        var params = {
-            client_id: this.configuration.clientId,
-            client_secret: this.configuration.clientSecret,
-            grant_type: 'password',
-            response_type: 'token',
-            username: form.username,
-            password: form.password
-        };
-        return this.http.post(this.configuration.tokenUrl, params).pipe(tap((/**
-         * @param {?} token
-         * @return {?}
-         */
-        function (token) {
-            _this.storageService.set('token', token, localStorage);
-            _this.loggedInSource.next(true);
-            if (redirect) {
-                _this.router.navigate([redirect]);
-            }
-        })));
-    };
-    /**
-     * @param {?=} redirect
-     * @return {?}
-     */
-    AuthService.prototype.logout = /**
-     * @param {?=} redirect
-     * @return {?}
-     */
-    function (redirect) {
-        this.router = this.router || this.injector.get(Router);
-        this.storageService.delete('token', localStorage);
-        this.loggedInSource.next(false);
-        this.router.navigate(['/login', redirect ? { redirect: redirect } : {}]);
+    function () {
+        if (this.storageService.get('token', 'localStorage')) {
+            this.loggedInSource.next(true);
+        }
+        else {
+            this.loggedInSource.next(false);
+        }
+        return this.loggedIn;
     };
     /**
      * @return {?}
@@ -76,7 +42,46 @@ var AuthService = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        return this.storageService.get('token', localStorage);
+        return this.storageService.get('token', 'localStorage');
+    };
+    /**
+     * @param {?} form
+     * @return {?}
+     */
+    AuthService.prototype.login = /**
+     * @param {?} form
+     * @return {?}
+     */
+    function (form) {
+        var _this = this;
+        /** @type {?} */
+        var params = {
+            client_id: this.configuration.clientId,
+            client_secret: this.configuration.clientSecret,
+            grant_type: 'password',
+            response_type: 'token',
+            username: form.username,
+            password: form.password,
+            state: Date.now()
+        };
+        return this.http.post(this.configuration.tokenUrl, params).pipe(tap((/**
+         * @param {?} token
+         * @return {?}
+         */
+        function (token) {
+            _this.storageService.set('token', token, 'localStorage');
+            _this.loggedInSource.next(true);
+        })));
+    };
+    /**
+     * @return {?}
+     */
+    AuthService.prototype.logout = /**
+     * @return {?}
+     */
+    function () {
+        this.storageService.delete('token', 'localStorage');
+        this.loggedInSource.next(false);
     };
     /**
      * @return {?}
@@ -87,7 +92,7 @@ var AuthService = /** @class */ (function () {
     function () {
         var _this = this;
         /** @type {?} */
-        var token = this.storageService.get('token', localStorage);
+        var token = this.storageService.get('token', 'localStorage');
         /** @type {?} */
         var url = "" + this.configuration.tokenUrl;
         /** @type {?} */
@@ -102,7 +107,7 @@ var AuthService = /** @class */ (function () {
          * @return {?}
          */
         function (token) {
-            _this.storageService.set('token', token, localStorage);
+            _this.storageService.set('token', token, 'localStorage');
         })));
     };
     AuthService.decorators = [
@@ -113,17 +118,16 @@ var AuthService = /** @class */ (function () {
     /** @nocollapse */
     AuthService.ctorParameters = function () { return [
         { type: HttpClient },
-        { type: Injector },
         { type: StorageService },
         { type: undefined, decorators: [{ type: Inject, args: ['FactorAuthConfiguration',] }] }
     ]; };
-    /** @nocollapse */ AuthService.ngInjectableDef = defineInjectable({ factory: function AuthService_Factory() { return new AuthService(inject(HttpClient), inject(INJECTOR), inject(StorageService), inject("FactorAuthConfiguration")); }, token: AuthService, providedIn: "root" });
+    /** @nocollapse */ AuthService.ngInjectableDef = defineInjectable({ factory: function AuthService_Factory() { return new AuthService(inject(HttpClient), inject(StorageService), inject("FactorAuthConfiguration")); }, token: AuthService, providedIn: "root" });
     return AuthService;
 }());
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var AuthGuard = /** @class */ (function () {
     function AuthGuard(authService) {
@@ -145,7 +149,7 @@ var AuthGuard = /** @class */ (function () {
             return true;
         }
         else {
-            this.authService.logout(state.url);
+            this.authService.logout();
             return false;
         }
     };
@@ -164,7 +168,7 @@ var AuthGuard = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LoginGuard = /** @class */ (function () {
     function LoginGuard(authService, router) {
@@ -206,7 +210,7 @@ var LoginGuard = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var AuthInterceptor = /** @class */ (function () {
     function AuthInterceptor(injector) {
@@ -338,7 +342,7 @@ var AuthInterceptor = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var AuthModule = /** @class */ (function () {
     function AuthModule() {
@@ -372,12 +376,12 @@ var AuthModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { AuthService, AuthGuard, LoginGuard, AuthInterceptor, AuthModule };

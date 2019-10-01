@@ -8,18 +8,23 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root'
 })
 export class StorageService {
+  memoryStorage: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     @Inject('FactorUtilsConfiguration') private configuration
   ) { }
 
-  delete(key: string, storage?) {
+  public delete(key: string, storage?) {
     if (isPlatformBrowser(this.platformId)) {
       if (!storage || typeof storage == 'string') {
         switch (storage) {
+          case 'local':
           case 'localStorage':
             delete localStorage[key];
+            break;
+          case 'memory':
+            delete this.memoryStorage[key];
             break;
           default:
             delete sessionStorage[key];
@@ -30,7 +35,7 @@ export class StorageService {
       }
     }
   }
-  get(key: string, storage?): any {
+  public get(key: string, storage?): any {
     let parsedValue: any;
     if (isPlatformBrowser(this.platformId)) {
       try {
@@ -41,12 +46,16 @@ export class StorageService {
     }
     return parsedValue;
   }
-  getValue(key: string, storage?: any): any {
+  private getValue(key: string, storage?: any): any {
     let value: any;
     if (!storage || typeof storage == 'string') {
       switch (storage) {
+        case 'local':
         case 'localStorage':
           value = localStorage[key];
+          break;
+        case 'memory':
+          value = this.memoryStorage[key];
           break;
         default:
           value = sessionStorage[key];
@@ -57,7 +66,7 @@ export class StorageService {
     }
     return this.decrypt(value);
   }
-  decrypt(value: string) {
+  private decrypt(value: string) {
     if (value !== null &&
       value !== undefined &&
       value !== '' &&
@@ -69,7 +78,7 @@ export class StorageService {
     }
     return value;
   }
-  encrypt(value: string) {
+  private encrypt(value: string) {
     if (value !== null &&
       value !== undefined &&
       value !== '' &&
@@ -77,16 +86,23 @@ export class StorageService {
       this.configuration.storage &&
       this.configuration.storage.encryptionSecret) {
       value = CryptoJS.AES.encrypt(value, this.configuration.storage.encryptionSecret);
+      return value.toString();
+    } else {
+      return value;
     }
-    return value.toString();
+
   }
-  set(key: string, value: any, storage?) {
+  public set(key: string, value: any, storage?) {
     if (isPlatformBrowser(this.platformId)) {
       const valueEncrypted = this.encrypt(JSON.stringify(value));
       if (!storage || typeof storage == 'string') {
         switch (storage) {
+          case 'local':
           case 'localStorage':
             localStorage[key] = valueEncrypted;
+            break;
+          case 'memory':
+            this.memoryStorage[key] = valueEncrypted;
             break;
           default:
             sessionStorage[key] = valueEncrypted;

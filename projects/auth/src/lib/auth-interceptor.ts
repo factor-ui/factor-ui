@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, filter, take, switchMap, finalize, share } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
+import { Token } from './models/token';
 
 @Injectable()
 export class AuthInterceptor {
@@ -39,7 +40,7 @@ export class AuthInterceptor {
       this.refreshTokenInProgress = true;
       this.refreshTokenSubject.next(null);
       return this.authService.refreshToken().pipe(
-        switchMap((newToken: any) => {
+        switchMap((newToken: Token) => {
           if (newToken) {
             this.refreshTokenSubject.next(newToken);
             return next.handle(this.addAuthenticationToken(request));
@@ -70,7 +71,7 @@ export class AuthInterceptor {
     }
   }
   addAuthenticationToken(request): HttpRequest<any> {
-    const token = this.authService.getToken();
+    const token: Token = this.authService.getToken();
 
     // If access token is null this means that user is not logged in
     // And we return the original request

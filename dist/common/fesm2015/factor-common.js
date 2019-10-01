@@ -1,9 +1,13 @@
-import { Component, Input, Inject, HostBinding, ElementRef, Injectable, Directive, EventEmitter, Output, NgModule, HostListener, defineInjectable } from '@angular/core';
+import { of } from 'rxjs';
+import { Component, Input, Inject, HostBinding, ElementRef, Injectable, Directive, EventEmitter, Output, NgModule, defineInjectable, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class IconComponent {
     /**
@@ -53,7 +57,7 @@ IconComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ImageComponent {
     /**
@@ -131,7 +135,7 @@ ImageComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ft-image',
                 template: "<img *ngIf=\"shown\" [src]=\"src\" />\n",
-                styles: [":host{display:inline-block;overflow:hidden;display:flex;align-items:center;justify-content:center}:host.loading{background-color:rgba(0,0,0,.03)}:host.loading::after{content:'';display:block;background-image:linear-gradient(to right,transparent,rgba(255,255,255,.3),transparent);height:100%;width:50%;-webkit-animation:.8s linear infinite placeholder-loading;animation:.8s linear infinite placeholder-loading}:host.error{background-color:rgba(255,0,0,.03)}img{max-width:100%;-webkit-animation:.3s fade-in;animation:.3s fade-in}@-webkit-keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes fade-in{from{opacity:0}to{opacity:1}}@-webkit-keyframes placeholder-loading{from{-webkit-transform:translate3d(-200%,0,0);transform:translate3d(-200%,0,0)}to{-webkit-transform:translate3d(200%,0,0);transform:translate3d(200%,0,0)}}@keyframes placeholder-loading{from{-webkit-transform:translate3d(-200%,0,0);transform:translate3d(-200%,0,0)}to{-webkit-transform:translate3d(200%,0,0);transform:translate3d(200%,0,0)}}"]
+                styles: [":host{display:inline-block;overflow:hidden;display:flex;align-items:center;justify-content:center}:host.loading{background-color:rgba(0,0,0,.03)}:host.loading::after{content:'';display:block;background-image:linear-gradient(to right,transparent,rgba(255,255,255,.3),transparent);height:100%;width:50%;-webkit-animation:.8s linear infinite placeholder-loading;animation:.8s linear infinite placeholder-loading}:host.error{background-color:rgba(255,0,0,.03)}img{max-width:100%;-webkit-animation:.3s fade-in;animation:.3s fade-in}@-webkit-keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes fade-in{from{opacity:0}to{opacity:1}}@-webkit-keyframes placeholder-loading{from{transform:translate3d(-200%,0,0)}to{transform:translate3d(200%,0,0)}}@keyframes placeholder-loading{from{transform:translate3d(-200%,0,0)}to{transform:translate3d(200%,0,0)}}"]
             }] }
 ];
 /** @nocollapse */
@@ -146,7 +150,7 @@ ImageComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ProgressComponent {
     constructor() {
@@ -177,44 +181,88 @@ ProgressComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class MessageComponent {
+    /**
+     * @param {?} dialogRef
+     * @param {?} data
+     */
+    constructor(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+    /**
+     * @return {?}
+     */
+    get hostClasses() {
+        return [].join(' ');
+    }
+}
+MessageComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'ft-message',
+                template: "<h1 mat-dialog-title *ngIf=\"data.options.title\">{{ data.options.title }}</h1>\n<div mat-dialog-content>\n  <ft-icon *ngIf=\"data.options.icon\" [name]=\"data.options.icon.name\" [collection]=\"data.options.icon.collection\" size=\"data.options.icon.size\"></ft-icon>\n  <div>{{ data.message }}</div>\n</div>\n<div mat-dialog-actions>\n  <button mat-button mat-dialog-close color=\"primary\">Accept</button>\n</div>\n",
+                styles: ["[mat-dialog-content]{display:flex;align-items:center;margin-bottom:1rem}[mat-dialog-actions]{justify-content:flex-end;padding:.5rem;margin-left:-1.5rem;margin-right:-1.5rem}"]
+            }] }
+];
+/** @nocollapse */
+MessageComponent.ctorParameters = () => [
+    { type: MatDialogRef },
+    { type: undefined, decorators: [{ type: Inject, args: [MAT_DIALOG_DATA,] }] }
+];
+MessageComponent.propDecorators = {
+    hostClasses: [{ type: HostBinding, args: ['class',] }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MessageService {
-    constructor() { }
     /**
-     * @param {?} content
+     * @param {?} snackBar
+     * @param {?} dialog
+     */
+    constructor(snackBar, dialog) {
+        this.snackBar = snackBar;
+        this.dialog = dialog;
+    }
+    /**
+     * @param {?} message
      * @param {?=} options
      * @return {?}
      */
-    show(content, options) {
-        if (this.element) ;
-        this.element = document.createElement('div');
+    show(message, options) {
+        /** @type {?} */
+        const defaults = {
+            type: null,
+            duration: 2000
+        };
+        options = Object.assign(defaults, options);
         switch (options.type) {
-            case 'toast':
-                this.element.classList.add('toast', 'fade');
-                this.element.style = 'position: fixed; bottom: 2rem; left: 2rem; right: 2rem; margin: auto;';
-                this.element.innerHTML = `
-            <div class="toast-body">${content}</div>
-          `;
-                document.body.appendChild(this.element);
-                $(this.element).toast('show');
-                break;
             default:
-                this.element.classList.add('modal', 'fade');
-                this.element.innerHTML = `
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-body">${content}</div>
-                <div class="modal-footer" style="padding-top: 0; border: 0;">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
-                </div>
-              </div>
-            </div>
-          `;
-                document.body.appendChild(this.element);
-                $(this.element).modal();
+            case 'notification':
+                this.snackBar.open(message, '', {
+                    duration: options.duration || 2000,
+                });
+                break;
+            case 'modal':
+                /** @type {?} */
+                const dialogRef = this.dialog.open(MessageComponent, {
+                    width: '250px',
+                    data: { message, options },
+                    disableClose: true
+                });
+                this.snackBar.dismiss();
                 break;
         }
+        return of(null);
     }
 }
 MessageService.decorators = [
@@ -223,109 +271,15 @@ MessageService.decorators = [
             },] }
 ];
 /** @nocollapse */
-MessageService.ctorParameters = () => [];
-/** @nocollapse */ MessageService.ngInjectableDef = defineInjectable({ factory: function MessageService_Factory() { return new MessageService(); }, token: MessageService, providedIn: "root" });
+MessageService.ctorParameters = () => [
+    { type: MatSnackBar },
+    { type: MatDialog }
+];
+/** @nocollapse */ MessageService.ngInjectableDef = defineInjectable({ factory: function MessageService_Factory() { return new MessageService(inject(MatSnackBar), inject(MatDialog)); }, token: MessageService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class RippleDirective {
-    /**
-     * @param {?} elementRef
-     */
-    constructor(elementRef) {
-        this.elementRef = elementRef;
-    }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    showRipple(event) {
-        /** @type {?} */
-        let element = this.elementRef.nativeElement;
-        /** @type {?} */
-        let ripple = element.querySelector('.ripple');
-        /** @type {?} */
-        const eventType = event.type;
-        // Ripple
-        if (ripple === null) {
-            // Create ripple
-            ripple = document.createElement('span');
-            ripple.classList.add('ripple');
-            // Prepend ripple to element
-            element.insertBefore(ripple, element.firstChild);
-            // Set ripple this.size
-            if (!ripple.offsetHeight && !ripple.offsetWidth) {
-                this.size = Math.max(element.offsetWidth, element.offsetHeight);
-                ripple.style.width = this.size + 'px';
-                ripple.style.height = this.size + 'px';
-            }
-        }
-        // Remove animation effect
-        ripple.className = ripple.className.replace(/ ?(ripple-animate)/g, '');
-        // get click coordinates by event type
-        if (eventType === 'mousedown') {
-            this.x = event.pageX;
-            this.y = event.pageY;
-        }
-        else if (eventType === 'touchstart') {
-            try {
-                /** @type {?} */
-                let originalEvent;
-                if (typeof event.changedTouches !== 'undefined') {
-                    originalEvent = event.changedTouches[0];
-                }
-                else {
-                    originalEvent = event.originalEvent;
-                }
-                this.x = originalEvent.pageX;
-                this.y = originalEvent.pageY;
-            }
-            catch (e) {
-                // fall back to center of el
-                this.x = ripple.offsetWidth / 2;
-                this.y = ripple.offsetHeight / 2;
-            }
-        }
-        this.offsets = this.getPosition(element);
-        ripple.style.left = (this.x - this.offsets.left - this.size / 2) + 'px';
-        ripple.style.top = (this.y - this.offsets.top - this.size / 2) + 'px';
-        // Add animation effect
-        ripple.classList.add('ripple-animate');
-    }
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    getPosition(element) {
-        /** @type {?} */
-        const de = document.documentElement;
-        /** @type {?} */
-        const box = element.getBoundingClientRect();
-        /** @type {?} */
-        const top = box.top + window.pageYOffset - de.clientTop;
-        /** @type {?} */
-        const left = box.left + window.pageXOffset - de.clientLeft;
-        return { top: top, left: left };
-    }
-}
-RippleDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[ftRipple]'
-            },] }
-];
-/** @nocollapse */
-RippleDirective.ctorParameters = () => [
-    { type: ElementRef }
-];
-RippleDirective.propDecorators = {
-    showRipple: [{ type: HostListener, args: ['mousedown', ['$event'],] }, { type: HostListener, args: ['touchstart', ['$event'],] }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ObserveIntersectingDirective {
     /**
@@ -378,7 +332,7 @@ ObserveIntersectingDirective.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class CommonModule$1 {
     /**
@@ -399,33 +353,38 @@ CommonModule$1.decorators = [
                 declarations: [
                     IconComponent,
                     ImageComponent,
-                    RippleDirective,
                     ProgressComponent,
-                    ObserveIntersectingDirective
+                    ObserveIntersectingDirective,
+                    MessageComponent
                 ],
                 imports: [
-                    CommonModule
+                    CommonModule,
+                    MatButtonModule,
+                    MatDialogModule,
+                    MatSnackBarModule
                 ],
                 exports: [
                     IconComponent,
                     ImageComponent,
-                    RippleDirective,
                     ProgressComponent,
                     ObserveIntersectingDirective
+                ],
+                entryComponents: [
+                    MessageComponent
                 ]
             },] }
 ];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { IconComponent, ImageComponent, ProgressComponent, MessageService, RippleDirective, ObserveIntersectingDirective, CommonModule$1 as CommonModule };
+export { IconComponent, ImageComponent, ProgressComponent, MessageService, ObserveIntersectingDirective, CommonModule$1 as CommonModule, MessageComponent as ɵa };
 
 //# sourceMappingURL=factor-common.js.map

@@ -1,0 +1,11 @@
+[mat-dialog-content] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+[mat-dialog-actions] {
+  justify-content: flex-end;
+  padding: 0.5rem;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+}

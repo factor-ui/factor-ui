@@ -1,19 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
-import { CommonModule as FactorCommonModule } from 'factor-common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { LayoutModule } from '@angular/cdk/layout';
 
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { CommonModule as FactorCommonModule } from 'factor-common';
+
 import { NavbarComponent } from './navbar/navbar.component';
+import { SearchboxComponent } from './searchbox/searchbox.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { SidesheetComponent } from './sidesheet/sidesheet.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   declarations: [
+    NavbarComponent,
+    SearchboxComponent,
     ToolbarComponent,
-    NavbarComponent
+    SidesheetComponent,
+    ListComponent
   ],
   imports: [
     CommonModule,
@@ -21,11 +29,16 @@ import { NavbarComponent } from './navbar/navbar.component';
     FactorCommonModule,
     MatMenuModule,
     MatButtonModule,
-    MatRippleModule
+    MatRippleModule,
+    MatTooltipModule,
+    LayoutModule
   ],
   exports: [
+    NavbarComponent,
+    SearchboxComponent,
     ToolbarComponent,
-    NavbarComponent
+    SidesheetComponent,
+    ListComponent
   ]
 })
 export class NavigationModule { }

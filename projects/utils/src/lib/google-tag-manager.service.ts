@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { HTMLElementExtended } from './html-element-extended';
 
@@ -10,11 +11,13 @@ declare var window: any;
 export class GoogleTagManagerService {
   trackingId: string;
 
-  constructor() { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+  ) { }
 
   public appendTrackingCode(trackingId: string): void {
     try {
-      if (trackingId) {
+      if (isPlatformBrowser(this.platformId) && trackingId) {
         this.trackingId = trackingId;
         const s1: HTMLElement = document.createElement('script');
         s1.innerHTML = `

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { Option } from '../models/option';
 
@@ -16,58 +17,52 @@ export class NavbarComponent implements OnInit {
   @Input()
   labelField: string = 'label';
   @Input()
-  mode: 'docked' | 'collapsed' = 'collapsed';
+  labelPlacement: 'left' | 'bottom' | 'tooltip' | 'none' = 'left';
   @Input()
-  children: Option[];
+  items: Option[];
   @Input()
-  position: 'left' | 'right' = 'left';
-  @Input()
-  shown: boolean;
+  position: 'top' | 'right' | 'bottom' | 'left' | 'auto' = 'auto';
+  tooltipPosition: 'above' | 'right';
 
   constructor(
-    private router: Router
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
   ) { }
 
   ngOnInit() {
-  }
-  hide() {
-    this.shown = false;
+    const layoutChanges = this.breakpointObserver.observe([
+      Breakpoints.HandsetPortrait
+    ]);
+    layoutChanges.subscribe(result => {
+      this.tooltipPosition = result.matches? 'above' : 'right';
+    });
   }
   @HostBinding('class')
   get hostClasses(): string {
     return [
-      this.mode,
-      this.position,
-      this.shown ? 'show' : ''
+      this.position
     ].join(' ');
   }
-  getComponentType(option) {
+  getComponentType(item) {
     let type: string = 'text';
-    if (!option.url || option.url.match(/^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)) {
+    if (!item.url || item.url.match(/^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)) {
       type = 'button';
     } else {
       type = 'link';
     }
     return type;
   }
-  setOption(option) {
-    if (option.url) {
-      if (option.url.match(/^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)) {
-        window.location.href = option.url;
+  setItem(item) {
+    if (item.url) {
+      if (item.url.match(/^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)) {
+        window.location.href = item.url;
       }
-    } else if (option.click) {
-      option.click();
+    } else if (item.click) {
+      item.click();
     }
-    this.hide();
   }
   toggleCollapsible(option) {
     option.show = !option.show;
-  }
-  show() {
-    this.shown = true;
-  }
-  toggle() {
-    this.shown = !this.shown;
   }
 
 }

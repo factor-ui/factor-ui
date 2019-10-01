@@ -1,0 +1,80 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/_mixins";
+:host {
+  --background-color: #FFF;
+  --text-color: #333;
+  --hover-background-color: rgba(0, 0, 0, .10);
+  --hover-text-color: #333;
+  --active-background-color: rgba(0, 0, 0, .10);
+  --active-text-color: #FFF;
+  display: block;
+  overflow: auto;
+}
+.list {
+  &__item {
+    border: 0;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: left;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      width: 100%;
+    }
+    &:hover {
+      text-decoration: none;
+      &:not(.active) {
+        background: var(--hover-background-color);
+        color: var(--hover-text-color);
+      }
+    }
+    &.active {
+      background: var(--active-background-color);
+      color: var(--active-text-color);
+    }
+    > div {
+      max-width: 100%;
+    }
+    .item {
+      &__icon {
+        font-size: 1.5rem;
+      }
+      &__icon + .item__label {
+        display: block;
+        margin-left: 0.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      &__icon,
+      &__label {
+        transition: margin-left 0.3s;
+      }
+    }
+  }
+}
+.collapsible {
+  overflow: hidden;
+  transition: max-height 0.2s;
+  max-height: 100vh;
+  background-color: rgba(0, 0, 0, .01);
+  box-shadow: inset 0 4px 9px -7px rgba(0,0,0,0.4);
+  &-header {
+    font-weight: 500;
+  }
+  &:not(.show) {
+    max-height: 0;
+    background-color: transparent;
+  }
+}
+.header {
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: .75rem 1.5rem .25rem;
+  font-size: .75rem;
+  opacity: .3;
+}

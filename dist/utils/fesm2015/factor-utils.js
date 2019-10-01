@@ -1,13 +1,13 @@
 import { AES, enc } from 'crypto-js';
-import { isPlatformBrowser, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { isPlatformBrowser, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { Inject, Injectable, PLATFORM_ID, Injector, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // Only works on client storage
 class StorageService {
@@ -28,8 +28,12 @@ class StorageService {
         if (isPlatformBrowser(this.platformId)) {
             if (!storage || typeof storage == 'string') {
                 switch (storage) {
+                    case 'local':
                     case 'localStorage':
                         delete localStorage[key];
+                        break;
+                    case 'memory':
+                        delete this.memoryStorage[key];
                         break;
                     default:
                         delete sessionStorage[key];
@@ -60,6 +64,7 @@ class StorageService {
         return parsedValue;
     }
     /**
+     * @private
      * @param {?} key
      * @param {?=} storage
      * @return {?}
@@ -69,8 +74,12 @@ class StorageService {
         let value;
         if (!storage || typeof storage == 'string') {
             switch (storage) {
+                case 'local':
                 case 'localStorage':
                     value = localStorage[key];
+                    break;
+                case 'memory':
+                    value = this.memoryStorage[key];
                     break;
                 default:
                     value = sessionStorage[key];
@@ -83,6 +92,7 @@ class StorageService {
         return this.decrypt(value);
     }
     /**
+     * @private
      * @param {?} value
      * @return {?}
      */
@@ -100,6 +110,7 @@ class StorageService {
         return value;
     }
     /**
+     * @private
      * @param {?} value
      * @return {?}
      */
@@ -111,8 +122,11 @@ class StorageService {
             this.configuration.storage &&
             this.configuration.storage.encryptionSecret) {
             value = AES.encrypt(value, this.configuration.storage.encryptionSecret);
+            return value.toString();
         }
-        return value.toString();
+        else {
+            return value;
+        }
     }
     /**
      * @param {?} key
@@ -126,8 +140,12 @@ class StorageService {
             const valueEncrypted = this.encrypt(JSON.stringify(value));
             if (!storage || typeof storage == 'string') {
                 switch (storage) {
+                    case 'local':
                     case 'localStorage':
                         localStorage[key] = valueEncrypted;
+                        break;
+                    case 'memory':
+                        this.memoryStorage[key] = valueEncrypted;
                         break;
                     default:
                         sessionStorage[key] = valueEncrypted;
@@ -154,7 +172,7 @@ StorageService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class GoogleAnalyticsService {
     /**
@@ -275,7 +293,7 @@ GoogleAnalyticsService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class GoogleAnalyticsErrorHandler {
     /**
@@ -322,7 +340,7 @@ GoogleAnalyticsErrorHandler.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class GoogleTagManagerErrorHandler {
     /**
@@ -348,7 +366,21 @@ class GoogleTagManagerErrorHandler {
                     'error_status': error.status
                 });
             }
-        }
+        } /* else {
+          // DEPRECATED: Google Tag Manager automatically collect javascript errors this not neccesary now
+          const location = this.injector.get(LocationStrategy);
+          const message = error.message ? error.message : error.toString();
+          const stack = error.stack ? error.stack : error.toString();
+          const url = location instanceof PathLocationStrategy ? location.path() : '';
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'javascript_error',
+            'gtm.errorMessage': message,
+            'gtm.errorUrl': url,
+            'error_stack': stack,
+    
+          });
+        }*/
         throw error;
     }
 }
@@ -362,17 +394,22 @@ GoogleTagManagerErrorHandler.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class GoogleTagManagerService {
-    constructor() { }
+    /**
+     * @param {?} platformId
+     */
+    constructor(platformId) {
+        this.platformId = platformId;
+    }
     /**
      * @param {?} trackingId
      * @return {?}
      */
     appendTrackingCode(trackingId) {
         try {
-            if (trackingId) {
+            if (isPlatformBrowser(this.platformId) && trackingId) {
                 this.trackingId = trackingId;
                 /** @type {?} */
                 const s1 = document.createElement('script');
@@ -417,12 +454,14 @@ GoogleTagManagerService.decorators = [
             },] }
 ];
 /** @nocollapse */
-GoogleTagManagerService.ctorParameters = () => [];
-/** @nocollapse */ GoogleTagManagerService.ngInjectableDef = defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(); }, token: GoogleTagManagerService, providedIn: "root" });
+GoogleTagManagerService.ctorParameters = () => [
+    { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] }
+];
+/** @nocollapse */ GoogleTagManagerService.ngInjectableDef = defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(inject(PLATFORM_ID)); }, token: GoogleTagManagerService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class FilesList {
     /**
@@ -490,7 +529,7 @@ class FilesList {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class UtilsModule {
     /**
@@ -516,12 +555,12 @@ UtilsModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { StorageService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, FilesList, UtilsModule };

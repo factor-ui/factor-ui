@@ -1,15 +1,18 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/_mixins";
+:host {
+  --background-color: #FFF;
+  --text-color: #333;
+}
 .content {
-  background-color: #FFF;
+  background-color: var(--background-color);
   transition: background-color 0.2s, box-shadow 0.2s;
   position: sticky;
   top: 0;
   z-index: 970;
   @include media-breakpoint-up(md) {
     top: -2rem;
-    background-color: var(--light);
   }
   &.overlapped {
     box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 0 6px 0 rgba(0,0,0,.12);

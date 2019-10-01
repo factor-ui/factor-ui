@@ -1,6 +1,6 @@
 {
   "name": "factor-auth",
-  "version": "0.0.17",
+  "version": "0.1.1",
   "license": "CC-BY-NC-ND-4.0",
   "author": "Factor",
   "repository": {
@@ -17,7 +17,7 @@
     "input"
   ],
   "peerDependencies": {
-    "@angular/common": "^7.2.0",
-    "@angular/core": "^7.2.0"
+    "@angular/common": ">=7.2.0",
+    "@angular/core": ">=7.2.0"
   }
 }

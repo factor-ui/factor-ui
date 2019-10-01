@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       //TODO Verify session on server with Observable
       return true;
     } else {
-      this.authService.logout(state.url);
+      this.authService.logout();
       return false;
     }
   }

@@ -1,54 +1,29 @@
-<div class="backdrop" (click)="hide()"></div>
-<div class="content d-flex flex-md-column">
-  <ng-content select="[ftStart]"></ng-content>
-  <div class="list-group flex-grow-1" *ngIf="children">
-    <ng-container *ngTemplateOutlet="switch; context:{children:children}"></ng-container>
-  </div>
-  <ng-content select="[ftEnd]"></ng-content>
-</div>
-<div class="resizer" (click)="show()" *ngIf="mode && mode == 'collapsed'"></div>
-<ng-template #switch let-children="children">
-  <ng-container *ngFor="let option of children" [ngSwitch]="option.type">
-    <ng-container *ngSwitchCase="'collapsible'">
-      <ng-container *ngTemplateOutlet="collapsible; context:{option:option}"></ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="'header'">
-      <ng-container *ngTemplateOutlet="header; context:{option:option}"></ng-container>
-    </ng-container>
-    <ng-container *ngSwitchDefault>
-      <ng-container *ngTemplateOutlet="action; context:{option:option}"></ng-container>
-    </ng-container>
+<ng-content select="[ftStart]"></ng-content>
+<div class="list" *ngIf="items">
+  <ng-container *ngFor="let item of items">
+    <ng-container *ngTemplateOutlet="action; context: { item: item }"></ng-container>
   </ng-container>
-</ng-template>
-<ng-template #action let-option="option">
-  <ng-container [ngSwitch]="getComponentType(option)">
-    <button *ngSwitchCase="'button'" type="button" matRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="setOption(option)">
-      <ng-container *ngTemplateOutlet="text; context:{option:option}"></ng-container>
+</div>
+<ng-content select="[ftEnd]"></ng-content>
+<ng-template #action let-item="item">
+  <ng-container [ngSwitch]="getComponentType(item)">
+    <button *ngSwitchCase="'button'" type="button" matRipple class="list__item" [class.list__item--column]="labelPlacement == 'bottom'" [class.list__item--icon]="!labelPlacement || ['none', 'tooltip'].indexOf(labelPlacement) >= 0" [ngClass]="item.class"
+      (click)="setItem(item)">
+      <ng-container *ngTemplateOutlet="text; context: { item: item }"></ng-container>
     </button>
-    <a *ngSwitchCase="'link'" [routerLink]="option.url" routerLinkActive="active" matRipple class="list-group-item list-group-item-action" [ngClass]="option.class" (click)="setOption(option)">
-      <ng-container *ngTemplateOutlet="text; context:{option:option}"></ng-container>
+    <a *ngSwitchCase="'link'" [routerLink]="item.url" routerLinkActive="active" matRipple class="list__item" [class.list__item--column]="labelPlacement == 'bottom'" [class.list__item--icon]="!labelPlacement || ['none', 'tooltip'].indexOf(labelPlacement) >= 0"
+      [ngClass]="item.class" (click)="setItem(item)">
+      <ng-container *ngTemplateOutlet="text; context: { item: item }"></ng-container>
     </a>
   </ng-container>
 </ng-template>
-<ng-template #collapsible let-option="option">
-  <button type="button" matRipple class="collapsible-header list-group-item list-group-item-action" [ngClass]="{show:option.show}" (click)="toggleCollapsible(option)">
-    <div class="d-flex align-items-center justify-content-between">
-      <div>{{ option[labelField] }}</div>
-      <ft-icon class="toggle" name="angle-right" size="1"></ft-icon>
-    </div>
-  </button>
-  <div class="collapsible" [ngClass]="{show:option.show}" *ngIf="option.children">
-    <ng-container *ngTemplateOutlet="switch; context:{children:option.children}"></ng-container>
+<ng-template #text let-item="item">
+  <div class="item">
+    <ft-icon class="item__icon" *ngIf="item[iconNameField]; else iconPlaceholderTemplate" [name]="item[iconNameField]" [collection]="iconCollection" [matTooltip]="item[labelField]" [matTooltipDisabled]="labelPlacement != 'tooltip'"
+      [matTooltipPosition]="tooltipPosition" matTooltipShowDelay="1000" matTooltipHideDelay="300"></ft-icon>
+    <div class="item__label">{{ item[labelField] }}</div>
   </div>
-</ng-template>
-<ng-template #header let-option="option">
-  <div class="header" [ngClass]="option.class">
-    {{ option[labelField] }}
-  </div>
-</ng-template>
-<ng-template #text let-option="option">
-  <div class="d-flex align-items-center">
-    <ft-icon class="icon" *ngIf="option[iconNameField]" [name]="option[iconNameField]" [collection]="iconCollection" [title]="option[labelField]"></ft-icon>
-    <div class="label">{{ option[labelField] }}</div>
-  </div>
+  <ng-template #iconPlaceholderTemplate>
+    <div class="item__icon icon-placeholder" [matTooltip]="item[labelField]" [matTooltipDisabled]="labelPlacement != 'tooltip'" [matTooltipPosition]="tooltipPosition" matTooltipShowDelay="1000" matTooltipHideDelay="300"></div>
+  </ng-template>
 </ng-template>

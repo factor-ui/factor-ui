@@ -2,23 +2,21 @@ import { StorageService } from 'factor-utils';
 import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { tap, catchError, filter, take, switchMap, finalize, share } from 'rxjs/operators';
-import { Injectable, Injector, Inject, NgModule, defineInjectable, inject, INJECTOR } from '@angular/core';
+import { Inject, Injectable, NgModule, Injector, defineInjectable, inject } from '@angular/core';
 import { HttpClient, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AuthService {
     /**
      * @param {?} http
-     * @param {?} injector
      * @param {?} storageService
      * @param {?} configuration
      */
-    constructor(http, injector, storageService, configuration) {
+    constructor(http, storageService, configuration) {
         this.http = http;
-        this.injector = injector;
         this.storageService = storageService;
         this.configuration = configuration;
         this.loggedInSource = new BehaviorSubject(false);
@@ -28,12 +26,28 @@ class AuthService {
         }
     }
     /**
-     * @param {?} form
-     * @param {?=} redirect
      * @return {?}
      */
-    login(form, redirect) {
-        this.router = this.router || this.injector.get(Router);
+    checkLoggedIn() {
+        if (this.storageService.get('token', 'localStorage')) {
+            this.loggedInSource.next(true);
+        }
+        else {
+            this.loggedInSource.next(false);
+        }
+        return this.loggedIn;
+    }
+    /**
+     * @return {?}
+     */
+    getToken() {
+        return this.storageService.get('token', 'localStorage');
+    }
+    /**
+     * @param {?} form
+     * @return {?}
+     */
+    login(form) {
         /** @type {?} */
         const params = {
             client_id: this.configuration.clientId,
@@ -41,42 +55,31 @@ class AuthService {
             grant_type: 'password',
             response_type: 'token',
             username: form.username,
-            password: form.password
+            password: form.password,
+            state: Date.now()
         };
         return this.http.post(this.configuration.tokenUrl, params).pipe(tap((/**
          * @param {?} token
          * @return {?}
          */
         (token) => {
-            this.storageService.set('token', token, localStorage);
+            this.storageService.set('token', token, 'localStorage');
             this.loggedInSource.next(true);
-            if (redirect) {
-                this.router.navigate([redirect]);
-            }
         })));
     }
     /**
-     * @param {?=} redirect
      * @return {?}
      */
-    logout(redirect) {
-        this.router = this.router || this.injector.get(Router);
-        this.storageService.delete('token', localStorage);
+    logout() {
+        this.storageService.delete('token', 'localStorage');
         this.loggedInSource.next(false);
-        this.router.navigate(['/login', redirect ? { redirect: redirect } : {}]);
-    }
-    /**
-     * @return {?}
-     */
-    getToken() {
-        return this.storageService.get('token', localStorage);
     }
     /**
      * @return {?}
      */
     refreshToken() {
         /** @type {?} */
-        const token = this.storageService.get('token', localStorage);
+        const token = this.storageService.get('token', 'localStorage');
         /** @type {?} */
         const url = `${this.configuration.tokenUrl}`;
         /** @type {?} */
@@ -91,7 +94,7 @@ class AuthService {
          * @return {?}
          */
         (token) => {
-            this.storageService.set('token', token, localStorage);
+            this.storageService.set('token', token, 'localStorage');
         })));
     }
 }
@@ -103,15 +106,14 @@ AuthService.decorators = [
 /** @nocollapse */
 AuthService.ctorParameters = () => [
     { type: HttpClient },
-    { type: Injector },
     { type: StorageService },
     { type: undefined, decorators: [{ type: Inject, args: ['FactorAuthConfiguration',] }] }
 ];
-/** @nocollapse */ AuthService.ngInjectableDef = defineInjectable({ factory: function AuthService_Factory() { return new AuthService(inject(HttpClient), inject(INJECTOR), inject(StorageService), inject("FactorAuthConfiguration")); }, token: AuthService, providedIn: "root" });
+/** @nocollapse */ AuthService.ngInjectableDef = defineInjectable({ factory: function AuthService_Factory() { return new AuthService(inject(HttpClient), inject(StorageService), inject("FactorAuthConfiguration")); }, token: AuthService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AuthGuard {
     /**
@@ -131,7 +133,7 @@ class AuthGuard {
             return true;
         }
         else {
-            this.authService.logout(state.url);
+            this.authService.logout();
             return false;
         }
     }
@@ -149,7 +151,7 @@ AuthGuard.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LoginGuard {
     /**
@@ -189,7 +191,7 @@ LoginGuard.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AuthInterceptor {
     /**
@@ -307,7 +309,7 @@ AuthInterceptor.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AuthModule {
     /**
@@ -334,12 +336,12 @@ AuthModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { AuthService, AuthGuard, LoginGuard, AuthInterceptor, AuthModule };

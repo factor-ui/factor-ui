@@ -1,6 +1,6 @@
 {
   "name": "factor-inputs",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "license": "CC-BY-NC-ND-4.0",
   "author": "Factor",
   "repository": {
@@ -18,9 +18,13 @@
   ],
   "homepage": "https://github.com/juanca202/factor-ui#readme",
   "private": false,
+  "dependencies": {
+    "factor-common": ">=0.2.1",
+    "tslib": "^1.9.0"
+  },
   "peerDependencies": {
-    "@angular/common": "^7.2.0",
-    "@angular/core": "^7.2.0"
+    "@angular/common": ">=7.2.0",
+    "@angular/core": ">=7.2.0"
   },
   "main": "bundles/factor-inputs.umd.js",
   "module": "fesm5/factor-inputs.js",
@@ -31,8 +35,5 @@
   "fesm2015": "fesm2015/factor-inputs.js",
   "typings": "factor-inputs.d.ts",
   "metadata": "factor-inputs.metadata.json",
-  "sideEffects": false,
-  "dependencies": {
-    "tslib": "^1.9.0"
-  }
+  "sideEffects": false
 }
