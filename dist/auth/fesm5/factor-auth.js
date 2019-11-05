@@ -27,7 +27,7 @@ var AuthService = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        if (this.storageService.get('token', 'localStorage')) {
+        if (this.storageService.get('token', 'local')) {
             this.loggedInSource.next(true);
         }
         else {
@@ -42,7 +42,7 @@ var AuthService = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        return this.storageService.get('token', 'localStorage');
+        return this.storageService.get('token', 'local');
     };
     /**
      * @param {?} form
@@ -69,7 +69,7 @@ var AuthService = /** @class */ (function () {
          * @return {?}
          */
         function (token) {
-            _this.storageService.set('token', token, 'localStorage');
+            _this.storageService.set('token', token, 'local');
             _this.loggedInSource.next(true);
         })));
     };
@@ -80,7 +80,7 @@ var AuthService = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this.storageService.delete('token', 'localStorage');
+        this.storageService.delete('token', 'local');
         this.loggedInSource.next(false);
     };
     /**
@@ -92,7 +92,7 @@ var AuthService = /** @class */ (function () {
     function () {
         var _this = this;
         /** @type {?} */
-        var token = this.storageService.get('token', 'localStorage');
+        var token = this.storageService.get('token', 'local');
         /** @type {?} */
         var url = "" + this.configuration.tokenUrl;
         /** @type {?} */
@@ -107,7 +107,7 @@ var AuthService = /** @class */ (function () {
          * @return {?}
          */
         function (token) {
-            _this.storageService.set('token', token, 'localStorage');
+            _this.storageService.set('token', token, 'local');
         })));
     };
     AuthService.decorators = [

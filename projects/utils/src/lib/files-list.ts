@@ -17,7 +17,7 @@ export class FilesList {
       const reader = new FileReader();
       this.loadValue(event.target.files);
     });
-    document.body.appendChild(this.fileInput);
+    //document.body.appendChild(this.fileInput);
   }
   private loadValue(files) {
     if (files && files.length > 0) {
@@ -27,13 +27,9 @@ export class FilesList {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-          data.push({
-            data: reader.result,
-            lastModifiedDate: file.lastModifiedDate,
-            name: file.name,
-            size: file.size/*,
-            type: file.type*/
-          });
+          data.push(Object.assign(file, {
+            data: reader.result
+          }));
           if (data.length == files.length) {
             this.valueChangesSubject.next(data.length > 0 ? data : null);
           }

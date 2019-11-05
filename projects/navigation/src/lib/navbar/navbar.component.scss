@@ -17,6 +17,9 @@
   z-index: var(--z-index);
   font-size: 0.875rem;
   display: flex;
+  @include media-breakpoint-up(md) {
+    --min-width: 13.75rem;
+  }
 }
 :host.left,
 :host.right {

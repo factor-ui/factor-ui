@@ -29,7 +29,7 @@ class AuthService {
      * @return {?}
      */
     checkLoggedIn() {
-        if (this.storageService.get('token', 'localStorage')) {
+        if (this.storageService.get('token', 'local')) {
             this.loggedInSource.next(true);
         }
         else {
@@ -41,7 +41,7 @@ class AuthService {
      * @return {?}
      */
     getToken() {
-        return this.storageService.get('token', 'localStorage');
+        return this.storageService.get('token', 'local');
     }
     /**
      * @param {?} form
@@ -63,7 +63,7 @@ class AuthService {
          * @return {?}
          */
         (token) => {
-            this.storageService.set('token', token, 'localStorage');
+            this.storageService.set('token', token, 'local');
             this.loggedInSource.next(true);
         })));
     }
@@ -71,7 +71,7 @@ class AuthService {
      * @return {?}
      */
     logout() {
-        this.storageService.delete('token', 'localStorage');
+        this.storageService.delete('token', 'local');
         this.loggedInSource.next(false);
     }
     /**
@@ -79,7 +79,7 @@ class AuthService {
      */
     refreshToken() {
         /** @type {?} */
-        const token = this.storageService.get('token', 'localStorage');
+        const token = this.storageService.get('token', 'local');
         /** @type {?} */
         const url = `${this.configuration.tokenUrl}`;
         /** @type {?} */
@@ -94,7 +94,7 @@ class AuthService {
          * @return {?}
          */
         (token) => {
-            this.storageService.set('token', token, 'localStorage');
+            this.storageService.set('token', token, 'local');
         })));
     }
 }

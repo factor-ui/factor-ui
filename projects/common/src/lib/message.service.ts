@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { ReplaySubject, Observable, of } from "rxjs";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,12 +8,14 @@ import { MessageComponent } from './message/message.component';
 export interface Action {
   label: string;
   value: any;
+  color?: string;
 }
 export interface Options {
   type?: 'modal' | 'notification';
   actions?: Action[];
   duration?: number;
   title?: string;
+  width?: string;
 }
 
 @Injectable({
@@ -28,6 +30,8 @@ export class MessageService {
   ) { }
 
   show(message: string, options?: Options): Observable<any> {
+    let selectionSource: ReplaySubject<string> = new ReplaySubject<string>(null);
+    let selection: Observable<string> = selectionSource.asObservable();
     const defaults: any = {
       type: null,
       duration: 2000
@@ -42,13 +46,18 @@ export class MessageService {
         break;
       case 'modal':
         const dialogRef = this.dialog.open(MessageComponent, {
-          width: '250px',
+          width: options.width || '250px',
           data: { message, options },
+          autoFocus: false,
           disableClose: true
+        });
+        dialogRef.componentInstance.beforeSelect.subscribe(response => {
+          selectionSource.next(response);
+          dialogRef.close();
         });
         this.snackBar.dismiss();
         break;
     }
-    return of(null);
+    return selection;
   }
 }

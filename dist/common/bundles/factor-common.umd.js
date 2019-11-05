@@ -191,6 +191,7 @@
         function MessageComponent(dialogRef, data) {
             this.dialogRef = dialogRef;
             this.data = data;
+            this.beforeSelect = new i0.EventEmitter();
         }
         /**
          * @return {?}
@@ -200,19 +201,21 @@
          */
             function () {
             };
-        Object.defineProperty(MessageComponent.prototype, "hostClasses", {
-            get: /**
-             * @return {?}
-             */ function () {
-                return [].join(' ');
-            },
-            enumerable: true,
-            configurable: true
-        });
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        MessageComponent.prototype.select = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.beforeSelect.emit(value);
+            };
         MessageComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ft-message',
-                        template: "<h1 mat-dialog-title *ngIf=\"data.options.title\">{{ data.options.title }}</h1>\n<div mat-dialog-content>\n  <ft-icon *ngIf=\"data.options.icon\" [name]=\"data.options.icon.name\" [collection]=\"data.options.icon.collection\" size=\"data.options.icon.size\"></ft-icon>\n  <div>{{ data.message }}</div>\n</div>\n<div mat-dialog-actions>\n  <button mat-button mat-dialog-close color=\"primary\">Accept</button>\n</div>\n",
+                        template: "<h1 mat-dialog-title *ngIf=\"data.options.title\">{{ data.options.title }}</h1>\n<div mat-dialog-content>\n  <ft-icon *ngIf=\"data.options.icon\" [name]=\"data.options.icon.name\" [collection]=\"data.options.icon.collection\" size=\"data.options.icon.size\"></ft-icon>\n  <div>{{ data.message }}</div>\n</div>\n<div mat-dialog-actions>\n  <ng-container *ngIf=\"data.options && data.options.actions && data.options.actions.length > 0; else acceptTemplate\">\n    <button type=\"button\" mat-button [color]=\"action.color\" autofocus=\"action.color == 'primary'\" *ngFor=\"let action of data.options.actions; let i = index\" (click)=\"select(action.value)\">{{ action.label }}</button>\n  </ng-container>\n</div>\n<ng-template #acceptTemplate>\n  <button type=\"button\" mat-button color=\"primary\" i18n (click)=\"select('-1')\">Accept</button>\n</ng-template>\n",
                         styles: ["[mat-dialog-content]{display:flex;align-items:center;margin-bottom:1rem}[mat-dialog-actions]{justify-content:flex-end;padding:.5rem;margin-left:-1.5rem;margin-right:-1.5rem}"]
                     }] }
         ];
@@ -224,7 +227,7 @@
             ];
         };
         MessageComponent.propDecorators = {
-            hostClasses: [{ type: i0.HostBinding, args: ['class',] }]
+            beforeSelect: [{ type: i0.Output }]
         };
         return MessageComponent;
     }());
@@ -250,6 +253,10 @@
          */
             function (message, options) {
                 /** @type {?} */
+                var selectionSource = new rxjs.ReplaySubject(null);
+                /** @type {?} */
+                var selection = selectionSource.asObservable();
+                /** @type {?} */
                 var defaults = {
                     type: null,
                     duration: 2000
@@ -264,15 +271,23 @@
                         break;
                     case 'modal':
                         /** @type {?} */
-                        var dialogRef = this.dialog.open(MessageComponent, {
-                            width: '250px',
+                        var dialogRef_1 = this.dialog.open(MessageComponent, {
+                            width: options.width || '250px',
                             data: { message: message, options: options },
+                            autoFocus: false,
                             disableClose: true
                         });
+                        dialogRef_1.componentInstance.beforeSelect.subscribe(( /**
+                         * @param {?} response
+                         * @return {?}
+                         */function (response) {
+                            selectionSource.next(response);
+                            dialogRef_1.close();
+                        }));
                         this.snackBar.dismiss();
                         break;
                 }
-                return rxjs.of(null);
+                return selection;
             };
         MessageService.decorators = [
             { type: i0.Injectable, args: [{

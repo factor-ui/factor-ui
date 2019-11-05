@@ -23,12 +23,6 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() { }
-  @HostBinding('class')
-  get hostClasses(): string {
-    return [
-
-    ].join(' ');
-  }
   getComponentType(item) {
     let type: string = 'text';
     if (!item.url || item.url.match(/^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)) {

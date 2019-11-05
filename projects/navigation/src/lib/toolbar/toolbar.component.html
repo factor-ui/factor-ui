@@ -1,6 +1,6 @@
 <div (ftObserveIntersecting)="setOverlapped($event)" [ftObserveIntersectingOptions]="rootMargin"></div>
 <div class="content" [ngClass]="{overlapped: overlapped}">
-  <div class="container p-2 pb-md-3 pt-md-5 px-md-3">
+  <div class="container p-2 pb-md-3 pt-md-5 px-md-3 px-lg-5">
     <div class="d-flex align-items-center">
       <h3 class="title ml-2 ml-md-0 mb-0 mr-auto" *ngIf="!titleOptions; else titleForm">{{ title }}</h3>
       <ng-container *ngFor="let option of actionOptions">
