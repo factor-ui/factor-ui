@@ -154,9 +154,7 @@
      */
     var ProgressComponent = /** @class */ (function () {
         function ProgressComponent() {
-            this.color = 'var(--primary)';
             this.mode = 'indeterminate';
-            this.value = 0;
         }
         /**
          * @return {?}
@@ -165,6 +163,8 @@
          * @return {?}
          */
             function () {
+                this.color = 'var(--primary)';
+                this.value = 0;
             };
         ProgressComponent.decorators = [
             { type: i0.Component, args: [{
@@ -178,6 +178,7 @@
         ProgressComponent.propDecorators = {
             color: [{ type: i0.Input }],
             mode: [{ type: i0.Input }],
+            size: [{ type: i0.Input }],
             value: [{ type: i0.Input }]
         };
         return ProgressComponent;

@@ -1,203 +1,94 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('crypto-js'), require('@angular/router'), require('@angular/common/http'), require('@angular/common'), require('rxjs'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('factor-utils', ['exports', 'crypto-js', '@angular/router', '@angular/common/http', '@angular/common', 'rxjs', '@angular/core'], factory) :
-    (factory((global['factor-utils'] = {}),global.CryptoJS,global.ng.router,global.ng.common.http,global.ng.common,global.rxjs,global.ng.core));
-}(this, (function (exports,CryptoJS,i1,http,common,rxjs,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/router'), require('@angular/common/http'), require('@angular/common'), require('crypto-js'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('factor-utils', ['exports', '@angular/router', '@angular/common/http', '@angular/common', 'crypto-js', '@angular/core'], factory) :
+    (factory((global['factor-utils'] = {}),global.ng.router,global.ng.common.http,global.ng.common,global.CryptoJS,global.ng.core));
+}(this, (function (exports,i1,http,common,CryptoJS,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    // Only works on client storage
-    var StorageService = /** @class */ (function () {
-        function StorageService(platformId, configuration) {
-            this.platformId = platformId;
-            this.configuration = configuration;
+    var FilesService = /** @class */ (function () {
+        //private valueChangesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
+        //private valueChanges: Observable<any[]> = this.valueChangesSubject.asObservable();
+        function FilesService() {
+            var _this = this;
+            this.fileInput = document.createElement('input');
+            //this.fileInput.style.display = 'none';
+            this.fileInput.type = 'file';
+            this.fileInput.addEventListener('change', ( /**
+             * @param {?} event
+             * @return {?}
+             */function (event) {
+                /** @type {?} */
+                var reader = new FileReader();
+                _this.loadValue(event.target.files);
+            }));
         }
         /**
-         * @param {?} key
-         * @param {?=} storage
-         * @return {?}
-         */
-        StorageService.prototype.delete = /**
-         * @param {?} key
-         * @param {?=} storage
-         * @return {?}
-         */
-            function (key, storage) {
-                if (common.isPlatformBrowser(this.platformId)) {
-                    if (!storage || typeof storage == 'string') {
-                        switch (storage) {
-                            case 'local':
-                            case 'localStorage':
-                                delete localStorage[key];
-                                break;
-                            case 'memory':
-                                delete this.memoryStorage[key];
-                                break;
-                            default:
-                                delete sessionStorage[key];
-                                break;
-                        }
-                    }
-                    else if (typeof storage == 'object') {
-                        delete storage[key];
-                    }
-                }
-            };
-        /**
-         * @param {?} key
-         * @param {?=} storage
-         * @return {?}
-         */
-        StorageService.prototype.get = /**
-         * @param {?} key
-         * @param {?=} storage
-         * @return {?}
-         */
-            function (key, storage) {
-                /** @type {?} */
-                var parsedValue;
-                if (common.isPlatformBrowser(this.platformId)) {
-                    try {
-                        parsedValue = JSON.parse(this.getValue(key, storage));
-                    }
-                    catch (err) {
-                        parsedValue = this.getValue(key, storage);
-                    }
-                }
-                return parsedValue;
-            };
-        /**
          * @private
-         * @param {?} key
-         * @param {?=} storage
+         * @param {?} files
          * @return {?}
          */
-        StorageService.prototype.getValue = /**
+        FilesService.prototype.loadValue = /**
          * @private
-         * @param {?} key
-         * @param {?=} storage
+         * @param {?} files
          * @return {?}
          */
-            function (key, storage) {
-                /** @type {?} */
-                var value;
-                if (!storage || typeof storage == 'string') {
-                    switch (storage) {
-                        case 'local':
-                        case 'localStorage':
-                            value = localStorage[key];
-                            break;
-                        case 'memory':
-                            value = this.memoryStorage[key];
-                            break;
-                        default:
-                            value = sessionStorage[key];
-                            break;
-                    }
-                }
-                else if (typeof storage == 'object') {
-                    value = storage[key];
-                }
-                return this.decrypt(value);
-            };
-        /**
-         * @private
-         * @param {?} value
-         * @return {?}
-         */
-        StorageService.prototype.decrypt = /**
-         * @private
-         * @param {?} value
-         * @return {?}
-         */
-            function (value) {
-                if (value !== null &&
-                    value !== undefined &&
-                    value !== '' &&
-                    this.configuration &&
-                    this.configuration.storage &&
-                    this.configuration.storage.encryptionSecret) {
+            function (files) {
+                var _this = this;
+                if (files && files.length > 0) {
                     /** @type {?} */
-                    var decryptedValue = CryptoJS.AES.decrypt(value, this.configuration.storage.encryptionSecret);
-                    value = decryptedValue.toString(CryptoJS.enc.Utf8);
-                }
-                return value;
-            };
-        /**
-         * @private
-         * @param {?} value
-         * @return {?}
-         */
-        StorageService.prototype.encrypt = /**
-         * @private
-         * @param {?} value
-         * @return {?}
-         */
-            function (value) {
-                if (value !== null &&
-                    value !== undefined &&
-                    value !== '' &&
-                    this.configuration &&
-                    this.configuration.storage &&
-                    this.configuration.storage.encryptionSecret) {
-                    value = CryptoJS.AES.encrypt(value, this.configuration.storage.encryptionSecret);
-                    return value.toString();
-                }
-                else {
-                    return value;
-                }
-            };
-        /**
-         * @param {?} key
-         * @param {?} value
-         * @param {?=} storage
-         * @return {?}
-         */
-        StorageService.prototype.set = /**
-         * @param {?} key
-         * @param {?} value
-         * @param {?=} storage
-         * @return {?}
-         */
-            function (key, value, storage) {
-                if (common.isPlatformBrowser(this.platformId)) {
-                    /** @type {?} */
-                    var valueEncrypted = this.encrypt(JSON.stringify(value));
-                    if (!storage || typeof storage == 'string') {
-                        switch (storage) {
-                            case 'local':
-                            case 'localStorage':
-                                localStorage[key] = valueEncrypted;
-                                break;
-                            case 'memory':
-                                this.memoryStorage[key] = valueEncrypted;
-                                break;
-                            default:
-                                sessionStorage[key] = valueEncrypted;
-                                break;
-                        }
-                    }
-                    else {
-                        storage[key] = valueEncrypted;
+                    var data_1 = [];
+                    var _loop_1 = function (i) {
+                        /** @type {?} */
+                        var file = files.item(i);
+                        /** @type {?} */
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = ( /**
+                         * @return {?}
+                         */function () {
+                            data_1.push(Object.assign(file, {
+                                data: reader.result
+                            }));
+                            if (data_1.length == files.length) {
+                                //this.valueChangesSubject.next(data.length > 0 ? data : null);
+                                _this.callback(data_1.length > 0 ? data_1 : null);
+                                _this.fileInput.value = null;
+                            }
+                        });
+                    };
+                    for (var i = 0; i < files.length; i++) {
+                        _loop_1(i);
                     }
                 }
             };
-        StorageService.decorators = [
+        /**
+         * @param {?} callback
+         * @param {?} options
+         * @return {?}
+         */
+        FilesService.prototype.open = /**
+         * @param {?} callback
+         * @param {?} options
+         * @return {?}
+         */
+            function (callback, options) {
+                this.fileInput.accept = options && options.accept ? options.accept : '';
+                this.fileInput.multiple = options && options.multiple;
+                this.fileInput.click();
+                this.callback = callback;
+            };
+        FilesService.decorators = [
             { type: i0.Injectable, args: [{
                         providedIn: 'root'
                     },] }
         ];
         /** @nocollapse */
-        StorageService.ctorParameters = function () {
-            return [
-                { type: Object, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: undefined, decorators: [{ type: i0.Inject, args: ['FactorUtilsConfiguration',] }] }
-            ];
-        };
-        /** @nocollapse */ StorageService.ngInjectableDef = i0.defineInjectable({ factory: function StorageService_Factory() { return new StorageService(i0.inject(i0.PLATFORM_ID), i0.inject("FactorUtilsConfiguration")); }, token: StorageService, providedIn: "root" });
-        return StorageService;
+        FilesService.ctorParameters = function () { return []; };
+        /** @nocollapse */ FilesService.ngInjectableDef = i0.defineInjectable({ factory: function FilesService_Factory() { return new FilesService(); }, token: FilesService, providedIn: "root" });
+        return FilesService;
     }());
 
     /**
@@ -530,77 +421,196 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var FilesList = /** @class */ (function () {
-        function FilesList(options) {
-            var _this = this;
-            this.valueChangesSubject = new rxjs.BehaviorSubject(null);
-            this.valueChanges = this.valueChangesSubject.asObservable();
-            this.fileInput = document.createElement('input');
-            this.fileInput.style.display = 'none';
-            this.fileInput.type = 'file';
-            this.fileInput.accept = options && options.accept ? options.accept : '';
-            this.fileInput.multiple = options && options.multiple;
-            this.fileInput.addEventListener('change', ( /**
-             * @param {?} event
-             * @return {?}
-             */function (event) {
-                /** @type {?} */
-                var reader = new FileReader();
-                _this.loadValue(event.target.files);
-            }));
-            document.body.appendChild(this.fileInput);
+    // Only works on client storage
+    var StorageService = /** @class */ (function () {
+        function StorageService(platformId, configuration) {
+            this.platformId = platformId;
+            this.configuration = configuration;
         }
         /**
-         * @private
-         * @param {?} files
+         * @param {?} key
+         * @param {?=} storage
          * @return {?}
          */
-        FilesList.prototype.loadValue = /**
-         * @private
-         * @param {?} files
+        StorageService.prototype.delete = /**
+         * @param {?} key
+         * @param {?=} storage
          * @return {?}
          */
-            function (files) {
-                var _this = this;
-                if (files && files.length > 0) {
-                    /** @type {?} */
-                    var data_1 = [];
-                    var _loop_1 = function (i) {
-                        /** @type {?} */
-                        var file = files.item(i);
-                        /** @type {?} */
-                        var reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = ( /**
-                         * @return {?}
-                         */function () {
-                            data_1.push({
-                                data: reader.result,
-                                lastModifiedDate: file.lastModifiedDate,
-                                name: file.name,
-                                size: file.size /*,
-                                type: file.type*/
-                            });
-                            if (data_1.length == files.length) {
-                                _this.valueChangesSubject.next(data_1.length > 0 ? data_1 : null);
-                            }
-                        });
-                    };
-                    for (var i = 0; i < files.length; i++) {
-                        _loop_1(i);
+            function (key, storage) {
+                if (common.isPlatformBrowser(this.platformId)) {
+                    if (!storage || typeof storage == 'string') {
+                        switch (storage) {
+                            case 'local':
+                            case 'localStorage':
+                                delete localStorage[key];
+                                break;
+                            case 'memory':
+                                delete this.memoryStorage[key];
+                                break;
+                            default:
+                                delete sessionStorage[key];
+                                break;
+                        }
+                    }
+                    else if (typeof storage == 'object') {
+                        delete storage[key];
                     }
                 }
             };
         /**
+         * @param {?} key
+         * @param {?=} storage
          * @return {?}
          */
-        FilesList.prototype.open = /**
+        StorageService.prototype.get = /**
+         * @param {?} key
+         * @param {?=} storage
          * @return {?}
          */
-            function () {
-                this.fileInput.click();
+            function (key, storage) {
+                /** @type {?} */
+                var parsedValue;
+                if (common.isPlatformBrowser(this.platformId)) {
+                    try {
+                        parsedValue = JSON.parse(this.getValue(key, storage));
+                    }
+                    catch (err) {
+                        parsedValue = this.getValue(key, storage);
+                    }
+                }
+                return parsedValue;
             };
-        return FilesList;
+        /**
+         * @private
+         * @param {?} key
+         * @param {?=} storage
+         * @return {?}
+         */
+        StorageService.prototype.getValue = /**
+         * @private
+         * @param {?} key
+         * @param {?=} storage
+         * @return {?}
+         */
+            function (key, storage) {
+                /** @type {?} */
+                var value;
+                if (!storage || typeof storage == 'string') {
+                    switch (storage) {
+                        case 'local':
+                        case 'localStorage':
+                            value = localStorage[key];
+                            break;
+                        case 'memory':
+                            value = this.memoryStorage[key];
+                            break;
+                        default:
+                            value = sessionStorage[key];
+                            break;
+                    }
+                }
+                else if (typeof storage == 'object') {
+                    value = storage[key];
+                }
+                return this.decrypt(value);
+            };
+        /**
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+        StorageService.prototype.decrypt = /**
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                if (value !== null &&
+                    value !== undefined &&
+                    value !== '' &&
+                    this.configuration &&
+                    this.configuration.storage &&
+                    this.configuration.storage.encryptionSecret) {
+                    /** @type {?} */
+                    var decryptedValue = CryptoJS.AES.decrypt(value, this.configuration.storage.encryptionSecret);
+                    value = decryptedValue.toString(CryptoJS.enc.Utf8);
+                }
+                return value;
+            };
+        /**
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+        StorageService.prototype.encrypt = /**
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                if (value !== null &&
+                    value !== undefined &&
+                    value !== '' &&
+                    this.configuration &&
+                    this.configuration.storage &&
+                    this.configuration.storage.encryptionSecret) {
+                    value = CryptoJS.AES.encrypt(value, this.configuration.storage.encryptionSecret);
+                    return value.toString();
+                }
+                else {
+                    return value;
+                }
+            };
+        /**
+         * @param {?} key
+         * @param {?} value
+         * @param {?=} storage
+         * @return {?}
+         */
+        StorageService.prototype.set = /**
+         * @param {?} key
+         * @param {?} value
+         * @param {?=} storage
+         * @return {?}
+         */
+            function (key, value, storage) {
+                if (common.isPlatformBrowser(this.platformId)) {
+                    /** @type {?} */
+                    var valueEncrypted = this.encrypt(JSON.stringify(value));
+                    if (!storage || typeof storage == 'string') {
+                        switch (storage) {
+                            case 'local':
+                            case 'localStorage':
+                                localStorage[key] = valueEncrypted;
+                                break;
+                            case 'memory':
+                                this.memoryStorage[key] = valueEncrypted;
+                                break;
+                            default:
+                                sessionStorage[key] = valueEncrypted;
+                                break;
+                        }
+                    }
+                    else {
+                        storage[key] = valueEncrypted;
+                    }
+                }
+            };
+        StorageService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        StorageService.ctorParameters = function () {
+            return [
+                { type: Object, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
+                { type: undefined, decorators: [{ type: i0.Inject, args: ['FactorUtilsConfiguration',] }] }
+            ];
+        };
+        /** @nocollapse */ StorageService.ngInjectableDef = i0.defineInjectable({ factory: function StorageService_Factory() { return new StorageService(i0.inject(i0.PLATFORM_ID), i0.inject("FactorUtilsConfiguration")); }, token: StorageService, providedIn: "root" });
+        return StorageService;
     }());
 
     /**
@@ -646,12 +656,12 @@
      * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
-    exports.StorageService = StorageService;
+    exports.FilesService = FilesService;
     exports.GoogleAnalyticsErrorHandler = GoogleAnalyticsErrorHandler;
     exports.GoogleAnalyticsService = GoogleAnalyticsService;
     exports.GoogleTagManagerErrorHandler = GoogleTagManagerErrorHandler;
     exports.GoogleTagManagerService = GoogleTagManagerService;
-    exports.FilesList = FilesList;
+    exports.StorageService = StorageService;
     exports.UtilsModule = UtilsModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });

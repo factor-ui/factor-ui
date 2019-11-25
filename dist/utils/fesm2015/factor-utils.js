@@ -1,174 +1,81 @@
-import { AES, enc } from 'crypto-js';
 import { NavigationEnd, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { isPlatformBrowser, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
-import { Inject, Injectable, PLATFORM_ID, Injector, NgModule, defineInjectable, inject } from '@angular/core';
+import { LocationStrategy, PathLocationStrategy, isPlatformBrowser } from '@angular/common';
+import { AES, enc } from 'crypto-js';
+import { Injectable, Injector, Inject, PLATFORM_ID, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-// Only works on client storage
-class StorageService {
-    /**
-     * @param {?} platformId
-     * @param {?} configuration
-     */
-    constructor(platformId, configuration) {
-        this.platformId = platformId;
-        this.configuration = configuration;
-    }
-    /**
-     * @param {?} key
-     * @param {?=} storage
-     * @return {?}
-     */
-    delete(key, storage) {
-        if (isPlatformBrowser(this.platformId)) {
-            if (!storage || typeof storage == 'string') {
-                switch (storage) {
-                    case 'local':
-                    case 'localStorage':
-                        delete localStorage[key];
-                        break;
-                    case 'memory':
-                        delete this.memoryStorage[key];
-                        break;
-                    default:
-                        delete sessionStorage[key];
-                        break;
-                }
-            }
-            else if (typeof storage == 'object') {
-                delete storage[key];
-            }
-        }
-    }
-    /**
-     * @param {?} key
-     * @param {?=} storage
-     * @return {?}
-     */
-    get(key, storage) {
-        /** @type {?} */
-        let parsedValue;
-        if (isPlatformBrowser(this.platformId)) {
-            try {
-                parsedValue = JSON.parse(this.getValue(key, storage));
-            }
-            catch (err) {
-                parsedValue = this.getValue(key, storage);
-            }
-        }
-        return parsedValue;
-    }
-    /**
-     * @private
-     * @param {?} key
-     * @param {?=} storage
-     * @return {?}
-     */
-    getValue(key, storage) {
-        /** @type {?} */
-        let value;
-        if (!storage || typeof storage == 'string') {
-            switch (storage) {
-                case 'local':
-                case 'localStorage':
-                    value = localStorage[key];
-                    break;
-                case 'memory':
-                    value = this.memoryStorage[key];
-                    break;
-                default:
-                    value = sessionStorage[key];
-                    break;
-            }
-        }
-        else if (typeof storage == 'object') {
-            value = storage[key];
-        }
-        return this.decrypt(value);
-    }
-    /**
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
-    decrypt(value) {
-        if (value !== null &&
-            value !== undefined &&
-            value !== '' &&
-            this.configuration &&
-            this.configuration.storage &&
-            this.configuration.storage.encryptionSecret) {
+class FilesService {
+    //private valueChangesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
+    //private valueChanges: Observable<any[]> = this.valueChangesSubject.asObservable();
+    constructor() {
+        this.fileInput = document.createElement('input');
+        //this.fileInput.style.display = 'none';
+        this.fileInput.type = 'file';
+        this.fileInput.addEventListener('change', (/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
             /** @type {?} */
-            const decryptedValue = AES.decrypt(value, this.configuration.storage.encryptionSecret);
-            value = decryptedValue.toString(enc.Utf8);
-        }
-        return value;
+            const reader = new FileReader();
+            this.loadValue(event.target.files);
+        }));
     }
     /**
      * @private
-     * @param {?} value
+     * @param {?} files
      * @return {?}
      */
-    encrypt(value) {
-        if (value !== null &&
-            value !== undefined &&
-            value !== '' &&
-            this.configuration &&
-            this.configuration.storage &&
-            this.configuration.storage.encryptionSecret) {
-            value = AES.encrypt(value, this.configuration.storage.encryptionSecret);
-            return value.toString();
-        }
-        else {
-            return value;
+    loadValue(files) {
+        if (files && files.length > 0) {
+            /** @type {?} */
+            let data = [];
+            for (let i = 0; i < files.length; i++) {
+                /** @type {?} */
+                const file = files.item(i);
+                /** @type {?} */
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (/**
+                 * @return {?}
+                 */
+                () => {
+                    data.push(Object.assign(file, {
+                        data: reader.result
+                    }));
+                    if (data.length == files.length) {
+                        //this.valueChangesSubject.next(data.length > 0 ? data : null);
+                        this.callback(data.length > 0 ? data : null);
+                        this.fileInput.value = null;
+                    }
+                });
+            }
         }
     }
     /**
-     * @param {?} key
-     * @param {?} value
-     * @param {?=} storage
+     * @param {?} callback
+     * @param {?} options
      * @return {?}
      */
-    set(key, value, storage) {
-        if (isPlatformBrowser(this.platformId)) {
-            /** @type {?} */
-            const valueEncrypted = this.encrypt(JSON.stringify(value));
-            if (!storage || typeof storage == 'string') {
-                switch (storage) {
-                    case 'local':
-                    case 'localStorage':
-                        localStorage[key] = valueEncrypted;
-                        break;
-                    case 'memory':
-                        this.memoryStorage[key] = valueEncrypted;
-                        break;
-                    default:
-                        sessionStorage[key] = valueEncrypted;
-                        break;
-                }
-            }
-            else {
-                storage[key] = valueEncrypted;
-            }
-        }
+    open(callback, options) {
+        this.fileInput.accept = options && options.accept ? options.accept : '';
+        this.fileInput.multiple = options && options.multiple;
+        this.fileInput.click();
+        this.callback = callback;
     }
 }
-StorageService.decorators = [
+FilesService.decorators = [
     { type: Injectable, args: [{
                 providedIn: 'root'
             },] }
 ];
 /** @nocollapse */
-StorageService.ctorParameters = () => [
-    { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
-];
-/** @nocollapse */ StorageService.ngInjectableDef = defineInjectable({ factory: function StorageService_Factory() { return new StorageService(inject(PLATFORM_ID), inject("FactorUtilsConfiguration")); }, token: StorageService, providedIn: "root" });
+FilesService.ctorParameters = () => [];
+/** @nocollapse */ FilesService.ngInjectableDef = defineInjectable({ factory: function FilesService_Factory() { return new FilesService(); }, token: FilesService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -463,69 +370,166 @@ GoogleTagManagerService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class FilesList {
+// Only works on client storage
+class StorageService {
     /**
-     * @param {?} options
+     * @param {?} platformId
+     * @param {?} configuration
      */
-    constructor(options) {
-        this.valueChangesSubject = new BehaviorSubject(null);
-        this.valueChanges = this.valueChangesSubject.asObservable();
-        this.fileInput = document.createElement('input');
-        this.fileInput.style.display = 'none';
-        this.fileInput.type = 'file';
-        this.fileInput.accept = options && options.accept ? options.accept : '';
-        this.fileInput.multiple = options && options.multiple;
-        this.fileInput.addEventListener('change', (/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
-            /** @type {?} */
-            const reader = new FileReader();
-            this.loadValue(event.target.files);
-        }));
-        document.body.appendChild(this.fileInput);
+    constructor(platformId, configuration) {
+        this.platformId = platformId;
+        this.configuration = configuration;
     }
     /**
-     * @private
-     * @param {?} files
+     * @param {?} key
+     * @param {?=} storage
      * @return {?}
      */
-    loadValue(files) {
-        if (files && files.length > 0) {
-            /** @type {?} */
-            let data = [];
-            for (let i = 0; i < files.length; i++) {
-                /** @type {?} */
-                const file = files.item(i);
-                /** @type {?} */
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = (/**
-                 * @return {?}
-                 */
-                () => {
-                    data.push({
-                        data: reader.result,
-                        lastModifiedDate: file.lastModifiedDate,
-                        name: file.name,
-                        size: file.size /*,
-                        type: file.type*/
-                    });
-                    if (data.length == files.length) {
-                        this.valueChangesSubject.next(data.length > 0 ? data : null);
-                    }
-                });
+    delete(key, storage) {
+        if (isPlatformBrowser(this.platformId)) {
+            if (!storage || typeof storage == 'string') {
+                switch (storage) {
+                    case 'local':
+                    case 'localStorage':
+                        delete localStorage[key];
+                        break;
+                    case 'memory':
+                        delete this.memoryStorage[key];
+                        break;
+                    default:
+                        delete sessionStorage[key];
+                        break;
+                }
+            }
+            else if (typeof storage == 'object') {
+                delete storage[key];
             }
         }
     }
     /**
+     * @param {?} key
+     * @param {?=} storage
      * @return {?}
      */
-    open() {
-        this.fileInput.click();
+    get(key, storage) {
+        /** @type {?} */
+        let parsedValue;
+        if (isPlatformBrowser(this.platformId)) {
+            try {
+                parsedValue = JSON.parse(this.getValue(key, storage));
+            }
+            catch (err) {
+                parsedValue = this.getValue(key, storage);
+            }
+        }
+        return parsedValue;
+    }
+    /**
+     * @private
+     * @param {?} key
+     * @param {?=} storage
+     * @return {?}
+     */
+    getValue(key, storage) {
+        /** @type {?} */
+        let value;
+        if (!storage || typeof storage == 'string') {
+            switch (storage) {
+                case 'local':
+                case 'localStorage':
+                    value = localStorage[key];
+                    break;
+                case 'memory':
+                    value = this.memoryStorage[key];
+                    break;
+                default:
+                    value = sessionStorage[key];
+                    break;
+            }
+        }
+        else if (typeof storage == 'object') {
+            value = storage[key];
+        }
+        return this.decrypt(value);
+    }
+    /**
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    decrypt(value) {
+        if (value !== null &&
+            value !== undefined &&
+            value !== '' &&
+            this.configuration &&
+            this.configuration.storage &&
+            this.configuration.storage.encryptionSecret) {
+            /** @type {?} */
+            const decryptedValue = AES.decrypt(value, this.configuration.storage.encryptionSecret);
+            value = decryptedValue.toString(enc.Utf8);
+        }
+        return value;
+    }
+    /**
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    encrypt(value) {
+        if (value !== null &&
+            value !== undefined &&
+            value !== '' &&
+            this.configuration &&
+            this.configuration.storage &&
+            this.configuration.storage.encryptionSecret) {
+            value = AES.encrypt(value, this.configuration.storage.encryptionSecret);
+            return value.toString();
+        }
+        else {
+            return value;
+        }
+    }
+    /**
+     * @param {?} key
+     * @param {?} value
+     * @param {?=} storage
+     * @return {?}
+     */
+    set(key, value, storage) {
+        if (isPlatformBrowser(this.platformId)) {
+            /** @type {?} */
+            const valueEncrypted = this.encrypt(JSON.stringify(value));
+            if (!storage || typeof storage == 'string') {
+                switch (storage) {
+                    case 'local':
+                    case 'localStorage':
+                        localStorage[key] = valueEncrypted;
+                        break;
+                    case 'memory':
+                        this.memoryStorage[key] = valueEncrypted;
+                        break;
+                    default:
+                        sessionStorage[key] = valueEncrypted;
+                        break;
+                }
+            }
+            else {
+                storage[key] = valueEncrypted;
+            }
+        }
     }
 }
+StorageService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+StorageService.ctorParameters = () => [
+    { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+    { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
+];
+/** @nocollapse */ StorageService.ngInjectableDef = defineInjectable({ factory: function StorageService_Factory() { return new StorageService(inject(PLATFORM_ID), inject("FactorUtilsConfiguration")); }, token: StorageService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -563,6 +567,6 @@ UtilsModule.decorators = [
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { StorageService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, FilesList, UtilsModule };
+export { FilesService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, StorageService, UtilsModule };
 
 //# sourceMappingURL=factor-utils.js.map

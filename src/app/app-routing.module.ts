@@ -8,6 +8,7 @@ import { ListComponent } from './list/list.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 import { EditorComponent } from 'factor-designer';
 import { MessagesComponent } from './messages/messages.component';
+import { FilesComponent } from './files/files.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'messages',
     component: MessagesComponent,
+  },
+  {
+    path: 'files',
+    component: FilesComponent,
   }
 ];
 

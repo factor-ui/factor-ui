@@ -46,7 +46,7 @@ export class MessageService {
         break;
       case 'modal':
         const dialogRef = this.dialog.open(MessageComponent, {
-          width: options.width || '250px',
+          width: options.width || '350px',
           data: { message, options },
           autoFocus: false,
           disableClose: true

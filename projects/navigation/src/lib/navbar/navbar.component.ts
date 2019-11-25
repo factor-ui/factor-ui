@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   @Input()
   labelField: string = 'label';
   @Input()
-  labelPlacement: 'left' | 'bottom' | 'tooltip' | 'none' = 'left';
+  labelPlacement: 'left' | 'bottom' | 'left-bottom' | 'tooltip' | 'auto' | 'none' = 'left';
   @Input()
   items: Option[];
   @Input()
@@ -37,9 +37,12 @@ export class NavbarComponent implements OnInit {
       this.tooltipPosition = result.matches? 'above' : 'right';
     });
   }
+  @Input()
+  class: string = '';
   @HostBinding('class')
   get hostClasses(): string {
     return [
+      this.class,
       this.position
     ].join(' ');
   }

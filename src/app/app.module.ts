@@ -19,6 +19,7 @@ import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.compo
 import { NavbarComponent } from './navbar/navbar.component';
 import { ListComponent } from './list/list.component';
 import { MessagesComponent } from './messages/messages.component';
+import { FilesComponent } from './files/files.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MessagesComponent } from './messages/messages.component';
     InfiniteScrollComponent,
     NavbarComponent,
     ListComponent,
-    MessagesComponent
+    MessagesComponent,
+    FilesComponent
   ],
   imports: [
     AppRoutingModule,

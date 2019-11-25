@@ -154,14 +154,14 @@ ImageComponent.propDecorators = {
  */
 class ProgressComponent {
     constructor() {
-        this.color = 'var(--primary)';
         this.mode = 'indeterminate';
-        this.value = 0;
     }
     /**
      * @return {?}
      */
     ngOnInit() {
+        this.color = 'var(--primary)';
+        this.value = 0;
     }
 }
 ProgressComponent.decorators = [
@@ -176,6 +176,7 @@ ProgressComponent.ctorParameters = () => [];
 ProgressComponent.propDecorators = {
     color: [{ type: Input }],
     mode: [{ type: Input }],
+    size: [{ type: Input }],
     value: [{ type: Input }]
 };
 

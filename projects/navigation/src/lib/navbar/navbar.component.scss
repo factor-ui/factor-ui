@@ -20,64 +20,64 @@
   @include media-breakpoint-up(md) {
     --min-width: 13.75rem;
   }
-}
-:host.left,
-:host.right {
-  top: 0;
-  bottom: 0;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
-  min-width: var(--min-width);
-}
-:host.left {
-  left: 0;
-}
-:host.right {
-  right: 0;
-}
-:host.bottom,
-:host.top {
-  left: 0;
-  right: 0;
-  min-height: var(--min-height);
-  .list {
-    display: flex;
-    &__item {
-      flex-grow: 1;
-      justify-content: center;
-    }
-  }
-}
-:host.bottom {
-  bottom: 0;
-  box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 -1px 3px 0 rgba(0,0,0,.12);
-}
-:host.top {
-  top: 0;
-  box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-}
-:host.auto {
-  @include media-breakpoint-up(md) {
-    left: 0;
+  &.left,
+  &.right {
     top: 0;
     bottom: 0;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
     min-width: var(--min-width);
-    flex-direction: column;
   }
-  @include media-breakpoint-down(sm) {
-    bottom: 0;
+  &.left {
+    left: 0;
+  }
+  &.right {
+    right: 0;
+  }
+  &.bottom,
+  &.top {
     left: 0;
     right: 0;
-    box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 -1px 3px 0 rgba(0,0,0,.12);
     min-height: var(--min-height);
     .list {
       display: flex;
       &__item {
         flex-grow: 1;
-        padding: 0;
         justify-content: center;
-        .item__label {
-          display: none;
+      }
+    }
+  }
+  &.bottom {
+    bottom: 0;
+    box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 -1px 3px 0 rgba(0,0,0,.12);
+  }
+  &.top {
+    top: 0;
+    box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  }
+  &.auto {
+    @include media-breakpoint-up(md) {
+      left: 0;
+      top: 0;
+      bottom: 0;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+      min-width: var(--min-width);
+      flex-direction: column;
+    }
+    @include media-breakpoint-down(sm) {
+      bottom: 0;
+      left: 0;
+      right: 0;
+      box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 -1px 3px 0 rgba(0,0,0,.12);
+      min-height: var(--min-height);
+      .list {
+        display: flex;
+        &__item {
+          flex-grow: 1;
+          padding: 0;
+          justify-content: center;
+          .item__label {
+            display: none;
+          }
         }
       }
     }

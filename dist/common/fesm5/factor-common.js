@@ -157,9 +157,7 @@ var ImageComponent = /** @class */ (function () {
  */
 var ProgressComponent = /** @class */ (function () {
     function ProgressComponent() {
-        this.color = 'var(--primary)';
         this.mode = 'indeterminate';
-        this.value = 0;
     }
     /**
      * @return {?}
@@ -168,6 +166,8 @@ var ProgressComponent = /** @class */ (function () {
      * @return {?}
      */
     function () {
+        this.color = 'var(--primary)';
+        this.value = 0;
     };
     ProgressComponent.decorators = [
         { type: Component, args: [{
@@ -181,6 +181,7 @@ var ProgressComponent = /** @class */ (function () {
     ProgressComponent.propDecorators = {
         color: [{ type: Input }],
         mode: [{ type: Input }],
+        size: [{ type: Input }],
         value: [{ type: Input }]
     };
     return ProgressComponent;

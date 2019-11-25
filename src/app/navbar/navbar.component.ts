@@ -17,22 +17,29 @@ export class NavbarComponent implements OnInit {
       {
         "name": "Ambientes",
         "icon": "cloud-check",
-        "url": "\/environments",
+        "url": "/environments",
+        "children": [
+          {
+            "name": "Cargar",
+            "icon": "cloud-check",
+            "url": "/environments"
+          }
+        ]
       },
       {
         "name": "Respaldos",
         "icon": "history",
-        "url": "\/backups",
+        "url": "/backups",
       },
       {
         "name": "Almacenamiento",
         "icon": "storage",
-        "url": "\/storage",
+        "url": "/storage",
       },
       {
         "name": "Usuarios",
         "icon": "usergroup",
-        "url": "\/users",
+        "url": "/users",
       },
       {
         "name": "Facturación",
