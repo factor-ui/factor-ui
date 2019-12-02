@@ -1,7 +1,9 @@
 import { NavigationEnd, Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy, isPlatformBrowser } from '@angular/common';
 import { AES, enc } from 'crypto-js';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Injectable, Injector, Inject, PLATFORM_ID, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
@@ -535,6 +537,136 @@ StorageService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+const MAX_CACHE_AGE = 60 * 60 * 1000;
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class CacheService {
+    constructor() {
+        this.cacheMap = new Map();
+    }
+    /**
+     * @param {?} req
+     * @return {?}
+     */
+    get(req) {
+        /** @type {?} */
+        const entry = this.cacheMap.get(req.urlWithParams);
+        if (!entry) {
+            return null;
+        }
+        /** @type {?} */
+        const isExpired = (Date.now() - entry.entryTime) > MAX_CACHE_AGE;
+        return isExpired ? null : entry.response;
+    }
+    /**
+     * @param {?} req
+     * @param {?} res
+     * @return {?}
+     */
+    put(req, res) {
+        /** @type {?} */
+        const entry = { url: req.urlWithParams, response: res, entryTime: Date.now() };
+        this.cacheMap.set(req.urlWithParams, entry);
+        this.deleteExpired();
+    }
+    /**
+     * @param {?} url
+     * @return {?}
+     */
+    invalidate(url) {
+        this.cacheMap.delete(url);
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    deleteExpired() {
+        this.cacheMap.forEach((/**
+         * @param {?} entry
+         * @return {?}
+         */
+        entry => {
+            if ((Date.now() - entry.entryTime) > MAX_CACHE_AGE) {
+                this.cacheMap.delete(entry.url);
+            }
+        }));
+    }
+}
+CacheService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */ CacheService.ngInjectableDef = defineInjectable({ factory: function CacheService_Factory() { return new CacheService(); }, token: CacheService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+//const CACHABLE_URL = "/api/booksSearch";
+class CacheInterceptor {
+    /**
+     * @param {?} cacheService
+     * @param {?} configuration
+     */
+    constructor(cacheService, configuration) {
+        this.cacheService = cacheService;
+        this.configuration = configuration;
+    }
+    /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    intercept(req, next) {
+        if (!this.isRequestCachable(req)) {
+            return next.handle(req);
+        }
+        /** @type {?} */
+        const response = this.cacheService.get(req);
+        if (response !== null) {
+            return of(response);
+        }
+        return next.handle(req).pipe(tap((/**
+         * @param {?} event
+         * @return {?}
+         */
+        event => {
+            if (event instanceof HttpResponse) {
+                this.cacheService.put(req, event);
+            }
+        })));
+    }
+    /**
+     * @private
+     * @param {?} req
+     * @return {?}
+     */
+    isRequestCachable(req) {
+        return (req.method === 'GET') && (this.configuration.cache.urls.find((/**
+         * @param {?} url
+         * @return {?}
+         */
+        url => req.url.indexOf(url) > -1)));
+    }
+}
+CacheInterceptor.decorators = [
+    { type: Injectable }
+];
+/** @nocollapse */
+CacheInterceptor.ctorParameters = () => [
+    { type: CacheService },
+    { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class UtilsModule {
     /**
      * @param {?} configuration
@@ -567,6 +699,6 @@ UtilsModule.decorators = [
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { FilesService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, StorageService, UtilsModule };
+export { FilesService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, StorageService, CacheService, CacheInterceptor, UtilsModule };
 
 //# sourceMappingURL=factor-utils.js.map

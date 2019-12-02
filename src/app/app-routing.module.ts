@@ -9,6 +9,7 @@ import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.compo
 import { EditorComponent } from 'factor-designer';
 import { MessagesComponent } from './messages/messages.component';
 import { FilesComponent } from './files/files.component';
+import { CacheComponent } from './cache/cache.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'files',
     component: FilesComponent,
+  },
+  {
+    path: 'cache',
+    component: CacheComponent,
   }
 ];
 

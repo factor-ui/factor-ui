@@ -1,7 +1,9 @@
 import { NavigationEnd, Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy, isPlatformBrowser } from '@angular/common';
 import { AES, enc } from 'crypto-js';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Injectable, Injector, Inject, PLATFORM_ID, NgModule, defineInjectable, inject } from '@angular/core';
 
 /**
@@ -605,6 +607,163 @@ var StorageService = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var MAX_CACHE_AGE = 60 * 60 * 1000;
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var CacheService = /** @class */ (function () {
+    function CacheService() {
+        this.cacheMap = new Map();
+    }
+    /**
+     * @param {?} req
+     * @return {?}
+     */
+    CacheService.prototype.get = /**
+     * @param {?} req
+     * @return {?}
+     */
+    function (req) {
+        /** @type {?} */
+        var entry = this.cacheMap.get(req.urlWithParams);
+        if (!entry) {
+            return null;
+        }
+        /** @type {?} */
+        var isExpired = (Date.now() - entry.entryTime) > MAX_CACHE_AGE;
+        return isExpired ? null : entry.response;
+    };
+    /**
+     * @param {?} req
+     * @param {?} res
+     * @return {?}
+     */
+    CacheService.prototype.put = /**
+     * @param {?} req
+     * @param {?} res
+     * @return {?}
+     */
+    function (req, res) {
+        /** @type {?} */
+        var entry = { url: req.urlWithParams, response: res, entryTime: Date.now() };
+        this.cacheMap.set(req.urlWithParams, entry);
+        this.deleteExpired();
+    };
+    /**
+     * @param {?} url
+     * @return {?}
+     */
+    CacheService.prototype.invalidate = /**
+     * @param {?} url
+     * @return {?}
+     */
+    function (url) {
+        this.cacheMap.delete(url);
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    CacheService.prototype.deleteExpired = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.cacheMap.forEach((/**
+         * @param {?} entry
+         * @return {?}
+         */
+        function (entry) {
+            if ((Date.now() - entry.entryTime) > MAX_CACHE_AGE) {
+                _this.cacheMap.delete(entry.url);
+            }
+        }));
+    };
+    CacheService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */ CacheService.ngInjectableDef = defineInjectable({ factory: function CacheService_Factory() { return new CacheService(); }, token: CacheService, providedIn: "root" });
+    return CacheService;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+//const CACHABLE_URL = "/api/booksSearch";
+var CacheInterceptor = /** @class */ (function () {
+    function CacheInterceptor(cacheService, configuration) {
+        this.cacheService = cacheService;
+        this.configuration = configuration;
+    }
+    /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    CacheInterceptor.prototype.intercept = /**
+     * @param {?} req
+     * @param {?} next
+     * @return {?}
+     */
+    function (req, next) {
+        var _this = this;
+        if (!this.isRequestCachable(req)) {
+            return next.handle(req);
+        }
+        /** @type {?} */
+        var response = this.cacheService.get(req);
+        if (response !== null) {
+            return of(response);
+        }
+        return next.handle(req).pipe(tap((/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) {
+            if (event instanceof HttpResponse) {
+                _this.cacheService.put(req, event);
+            }
+        })));
+    };
+    /**
+     * @private
+     * @param {?} req
+     * @return {?}
+     */
+    CacheInterceptor.prototype.isRequestCachable = /**
+     * @private
+     * @param {?} req
+     * @return {?}
+     */
+    function (req) {
+        return (req.method === 'GET') && (this.configuration.cache.urls.find((/**
+         * @param {?} url
+         * @return {?}
+         */
+        function (url) { return req.url.indexOf(url) > -1; })));
+    };
+    CacheInterceptor.decorators = [
+        { type: Injectable }
+    ];
+    /** @nocollapse */
+    CacheInterceptor.ctorParameters = function () { return [
+        { type: CacheService },
+        { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
+    ]; };
+    return CacheInterceptor;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var UtilsModule = /** @class */ (function () {
     function UtilsModule() {
     }
@@ -644,6 +803,6 @@ var UtilsModule = /** @class */ (function () {
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { FilesService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, StorageService, UtilsModule };
+export { FilesService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, StorageService, CacheService, CacheInterceptor, UtilsModule };
 
 //# sourceMappingURL=factor-utils.js.map

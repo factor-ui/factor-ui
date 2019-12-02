@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -9,7 +9,7 @@ import { InputsModule } from 'factor-inputs';
 import { NavigationModule } from 'factor-navigation';
 import { CommonModule as FactorCommonModule } from 'factor-common';
 import { DesignerModule } from 'factor-designer';
-import { UtilsModule } from 'factor-utils';
+import { UtilsModule, CacheInterceptor } from 'factor-utils';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ListComponent } from './list/list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { FilesComponent } from './files/files.component';
+import { CacheComponent } from './cache/cache.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FilesComponent } from './files/files.component';
     NavbarComponent,
     ListComponent,
     MessagesComponent,
-    FilesComponent
+    FilesComponent,
+    CacheComponent
   ],
   imports: [
     AppRoutingModule,
@@ -41,11 +43,22 @@ import { FilesComponent } from './files/files.component';
     ReactiveFormsModule,
     HttpClientModule,
     FactorCommonModule.forRoot({ icon: { path: 'assets/factoricons/symbols', collection: 'factoricons-regular' } }),
-    UtilsModule.forRoot({ storage: { encryptionSecret: 'test' } }),
+    UtilsModule.forRoot(
+      {
+        storage: { encryptionSecret: 'test' },
+        cache: {
+          urls: [
+            'assets/cachable-url.json'
+          ]
+        }
+      }
+    ),
     NavigationModule,
     DesignerModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

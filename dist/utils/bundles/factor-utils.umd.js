@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/router'), require('@angular/common/http'), require('@angular/common'), require('crypto-js'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('factor-utils', ['exports', '@angular/router', '@angular/common/http', '@angular/common', 'crypto-js', '@angular/core'], factory) :
-    (factory((global['factor-utils'] = {}),global.ng.router,global.ng.common.http,global.ng.common,global.CryptoJS,global.ng.core));
-}(this, (function (exports,i1,http,common,CryptoJS,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/router'), require('@angular/common'), require('crypto-js'), require('@angular/common/http'), require('rxjs'), require('rxjs/operators'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('factor-utils', ['exports', '@angular/router', '@angular/common', 'crypto-js', '@angular/common/http', 'rxjs', 'rxjs/operators', '@angular/core'], factory) :
+    (factory((global['factor-utils'] = {}),global.ng.router,global.ng.common,global.CryptoJS,global.ng.common.http,global.rxjs,global.rxjs.operators,global.ng.core));
+}(this, (function (exports,i1,common,CryptoJS,http,rxjs,operators,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -617,6 +617,162 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var MAX_CACHE_AGE = 60 * 60 * 1000;
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var CacheService = /** @class */ (function () {
+        function CacheService() {
+            this.cacheMap = new Map();
+        }
+        /**
+         * @param {?} req
+         * @return {?}
+         */
+        CacheService.prototype.get = /**
+         * @param {?} req
+         * @return {?}
+         */
+            function (req) {
+                /** @type {?} */
+                var entry = this.cacheMap.get(req.urlWithParams);
+                if (!entry) {
+                    return null;
+                }
+                /** @type {?} */
+                var isExpired = (Date.now() - entry.entryTime) > MAX_CACHE_AGE;
+                return isExpired ? null : entry.response;
+            };
+        /**
+         * @param {?} req
+         * @param {?} res
+         * @return {?}
+         */
+        CacheService.prototype.put = /**
+         * @param {?} req
+         * @param {?} res
+         * @return {?}
+         */
+            function (req, res) {
+                /** @type {?} */
+                var entry = { url: req.urlWithParams, response: res, entryTime: Date.now() };
+                this.cacheMap.set(req.urlWithParams, entry);
+                this.deleteExpired();
+            };
+        /**
+         * @param {?} url
+         * @return {?}
+         */
+        CacheService.prototype.invalidate = /**
+         * @param {?} url
+         * @return {?}
+         */
+            function (url) {
+                this.cacheMap.delete(url);
+            };
+        /**
+         * @private
+         * @return {?}
+         */
+        CacheService.prototype.deleteExpired = /**
+         * @private
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                this.cacheMap.forEach(( /**
+                 * @param {?} entry
+                 * @return {?}
+                 */function (entry) {
+                    if ((Date.now() - entry.entryTime) > MAX_CACHE_AGE) {
+                        _this.cacheMap.delete(entry.url);
+                    }
+                }));
+            };
+        CacheService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */ CacheService.ngInjectableDef = i0.defineInjectable({ factory: function CacheService_Factory() { return new CacheService(); }, token: CacheService, providedIn: "root" });
+        return CacheService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    //const CACHABLE_URL = "/api/booksSearch";
+    var CacheInterceptor = /** @class */ (function () {
+        function CacheInterceptor(cacheService, configuration) {
+            this.cacheService = cacheService;
+            this.configuration = configuration;
+        }
+        /**
+         * @param {?} req
+         * @param {?} next
+         * @return {?}
+         */
+        CacheInterceptor.prototype.intercept = /**
+         * @param {?} req
+         * @param {?} next
+         * @return {?}
+         */
+            function (req, next) {
+                var _this = this;
+                if (!this.isRequestCachable(req)) {
+                    return next.handle(req);
+                }
+                /** @type {?} */
+                var response = this.cacheService.get(req);
+                if (response !== null) {
+                    return rxjs.of(response);
+                }
+                return next.handle(req).pipe(operators.tap(( /**
+                 * @param {?} event
+                 * @return {?}
+                 */function (event) {
+                    if (event instanceof http.HttpResponse) {
+                        _this.cacheService.put(req, event);
+                    }
+                })));
+            };
+        /**
+         * @private
+         * @param {?} req
+         * @return {?}
+         */
+        CacheInterceptor.prototype.isRequestCachable = /**
+         * @private
+         * @param {?} req
+         * @return {?}
+         */
+            function (req) {
+                return (req.method === 'GET') && (this.configuration.cache.urls.find(( /**
+                 * @param {?} url
+                 * @return {?}
+                 */function (url) { return req.url.indexOf(url) > -1; })));
+            };
+        CacheInterceptor.decorators = [
+            { type: i0.Injectable }
+        ];
+        /** @nocollapse */
+        CacheInterceptor.ctorParameters = function () {
+            return [
+                { type: CacheService },
+                { type: undefined, decorators: [{ type: i0.Inject, args: ['FactorUtilsConfiguration',] }] }
+            ];
+        };
+        return CacheInterceptor;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var UtilsModule = /** @class */ (function () {
         function UtilsModule() {
         }
@@ -662,6 +818,8 @@
     exports.GoogleTagManagerErrorHandler = GoogleTagManagerErrorHandler;
     exports.GoogleTagManagerService = GoogleTagManagerService;
     exports.StorageService = StorageService;
+    exports.CacheService = CacheService;
+    exports.CacheInterceptor = CacheInterceptor;
     exports.UtilsModule = UtilsModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
