@@ -1,41 +1,33 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule as AngularCommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+import { AvatarComponent } from './avatar/avatar.component';
 import { IconComponent } from './icon/icon.component';
 import { ImageComponent } from './image/image.component';
-import { ProgressComponent } from './progress/progress.component';
 import { ObserveIntersectingDirective } from './observe-intersecting.directive';
-import { MessageComponent } from './message/message.component';
+import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
   declarations: [
+    AvatarComponent,
     IconComponent,
     ImageComponent,
-    ProgressComponent,
     ObserveIntersectingDirective,
-    MessageComponent
+    ProgressComponent
   ],
   imports: [
-    AngularCommonModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatSnackBarModule
+    AngularCommonModule
   ],
   exports: [
+    AvatarComponent,
     IconComponent,
     ImageComponent,
-    ProgressComponent,
-    ObserveIntersectingDirective
-  ],
-  entryComponents: [
-    MessageComponent
+    ObserveIntersectingDirective,
+    ProgressComponent
   ]
 })
 export class CommonModule {
-  public static forRoot(configuration: any): ModuleWithProviders {
+  public static forRoot(configuration?: any): ModuleWithProviders {
     return {
       ngModule: CommonModule,
       providers: [

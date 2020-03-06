@@ -1,0 +1,29 @@
+{
+  "name": "factor-dialogs",
+  "version": "0.4.4",
+  "license": "CC-BY-NC-ND-4.0",
+  "author": "Factor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juanca202/factor-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juanca202/factor-ui/issues"
+  },
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "dialog"
+  ],
+  "homepage": "https://github.com/juanca202/factor-ui#readme",
+  "private": false,
+  "dependencies": {
+    "@angular/material": ">=7.2.0",
+    "factor-common": ">=0.3.6"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=7.2.0",
+    "@angular/core": ">=7.2.0"
+  }
+}

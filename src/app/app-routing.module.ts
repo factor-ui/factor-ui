@@ -10,6 +10,7 @@ import { EditorComponent } from 'factor-designer';
 import { MessagesComponent } from './messages/messages.component';
 import { FilesComponent } from './files/files.component';
 import { CacheComponent } from './cache/cache.component';
+import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'cache',
     component: CacheComponent,
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
   }
 ];
 

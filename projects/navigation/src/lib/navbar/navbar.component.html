@@ -7,23 +7,17 @@
 <ng-content select="[ftEnd]"></ng-content>
 <ng-template #action let-item="item">
   <ng-container [ngSwitch]="getComponentType(item)">
-    <button *ngSwitchCase="'button'" type="button" matRipple class="list__item" [class.list__item--column]="labelPlacement == 'bottom'" [class.list__item--icon]="!labelPlacement || ['none', 'tooltip'].indexOf(labelPlacement) >= 0" [ngClass]="item.class"
-      (click)="setItem(item)">
+    <button *ngSwitchCase="'button'" type="button" matRipple class="list__item" [ngClass]="[labelPlacement, item.class || '' ]" (click)="setItem(item)">
       <ng-container *ngTemplateOutlet="text; context: { item: item }"></ng-container>
     </button>
-    <a *ngSwitchCase="'link'" [routerLink]="item.url" routerLinkActive="active" matRipple class="list__item" [class.list__item--column]="labelPlacement == 'bottom'" [class.list__item--icon]="!labelPlacement || ['none', 'tooltip'].indexOf(labelPlacement) >= 0"
-      [ngClass]="item.class" (click)="setItem(item)">
+    <a *ngSwitchCase="'link'" [routerLink]="item.url" routerLinkActive="active" matRipple class="list__item" [ngClass]="[labelPlacement, item.class || '' ]" (click)="setItem(item)">
       <ng-container *ngTemplateOutlet="text; context: { item: item }"></ng-container>
     </a>
   </ng-container>
 </ng-template>
 <ng-template #text let-item="item">
   <div class="item">
-    <ft-icon class="item__icon" *ngIf="item[iconNameField]; else iconPlaceholderTemplate" [name]="item[iconNameField]" [collection]="iconCollection" [matTooltip]="item[labelField]" [matTooltipDisabled]="labelPlacement != 'tooltip'"
-      [matTooltipPosition]="tooltipPosition" matTooltipShowDelay="1000" matTooltipHideDelay="300"></ft-icon>
-    <div class="item__label">{{ item[labelField] }}</div>
+    <ft-icon class="item__icon" *ngIf="item[iconNameField]" [name]="item[iconNameField]" [collection]="iconCollection" [title]="labelPlacement === 'none' ? item[labelField] : '' "></ft-icon>
+    <div class="item__label" *ngIf="labelPlacement !== 'none'">{{ item[labelField] }}</div>
   </div>
-  <ng-template #iconPlaceholderTemplate>
-    <div class="item__icon icon-placeholder" [matTooltip]="item[labelField]" [matTooltipDisabled]="labelPlacement != 'tooltip'" [matTooltipPosition]="tooltipPosition" matTooltipShowDelay="1000" matTooltipHideDelay="300"></div>
-  </ng-template>
 </ng-template>

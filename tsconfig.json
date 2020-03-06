@@ -54,6 +54,12 @@
       ],
       "factor-designer/*": [
         "dist/designer/*"
+      ],
+      "factor-dialogs": [
+        "dist/dialogs"
+      ],
+      "factor-dialogs/*": [
+        "dist/dialogs/*"
       ]
     }
   }

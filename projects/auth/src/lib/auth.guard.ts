@@ -1,5 +1,5 @@
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -11,17 +11,17 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    @Inject('FactorAuthConfiguration') private configuration
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.authService.getToken()) {
-      //TODO Verify session on server with Observable
+    if (this.authService.getProvider().getToken()) {
       return true;
     } else {
-      this.authService.logout();
+      this.authService.getProvider().logout();
       return false;
     }
   }

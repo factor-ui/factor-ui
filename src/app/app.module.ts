@@ -10,6 +10,7 @@ import { NavigationModule } from 'factor-navigation';
 import { CommonModule as FactorCommonModule } from 'factor-common';
 import { DesignerModule } from 'factor-designer';
 import { UtilsModule, CacheInterceptor } from 'factor-utils';
+import { AuthModule } from 'factor-auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { ListComponent } from './list/list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { FilesComponent } from './files/files.component';
 import { CacheComponent } from './cache/cache.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { CacheComponent } from './cache/cache.component';
     ListComponent,
     MessagesComponent,
     FilesComponent,
-    CacheComponent
+    CacheComponent,
+    AuthComponent
   ],
   imports: [
     AppRoutingModule,
@@ -42,10 +45,11 @@ import { CacheComponent } from './cache/cache.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FactorCommonModule.forRoot({ icon: { path: 'assets/factoricons/symbols', collection: 'factoricons-regular' } }),
+    FactorCommonModule.forRoot(
+      { icon: { path: 'assets/factoricons/symbols', collection: 'factoricons-regular' }
+    }),
     UtilsModule.forRoot(
       {
-        storage: { encryptionSecret: 'test' },
         cache: {
           urls: [
             'assets/cachable-url.json'
@@ -54,7 +58,8 @@ import { CacheComponent } from './cache/cache.component';
       }
     ),
     NavigationModule,
-    DesignerModule
+    DesignerModule,
+    AuthModule.forRoot({type:'oauth'})
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { Option } from '../models/option';
 
@@ -17,26 +16,17 @@ export class NavbarComponent implements OnInit {
   @Input()
   labelField: string = 'label';
   @Input()
-  labelPlacement: 'left' | 'bottom' | 'left-bottom' | 'tooltip' | 'auto' | 'none' = 'left';
+  labelPlacement: 'top' | 'right' | 'bottom' | 'left' | 'auto' | 'none' = 'auto';
   @Input()
   items: Option[];
   @Input()
   position: 'top' | 'right' | 'bottom' | 'left' | 'auto' = 'auto';
-  tooltipPosition: 'above' | 'right';
 
   constructor(
-    private router: Router,
-    private breakpointObserver: BreakpointObserver
+    private router: Router
   ) { }
 
-  ngOnInit() {
-    const layoutChanges = this.breakpointObserver.observe([
-      Breakpoints.HandsetPortrait
-    ]);
-    layoutChanges.subscribe(result => {
-      this.tooltipPosition = result.matches? 'above' : 'right';
-    });
-  }
+  ngOnInit() { }
   @Input()
   class: string = '';
   @HostBinding('class')

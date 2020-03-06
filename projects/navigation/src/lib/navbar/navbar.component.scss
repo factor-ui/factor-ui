@@ -17,7 +17,7 @@
   z-index: var(--z-index);
   font-size: 0.875rem;
   display: flex;
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(sm) {
     --min-width: 13.75rem;
   }
   &.left,
@@ -71,14 +71,6 @@
       min-height: var(--min-height);
       .list {
         display: flex;
-        &__item {
-          flex-grow: 1;
-          padding: 0;
-          justify-content: center;
-          .item__label {
-            display: none;
-          }
-        }
       }
     }
   }
@@ -93,10 +85,9 @@
     cursor: pointer;
     outline: none;
     transition: background-color 0.3s, color 0.3s;
-    text-align: left;
     display: flex;
     align-items: center;
-    padding: 0.75rem 1.5rem 0.75rem 1rem;
+    padding: 0.75rem 1rem;
     &:hover {
       text-decoration: none;
       &:not(.active) {
@@ -108,21 +99,56 @@
       background: var(--active-background-color);
       color: var(--active-text-color);
     }
-    &.list__item--column {
+    &.left {
+      justify-content: flex-start;
+      .item {
+        &__icon {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+    &.right {
+      justify-content: flex-end;
+      .item {
+        flex-direction: row-reverse;
+        &__icon {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+    &.top {
       justify-content: center;
+      flex-grow: 1;
+      padding: .5rem;
+      .item {
+        flex-direction: column-reverse;
+      }
+    }
+    &.bottom {
+      justify-content: center;
+      flex-grow: 1;
+      padding: .5rem;
       .item {
         flex-direction: column;
       }
     }
-    &.list__item--icon {
-      justify-content: center;
-      .item__label {
-        display: none;
+    &.auto {
+      @include media-breakpoint-up(md) {
+        .item {
+          flex-direction: row;
+          &__icon {
+            margin-right: 0.5rem;
+          }
+        }
       }
-    }
-    &:not(.list__item--column) {
-      .item__label {
-        margin-left: 0.5rem;
+      @include media-breakpoint-down(sm) {
+        justify-content: center;
+        flex-grow: 1;
+        padding: .5rem;
+        .item {
+          flex-direction: column;
+          font-size: 0.6875rem;
+        }
       }
     }
     .item {
@@ -139,11 +165,4 @@
       }
     }
   }
-}
-.icon-placeholder {
-  background: var(--text-color);
-  border-radius: 100vh;
-  min-height: 1em;
-  min-width: 1em;
-  opacity: 0.2;
 }

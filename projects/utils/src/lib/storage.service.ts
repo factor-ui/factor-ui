@@ -8,6 +8,7 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root'
 })
 export class StorageService {
+  //TODO: Replace with Map object it is more efficient
   memoryStorage: any;
 
   constructor(
@@ -15,37 +16,6 @@ export class StorageService {
     @Inject('FactorUtilsConfiguration') private configuration
   ) { }
 
-  public delete(key: string, storage?) {
-    if (isPlatformBrowser(this.platformId)) {
-      if (!storage || typeof storage == 'string') {
-        switch (storage) {
-          case 'local':
-          case 'localStorage':
-            delete localStorage[key];
-            break;
-          case 'memory':
-            delete this.memoryStorage[key];
-            break;
-          default:
-            delete sessionStorage[key];
-            break;
-        }
-      } else if (typeof storage == 'object') {
-        delete storage[key];
-      }
-    }
-  }
-  public get(key: string, storage?): any {
-    let parsedValue: any;
-    if (isPlatformBrowser(this.platformId)) {
-      try {
-        parsedValue = JSON.parse(this.getValue(key, storage));
-      } catch (err) {
-        parsedValue = this.getValue(key, storage);
-      }
-    }
-    return parsedValue;
-  }
   private getValue(key: string, storage?: any): any {
     let value: any;
     if (!storage || typeof storage == 'string') {
@@ -91,6 +61,38 @@ export class StorageService {
       return value;
     }
 
+  }
+
+  public delete(key: string, storage?) {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!storage || typeof storage == 'string') {
+        switch (storage) {
+          case 'local':
+          case 'localStorage':
+            delete localStorage[key];
+            break;
+          case 'memory':
+            delete this.memoryStorage[key];
+            break;
+          default:
+            delete sessionStorage[key];
+            break;
+        }
+      } else if (typeof storage == 'object') {
+        delete storage[key];
+      }
+    }
+  }
+  public get(key: string, storage?): any {
+    let parsedValue: any;
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        parsedValue = JSON.parse(this.getValue(key, storage));
+      } catch (err) {
+        parsedValue = this.getValue(key, storage);
+      }
+    }
+    return parsedValue;
   }
   public set(key: string, value: any, storage?) {
     if (isPlatformBrowser(this.platformId)) {

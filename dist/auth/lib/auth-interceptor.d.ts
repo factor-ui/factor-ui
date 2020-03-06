@@ -3,11 +3,10 @@ import { HttpHandler, HttpRequest, HttpSentEvent, HttpHeaderResponse, HttpProgre
 import { Observable } from 'rxjs';
 export declare class AuthInterceptor {
     private injector;
+    private configuration;
     private authService;
     private refreshTokenInProgress;
     private refreshTokenSubject;
-    constructor(injector: Injector);
+    constructor(injector: Injector, configuration: any);
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any> | any>;
-    handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<any>;
-    addAuthenticationToken(request: any): HttpRequest<any>;
 }

@@ -43,8 +43,24 @@ svg {
     fill: none;
     stroke-opacity: 0.9;
     stroke-width: 6;
+    &.indeterminate {
+      animation: progress-rotation 2s infinite linear;
+    }
     &.determinate {
       stroke-dasharray: calc(2 * 3.1415926536 * 40);
     }
+  }
+}
+@keyframes progress-rotation {
+  0% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 150.6 100.4;
+  }
+  50% {
+    stroke-dasharray: 1 250;
+  }
+  100% {
+    stroke-dashoffset: 502;
+    stroke-dasharray: 150.6 100.4;
   }
 }

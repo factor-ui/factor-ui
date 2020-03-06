@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ColorService } from 'factor-common';
+
 @Component({
   selector: 'app-common',
   templateUrl: './common.component.html',
@@ -8,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 export class CommonComponent implements OnInit {
   value: number = 0;
 
-  constructor() { }
+  constructor(
+    private colorService: ColorService
+  ) { }
 
   ngOnInit() {
     let interval = setInterval(() => {
@@ -17,6 +21,8 @@ export class CommonComponent implements OnInit {
         clearInterval(interval);
       }
     }, 100);
+
+    console.log(this.colorService.hex('Juan Altamirano'));
   }
 
 }

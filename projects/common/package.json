@@ -1,6 +1,6 @@
 {
   "name": "factor-common",
-  "version": "0.2.10",
+  "version": "0.4.0",
   "license": "CC-BY-NC-ND-4.0",
   "author": "Factor",
   "repository": {
@@ -18,9 +18,7 @@
   ],
   "homepage": "https://github.com/juanca202/factor-ui#readme",
   "private": false,
-  "dependencies": {
-    "@angular/material": ">=7.2.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "@angular/common": ">=7.2.0",
     "@angular/core": ">=7.2.0"

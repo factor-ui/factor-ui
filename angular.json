@@ -176,6 +176,12 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "deploy": {
+          "builder": "ngx-deploy-npm:deploy",
+          "options": {
+            "access": "public"
+          }
         }
       }
     },
@@ -215,6 +221,12 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "deploy": {
+          "builder": "ngx-deploy-npm:deploy",
+          "options": {
+            "access": "public"
           }
         }
       }
@@ -256,6 +268,12 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "deploy": {
+          "builder": "ngx-deploy-npm:deploy",
+          "options": {
+            "access": "public"
+          }
         }
       }
     },
@@ -295,6 +313,12 @@
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "deploy": {
+          "builder": "ngx-deploy-npm:deploy",
+          "options": {
+            "access": "public"
           }
         }
       }
@@ -336,6 +360,12 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "deploy": {
+          "builder": "ngx-deploy-npm:deploy",
+          "options": {
+            "access": "public"
+          }
         }
       }
     },
@@ -371,6 +401,47 @@
             "tsConfig": [
               "projects/designer/tsconfig.lib.json",
               "projects/designer/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "deploy": {
+          "builder": "ngx-deploy-npm:deploy",
+          "options": {
+            "access": "public"
+          }
+        }
+      }
+    },
+    "dialogs": {
+      "root": "projects/dialogs",
+      "sourceRoot": "projects/dialogs/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/dialogs/tsconfig.lib.json",
+            "project": "projects/dialogs/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/dialogs/src/test.ts",
+            "tsConfig": "projects/dialogs/tsconfig.spec.json",
+            "karmaConfig": "projects/dialogs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/dialogs/tsconfig.lib.json",
+              "projects/dialogs/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

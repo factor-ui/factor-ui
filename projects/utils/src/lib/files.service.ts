@@ -41,7 +41,7 @@ export class FilesService {
       }
     }
   }
-  public open(callback: Function, options: { accept?: string, multiple?: boolean }) {
+  public open(callback?: Function, options?: { accept?: string, multiple?: boolean }) {
     this.fileInput.accept = options && options.accept ? options.accept : '';
     this.fileInput.multiple = options && options.multiple;
     this.fileInput.click();
