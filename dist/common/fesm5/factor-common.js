@@ -343,7 +343,7 @@ var AvatarComponent = /** @class */ (function () {
          * @return {?}
          */
         function () {
-            return "url(" + this._src + ")";
+            return this._src ? "url(" + this._src + ")" : '';
         },
         enumerable: true,
         configurable: true
@@ -437,7 +437,8 @@ var IconComponent = /** @class */ (function () {
     IconComponent.propDecorators = {
         name: [{ type: Input }],
         collection: [{ type: Input }],
-        path: [{ type: Input }]
+        path: [{ type: Input }],
+        size: [{ type: Input }]
     };
     return IconComponent;
 }());

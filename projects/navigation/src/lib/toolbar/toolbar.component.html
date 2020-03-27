@@ -2,7 +2,7 @@
 <div class="content" [ngClass]="{overlapped: overlapped}">
   <div class="container p-2 p-sm-3 pb-md-3 pt-md-5 px-md-3 px-lg-5">
     <div class="d-flex align-items-center">
-      <h3 class="title ml-2 ml-md-0 mb-0 mr-auto" *ngIf="!titleOptions; else titleForm">{{ title }}</h3>
+      <h5 class="title ml-2 ml-md-0 mb-0 mr-auto" *ngIf="!titleOptions; else titleForm">{{ title }}</h5>
       <ng-container *ngFor="let option of actionOptions">
         <button type="button" class="p-2" mat-button [ngClass]="option.class" *ngIf="!option.children" (click)="option['click']($event)" title="{{ option.label }}">
           <div class="d-flex align-items-center">

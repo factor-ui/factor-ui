@@ -8,5 +8,6 @@ export interface Option {
   id?: string;
   label?: string;
   url?: string;
-  type?: string
+  type?: string;
+  metadata?: any;
 }

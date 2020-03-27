@@ -12,6 +12,8 @@ export class IconComponent implements OnInit {
   collection: string;
   @Input()
   path: string;
+  @Input()
+  size: string;
 
   constructor(
     @Inject('FactorCommonConfiguration') private configuration

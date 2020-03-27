@@ -4,6 +4,7 @@ export declare class IconComponent implements OnInit {
     name: string;
     collection: string;
     path: string;
+    size: string;
     constructor(configuration: any);
     ngOnInit(): void;
 }

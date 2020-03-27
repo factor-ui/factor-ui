@@ -9,6 +9,8 @@ export interface Action {
   label: string;
   value: any;
   color?: string;
+  type?: string;
+  metadata?: any;
 }
 export interface Options {
   type?: 'modal' | 'notification';

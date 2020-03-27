@@ -40,7 +40,7 @@ export class AvatarComponent implements OnInit {
   }
   @HostBinding('style.background-image')
   get backgroundImage(): string {
-    return `url(${this._src})`;
+    return this._src ? `url(${this._src})` : '';
   }
 
   constructor(

@@ -12,7 +12,6 @@ import { CommonModule as FactorCommonModule } from 'factor-common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchboxComponent } from './searchbox/searchbox.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { SidesheetComponent } from './sidesheet/sidesheet.component';
 import { ListComponent } from './list/list.component';
 
 @NgModule({
@@ -20,7 +19,6 @@ import { ListComponent } from './list/list.component';
     NavbarComponent,
     SearchboxComponent,
     ToolbarComponent,
-    SidesheetComponent,
     ListComponent
   ],
   imports: [
@@ -37,7 +35,6 @@ import { ListComponent } from './list/list.component';
     NavbarComponent,
     SearchboxComponent,
     ToolbarComponent,
-    SidesheetComponent,
     ListComponent
   ]
 })

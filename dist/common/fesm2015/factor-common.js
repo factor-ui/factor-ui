@@ -1,4 +1,4 @@
-import { Injectable, Component, HostBinding, Input, Inject, NgModule, Directive, EventEmitter, Output, ElementRef, defineInjectable } from '@angular/core';
+import { Injectable, Directive, EventEmitter, Output, Input, ElementRef, NgModule, Component, HostBinding, Inject, defineInjectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -256,7 +256,7 @@ class AvatarComponent {
      * @return {?}
      */
     get backgroundImage() {
-        return `url(${this._src})`;
+        return this._src ? `url(${this._src})` : '';
     }
     /**
      * @return {?}
@@ -340,7 +340,8 @@ IconComponent.ctorParameters = () => [
 IconComponent.propDecorators = {
     name: [{ type: Input }],
     collection: [{ type: Input }],
-    path: [{ type: Input }]
+    path: [{ type: Input }],
+    size: [{ type: Input }]
 };
 
 /**

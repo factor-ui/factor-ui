@@ -336,7 +336,7 @@
            get: /**
             * @return {?}
             */ function () {
-               return "url(" + this._src + ")";
+               return this._src ? "url(" + this._src + ")" : '';
            },
            enumerable: true,
            configurable: true
@@ -434,7 +434,8 @@
        IconComponent.propDecorators = {
            name: [{ type: i0.Input }],
            collection: [{ type: i0.Input }],
-           path: [{ type: i0.Input }]
+           path: [{ type: i0.Input }],
+           size: [{ type: i0.Input }]
        };
        return IconComponent;
    }());
