@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build utils --prod && ng build auth --prod && ng build common --prod && ng build dialogs --prod && ng build inputs --prod && ng build navigation --prod",
+    "build:web": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
