@@ -3,10 +3,14 @@ import { TestBed } from '@angular/core/testing';
 import { GoogleTagManagerService } from './google-tag-manager.service';
 
 describe('GoogleTagManagerService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: GoogleTagManagerService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(GoogleTagManagerService);
+  });
 
   it('should be created', () => {
-    const service: GoogleTagManagerService = TestBed.get(GoogleTagManagerService);
     expect(service).toBeTruthy();
   });
 });

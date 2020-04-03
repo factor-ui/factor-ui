@@ -1,6 +1,6 @@
 {
   "name": "factor-auth",
-  "version": "0.2.6",
+  "version": "0.5.0",
   "license": "CC-BY-NC-ND-4.0",
   "author": "Factor",
   "repository": {
@@ -16,8 +16,12 @@
     "typescript",
     "input"
   ],
+  "dependencies": {
+    "factor-utils": ">=0.5.0"
+  },
   "peerDependencies": {
     "@angular/common": ">=7.2.0",
-    "@angular/core": ">=7.2.0"
+    "@angular/core": ">=7.2.0",
+    "tslib": "^1.10.0"
   }
 }

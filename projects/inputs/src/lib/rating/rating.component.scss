@@ -7,9 +7,9 @@
   display: inline-flex;
   &:hover {
     button {
-      color: $primary;
+      color: var(--primary);
       & svg:not(.hover) {
-        color: $gray-600;
+        color: var(--gray);
       }
     }
   }

@@ -1,0 +1,22 @@
+<div class="container p-4 p-md-5">
+  <h4>Tipos</h4>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td colspan="3" class="p-0">
+          <pre class="m-0" style="overflow: auto; height: 200px;"><code [highlight]="code" [lineNumbers]="true" [languages]="['typescript']" class="p-3 bg-white"></code></pre>
+        </td>
+      </tr>
+      <tr class="text-center">
+        <td><button type="button" mat-stroked-button color="primary" (click)="show('Has leído este mensaje importante.', {type:'modal'})">Abrir mensaje</button></td>
+        <td><button type="button" mat-stroked-button color="primary" (click)="show('Notificaciones pueden incluir alertas, sonidos e insignia en el ícono.', {title: 'Tareas quiere enviarte notificaciones', type:'modal', width: '350px', actions: [{label: 'No permitir', value: 1}, {label: 'Permitir', value: 2, type: 'stroked', metadata: { color: 'primary' }}]})">Abrir mensaje</button></td>
+        <td><button type="button" mat-stroked-button color="primary" (click)="show('Se ha eliminado el archivo exitosamente.', {title: 'Confirmación'})">Abrir mensaje</button></td>
+      </tr>
+      <tr class="text-center">
+        <th>Modal simple</th>
+        <th>Modal acciones personalidados</th>
+        <th>Notificación</th>
+      </tr>
+    </tbody>
+  </table>
+</div>

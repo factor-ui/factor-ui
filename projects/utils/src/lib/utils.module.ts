@@ -1,15 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 @NgModule({
-  declarations: [
-
-  ],
-  imports: [
-
-  ],
-  exports: [
-
-  ]
+  declarations: [],
+  imports: [],
+  exports: []
 })
 export class UtilsModule {
   public static forRoot(configuration: any): ModuleWithProviders {

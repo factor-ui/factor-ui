@@ -14,7 +14,7 @@ import { Token } from './models/token';
   providedIn: 'root'
 })
 export class AuthService {
-  
+
   constructor(
     private http: HttpClient,
     private storageService: StorageService,

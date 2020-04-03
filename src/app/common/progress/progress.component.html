@@ -1,0 +1,87 @@
+<div class="container p-4 p-md-5">
+  <h4>Size</h4>
+  <table class="table table-bordered">
+    <tr>
+      <td colspan="5" class="p-0">
+        <pre class="m-0"><code [highlight]="codeSize" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="1"></ft-progress>
+      </td>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="2"></ft-progress>
+      </td>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="3"></ft-progress>
+      </td>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="4"></ft-progress>
+      </td>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="5"></ft-progress>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+    </tr>
+  </table>
+
+  <h4>Color</h4>
+  <table class="table table-bordered">
+    <tr>
+      <td colspan="4" class="p-0">
+        <pre class="m-0"><code [highlight]="codeColor" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="2" color="#FF0000"></ft-progress>
+      </td>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="2" color="var(--blue)"></ft-progress>
+      </td>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="2" color="rgba(0,255,0)"></ft-progress>
+      </td>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="2" color="rgba(0,0,0,.5)"></ft-progress>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th>#FF0000</th>
+      <th>var(--blue)</th>
+      <th>rgb(0,255,0)</th>
+      <th>rgba(0,0,0,.5)</th>
+    </tr>
+  </table>
+
+  <h4>Mode</h4>
+  <table class="table table-bordered">
+    <tr>
+      <td colspan="4" class="p-0">
+        <pre class="m-0"><code [highlight]="codeMode" [lineNumbers]="true" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <div class="d-flex align-items-center justify-content-center">
+          <ft-progress size="3" mode="determinate" [value]="value"></ft-progress>
+          <div class="ml-2">{{ value }}%</div>
+        </div>
+      </td>
+      <td style="vertical-align: middle;" class="text-center p-3">
+        <ft-progress size="3"></ft-progress>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th>determinate</th>
+      <th>indeterminate</th>
+    </tr>
+  </table>
+</div>

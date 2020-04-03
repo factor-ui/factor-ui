@@ -1,0 +1,38 @@
+<div class="container p-4 p-md-5">
+  <h4>States</h4>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td colspan="3" class="p-0">
+          <pre class="m-0"><code [highlight]="code" [lineNumbers]="true" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+        </td>
+      </tr>
+      <tr class="text-center">
+        <td><ft-rating size="2" [ngModel]="3"></ft-rating></td>
+        <td><ft-rating size="2" [ngModel]="3" [readOnly]="true"></ft-rating></td>
+        <td><ft-rating size="2" [ngModel]="3" [disabled]="true"></ft-rating></td>
+      </tr>
+      <tr class="text-center">
+        <th>Normal</th>
+        <th>Read only</th>
+        <th>Disabled</th>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="mt-5">Sizes</h4>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td colspan="2" class="p-0">
+          <pre class="m-0"><code [highlight]="codeSize" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+        </td>
+      </tr>
+      <tr><th class="text-right" style="vertical-align:middle;">1</th><td style="width:100%;"><ft-rating size="1"></ft-rating></td></tr>
+      <tr><th class="text-right" style="vertical-align:middle;">2</th><td><ft-rating size="2"></ft-rating></td></tr>
+      <tr><th class="text-right" style="vertical-align:middle;">3</th><td><ft-rating size="3"></ft-rating></td></tr>
+      <tr><th class="text-right" style="vertical-align:middle;">4</th><td><ft-rating size="4"></ft-rating></td></tr>
+      <tr><th class="text-right" style="vertical-align:middle;">5</th><td><ft-rating size="5"></ft-rating></td></tr>
+    </tbody>
+  </table>
+</div>

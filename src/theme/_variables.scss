@@ -1,0 +1,18 @@
+$font-family-base: 'Quicksand', sans-serif;
+$enable-responsive-font-sizes: true;
+$zindex-dropdown: 960;
+$zindex-sticky: 970;
+$zindex-fixed: 980;
+$zindex-modal-backdrop: 990;
+$zindex-modal: 1000;
+$zindex-popover: 1010;
+$zindex-tooltip: 1020;
+$primary: #00DD8B;
+$secondary: #5a616e;
+$danger: #f44336;
+$list-group-active-color: var(--text-color-active);
+$progress-bar-bg: var(--primary);
+$theme-colors: (
+  "primary": $primary,
+  "danger": $danger
+);

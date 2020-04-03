@@ -1,0 +1,12 @@
+ft-file-picker {
+  display: inline-block;
+  cursor: pointer;
+  > div {
+    border-radius: 0.25rem;
+    border: 2px dashed rgba(0,0,0,.3);
+    &:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+  }
+}

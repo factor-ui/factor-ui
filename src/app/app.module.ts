@@ -1,68 +1,75 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
 
-import { InputsModule } from 'factor-inputs';
-import { NavigationModule } from 'factor-navigation';
 import { CommonModule as FactorCommonModule } from 'factor-common';
-import { DesignerModule } from 'factor-designer';
-import { UtilsModule, CacheInterceptor } from 'factor-utils';
-import { AuthModule } from 'factor-auth';
+import { InputsModule } from 'factor-inputs';
+import { DialogsModule } from 'factor-dialogs';
+import { NavigationModule } from 'factor-navigation';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import xml from 'highlight.js/lib/languages/xml';
+import scss from 'highlight.js/lib/languages/scss';
+import typescript from 'highlight.js/lib/languages/typescript';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommonComponent } from './common/common.component';
-import { HomeComponent } from './home/home.component';
-import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { ListComponent } from './list/list.component';
-import { MessagesComponent } from './messages/messages.component';
-import { FilesComponent } from './files/files.component';
-import { CacheComponent } from './cache/cache.component';
-import { AuthComponent } from './auth/auth.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AvatarComponent } from './common/avatar/avatar.component';
+import { ImageComponent } from './common/image/image.component';
+import { IconComponent } from './common/icon/icon.component';
+import { ProgressComponent } from './common/progress/progress.component';
+import { RatingComponent } from './inputs/rating/rating.component';
+import { FilePickerComponent } from './inputs/file-picker/file-picker.component';
+import { MessageComponent } from './dialogs/message/message.component';
+import { ListComponent } from './navigation/list/list.component';
+import { NavbarComponent } from './navigation/navbar/navbar.component';
+import { SearchboxComponent } from './navigation/searchbox/searchbox.component';
+import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
+
+export function hljsLanguages() {
+  return [
+    {name: 'typescript', func: typescript},
+    {name: 'scss', func: scss},
+    {name: 'xml', func: xml}
+  ];
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    CommonComponent,
-    HomeComponent,
-    InfiniteScrollComponent,
-    NavbarComponent,
+    AvatarComponent,
+    ImageComponent,
+    IconComponent,
+    ProgressComponent,
+    RatingComponent,
+    FilePickerComponent,
+    MessageComponent,
     ListComponent,
-    MessagesComponent,
-    FilesComponent,
-    CacheComponent,
-    AuthComponent
+    NavbarComponent,
+    SearchboxComponent,
+    ToolbarComponent
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    FactorCommonModule.forRoot(
-      { icon: { path: 'assets/factoricons/symbols', collection: 'factoricons-regular' }
-    }),
-    UtilsModule.forRoot(
-      {
-        cache: {
-          urls: [
-            'assets/cachable-url.json'
-          ]
-        }
-      }
-    ),
+    FactorCommonModule.forRoot({ icon: { path: 'assets/factoricons/symbols', collection: 'factoricons-regular' } }),
+    HighlightModule,
+    DialogsModule,
+    InputsModule,
     NavigationModule,
-    DesignerModule,
-    AuthModule.forRoot({type:'oauth'})
+    MatButtonModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        languages: hljsLanguages
+      }
+    }
   ],
   bootstrap: [AppComponent]
 })

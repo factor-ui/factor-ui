@@ -1,0 +1,9 @@
+.d-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+ft-image {
+  width: 100%;
+  height: 200px;
+}

@@ -1,0 +1,78 @@
+@import 'variables';
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+@function mat-color($palette, $hue: default, $opacity: null) {
+    @if type-of($hue) == number and $hue >= 0 and $hue <= 1 {
+        @return mat-color($palette, default, $hue);
+    }
+    $color: map-get($palette, $hue);
+    @if (type-of($color) != color) {
+        @if ($opacity == null){
+            @return $color;
+        }
+        // Here is the change from the original function:
+        // If the $color resolved to something different from a color, we assume it is a CSS variable
+        // in the form of rgba(var(--rgba-css-var),a) and replace the 'a' value.
+        @return #{str-slice($color, 0, str-index($color, ',')) + $opacity + ')'};
+    }
+    @return rgba($color, if($opacity == null, opacity($color), $opacity));
+}
+
+$primary-palette: (
+  50: #fff3e0,
+  100: #ffe0b2,
+  200: #ffcc80,
+  300: #ffb74d,
+  400: #ffa726,
+  500: rgba(var(--primary-rgb), 1),
+  600: #fb8c00,
+  700: #f57c00,
+  800: #ef6c00,
+  900: #e65100,
+  A100: #ffd180,
+  A200: #ffab40,
+  A400: #ff9100,
+  A700: #ff6d00,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $dark-primary-text,
+    700: $dark-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: black,
+  )
+);
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$theme-primary: mat-palette($primary-palette);
+$theme-accent:  mat-palette($primary-palette, A200, A100, A400);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$theme: mat-light-theme($theme-primary, $theme-accent);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($theme);
+
+$typography: mat-typography-config(
+  $font-family: $font-family-base
+);
+
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($typography);

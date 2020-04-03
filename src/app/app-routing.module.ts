@@ -1,58 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { CommonComponent } from './common/common.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { ListComponent } from './list/list.component';
-import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
-import { EditorComponent } from 'factor-designer';
-import { MessagesComponent } from './messages/messages.component';
-import { FilesComponent } from './files/files.component';
-import { CacheComponent } from './cache/cache.component';
-import { AuthComponent } from './auth/auth.component';
+import { AvatarComponent } from './common/avatar/avatar.component';
+import { ImageComponent } from './common/image/image.component';
+import { IconComponent } from './common/icon/icon.component';
+import { ProgressComponent } from './common/progress/progress.component';
+import { RatingComponent } from './inputs/rating/rating.component';
+import { FilePickerComponent } from './inputs/file-picker/file-picker.component';
+import { MessageComponent } from './dialogs/message/message.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-  },
-  {
-    path: 'common',
-    component: CommonComponent,
-  },
-  {
-    path: 'infinite-scroll',
-    component: InfiniteScrollComponent,
-  },
-  {
-    path: 'designer/editor',
-    component: EditorComponent,
-  },
-  {
-    path: 'navbar',
-    component: NavbarComponent,
-  },
-  {
-    path: 'list',
-    component: ListComponent,
-  },
-  {
-    path: 'messages',
-    component: MessagesComponent,
-  },
-  {
-    path: 'files',
-    component: FilesComponent,
-  },
-  {
-    path: 'cache',
-    component: CacheComponent,
-  },
-  {
-    path: 'auth',
-    component: AuthComponent,
-  }
+  { path: 'common/icon', component: IconComponent },
+  { path: 'common/image', component: ImageComponent },
+  { path: 'common/avatar', component: AvatarComponent },
+  { path: 'common/progress', component: ProgressComponent },
+  { path: 'inputs/rating', component: RatingComponent },
+  { path: 'inputs/file-picker', component: FilePickerComponent },
+  { path: 'dialogs/message', component: MessageComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,19 @@
+:host {
+  --navigation-width: 250px;
+}
+.global-navigation {
+  background-color: #FFF;
+  width: var(--navigation-width);
+  height: 100vh;
+  position: fixed;
+  z-index: 2;
+  ft-list {
+    height: 100vh;
+  }
+}
+.content {
+  margin-left: var(--navigation-width);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

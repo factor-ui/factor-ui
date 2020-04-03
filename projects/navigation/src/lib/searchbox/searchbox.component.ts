@@ -14,9 +14,27 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class SearchboxComponent implements OnInit {
-  @ViewChild('input')
+  /**
+   * Clase o clases asignadas al componente
+   */
+  @Input()
+  class: string;
+  @ViewChild('input', { static: true })
   input: ElementRef<any>;
   disabled: boolean;
+  private _value: string;
+  private shown: boolean;
+  @Output()
+  execute = new EventEmitter<string>();
+  @Output()
+  showChange = new EventEmitter<boolean>();
+  @HostBinding('class')
+  get hostClasses(): string {
+    return [
+      this.class,
+      this.shown ? 'show' : ''
+    ].join(' ');
+  }
   onChange = (_: any) => { };
   onTouched = (_: any) => { };
   @Input()
@@ -28,12 +46,16 @@ export class SearchboxComponent implements OnInit {
       }, 300);
     }
   }
-  @Output()
-  showChange = new EventEmitter<boolean>();
-  shown: boolean;
-  @Output()
-  execute = new EventEmitter<string>();
-  _value: string;
+  @Input()
+  set value(value: any) {
+    this._value = value || '';
+    this.input.nativeElement.value = this._value;
+    this.onChange(this._value);
+    this.onTouched(this._value);
+  }
+  get value() {
+    return this._value;
+  }
 
   constructor() { }
 
@@ -42,27 +64,11 @@ export class SearchboxComponent implements OnInit {
   closeSearch() {
     this.showChange.emit(false);
   }
-  @HostBinding('class')
-  get hostClasses(): string {
-    return [
-      this.shown ? 'show' : ''
-    ].join(' ');
-  }
-  get value() {
-    return this._value;
-  }
   registerOnChange(fn: any) {
     this.onChange = fn;
   }
   registerOnTouched(fn: any) {
     this.onTouched = fn;
-  }
-  @Input()
-  set value(value: any) {
-    this._value = value || '';
-    this.input.nativeElement.value = this._value;
-    this.onChange(this._value);
-    this.onTouched(this._value);
   }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;

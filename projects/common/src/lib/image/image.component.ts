@@ -6,9 +6,9 @@ import { Component, OnInit, Input, HostBinding, ElementRef } from '@angular/core
   styleUrls: ['./image.component.scss']
 })
 export class ImageComponent implements OnInit {
-  @HostBinding('class.error')
+  @HostBinding('class.ft-image--error')
   error: boolean;
-  @HostBinding('class.loading')
+  @HostBinding('class.ft-image--loading')
   loading: boolean;
   @Input()
   src: string;
@@ -51,6 +51,7 @@ export class ImageComponent implements OnInit {
       elementObserver.observe(this.element.nativeElement);
     } else {
       console.error('IntersectionObserver not available.');
+      this.loading = false;
       this.shown = true;
     }
   }

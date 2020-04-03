@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit, Input } from '@angular/core';
 
-import { ColorService } from '../color.service';
+import { ColorService } from 'factor-utils';
 
 @Component({
   selector: 'ft-avatar',

@@ -1,0 +1,34 @@
+<div class="container p-4 p-md-5">
+  <table class="table table-bordered">
+    <tr>
+      <td class="p-0">
+        <pre class="m-0"><code [highlight]="code" [lineNumbers]="true" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+      </td>
+    </tr>
+  </table>
+  <div class="d-flex">
+    <ft-file-picker [(ngModel)]="file" class="mr-3">
+      <div class="placeholder p-4 text-center d-flex flex-column justify-content-center align-items-center" *ngIf="!file; else pdfTemplate">
+        <ft-icon name="document" collection="factoricons-slim" size="5"></ft-icon>
+        <div class="text-center small">Click to upload a pdf</div>
+      </div>
+    </ft-file-picker>
+    <ft-file-picker [(ngModel)]="image" accept="image/*">
+      <div class="placeholder p-4 text-center d-flex flex-column justify-content-center align-items-center" *ngIf="!image; else imageTemplate">
+        <ft-icon name="media-image" collection="factoricons-slim" size="5"></ft-icon>
+        <div class="text-center small">Click to upload a picture</div>
+      </div>
+    </ft-file-picker>
+  </div>
+</div>
+
+<ng-template #imageTemplate>
+  <img [src]="image[0].data" />
+</ng-template>
+
+<ng-template #pdfTemplate>
+  <div class="placeholder p-4 text-center d-flex flex-column justify-content-center align-items-center">
+    <ft-icon name="document-text" collection="factoricons-slim" size="5"></ft-icon>
+    <div class="text-center small">{{ file[0].name }}</div>
+  </div>
+</ng-template>

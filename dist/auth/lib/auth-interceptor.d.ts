@@ -1,6 +1,7 @@
 import { Injector } from '@angular/core';
 import { HttpHandler, HttpRequest, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import * as ɵngcc0 from '@angular/core';
 export declare class AuthInterceptor {
     private injector;
     private configuration;
@@ -9,4 +10,8 @@ export declare class AuthInterceptor {
     private refreshTokenSubject;
     constructor(injector: Injector, configuration: any);
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any> | any>;
+    static ɵfac: ɵngcc0.ɵɵFactoryDef<AuthInterceptor, never>;
+    static ɵprov: ɵngcc0.ɵɵInjectableDef<AuthInterceptor>;
 }
+
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXV0aC1pbnRlcmNlcHRvci5kLnRzIiwic291cmNlcyI6WyJhdXRoLWludGVyY2VwdG9yLmQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBOztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7OztBQUNBIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSW5qZWN0b3IgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IEh0dHBIYW5kbGVyLCBIdHRwUmVxdWVzdCwgSHR0cFNlbnRFdmVudCwgSHR0cEhlYWRlclJlc3BvbnNlLCBIdHRwUHJvZ3Jlc3NFdmVudCwgSHR0cFJlc3BvbnNlLCBIdHRwVXNlckV2ZW50IH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uL2h0dHAnO1xuaW1wb3J0IHsgT2JzZXJ2YWJsZSB9IGZyb20gJ3J4anMnO1xuZXhwb3J0IGRlY2xhcmUgY2xhc3MgQXV0aEludGVyY2VwdG9yIHtcbiAgICBwcml2YXRlIGluamVjdG9yO1xuICAgIHByaXZhdGUgY29uZmlndXJhdGlvbjtcbiAgICBwcml2YXRlIGF1dGhTZXJ2aWNlO1xuICAgIHByaXZhdGUgcmVmcmVzaFRva2VuSW5Qcm9ncmVzcztcbiAgICBwcml2YXRlIHJlZnJlc2hUb2tlblN1YmplY3Q7XG4gICAgY29uc3RydWN0b3IoaW5qZWN0b3I6IEluamVjdG9yLCBjb25maWd1cmF0aW9uOiBhbnkpO1xuICAgIGludGVyY2VwdChyZXF1ZXN0OiBIdHRwUmVxdWVzdDxhbnk+LCBuZXh0OiBIdHRwSGFuZGxlcik6IE9ic2VydmFibGU8SHR0cFNlbnRFdmVudCB8IEh0dHBIZWFkZXJSZXNwb25zZSB8IEh0dHBQcm9ncmVzc0V2ZW50IHwgSHR0cFJlc3BvbnNlPGFueT4gfCBIdHRwVXNlckV2ZW50PGFueT4gfCBhbnk+O1xufVxuIl19

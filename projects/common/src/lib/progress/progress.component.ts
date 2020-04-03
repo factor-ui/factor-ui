@@ -18,7 +18,7 @@ export class ProgressComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.color = 'var(--primary)';
+    this.color = this.color || 'var(--primary)';
     this.value = 0;
   }
 

@@ -3,6 +3,9 @@
   "dest": "../../dist/navigation",
   "whitelistedNonPeerDependencies": ["."],
   "lib": {
-    "entryFile": "src/public-api.ts"
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "factor-common": "factor-common"
+    }
   }
 }

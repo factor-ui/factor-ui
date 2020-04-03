@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, HostListener, OnInit, Output, Input, ElementRef } from '@angular/core';
+import { Directive, EventEmitter, OnInit, Output, Input, ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[ftObserveIntersecting]'

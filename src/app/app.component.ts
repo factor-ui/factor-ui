@@ -1,23 +1,72 @@
-import { Component } from '@angular/core';
-
-import { StorageService } from 'factor-utils';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'factor-ui';
+  menu: any[];
 
-  constructor(
-    private storageService: StorageService
-  ) {
-    storageService.set('demo', {name: 'demo', id: 1});
-    storageService.set('demo2', {name: 'demo', id: 1}, 'localStorage');
-    storageService.set('demo3', {name: 'demo', id: 1}, localStorage);
-    storageService.set('demo4', {name: 'demo', id: 1}, 'sessionStorage');
-    storageService.set('demo5', {name: 'demo', id: 1}, sessionStorage);
-    console.log(storageService.get('demo'));
+  ngOnInit(): void {
+    this.menu = [
+      {
+        label: 'Common',
+        type: 'header'
+      },
+      {
+        label: 'Avatar',
+        url: '/common/avatar'
+      },
+      {
+        label: 'Icon',
+        url: '/common/icon'
+      },
+      {
+        label: 'Image',
+        url: '/common/image'
+      },
+      {
+        label: 'Progress',
+        url: '/common/progress'
+      },
+      {
+        label: 'Dialogs',
+        type: 'header'
+      },
+      {
+        label: 'Message',
+        url: '/dialogs/message'
+      },
+      {
+        label: 'Inputs',
+        type: 'header'
+      },
+      {
+        label: 'File picker',
+        url: '/inputs/file-picker'
+      },
+      {
+        label: 'Rating',
+        url: '/inputs/rating'
+      },
+      {
+        label: 'Navigation',
+        type: 'header'
+      },
+      {
+        label: 'Navbar',
+        url: '/navigation/navbar'
+      },
+      {
+        label: 'Toolbar',
+        url: '/navigation/toolbar'
+      },
+      {
+        label: 'Searchbox',
+        url: '/navigation/searchbox'
+      }
+    ];
   }
 }

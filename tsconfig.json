@@ -5,62 +5,45 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "module": "es2015",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "target": "es2015",
     "lib": [
       "es2018",
       "dom"
     ],
     "paths": {
-      "factor-auth": [
-        "dist/auth"
-      ],
-      "factor-auth/*": [
-        "dist/auth/*"
-      ],
       "factor-common": [
+        "dist/common/common",
         "dist/common"
       ],
-      "factor-common/*": [
-        "dist/common/*"
-      ],
-      "factor-inputs": [
-        "dist/inputs"
-      ],
-      "factor-inputs/*": [
-        "dist/inputs/*"
-      ],
-      "factor-navigation": [
-        "dist/navigation"
-      ],
-      "factor-navigation/*": [
-        "dist/navigation/*"
-      ],
-      "factor-utils": [
-        "dist/utils"
-      ],
-      "factor-utils/*": [
-        "dist/utils/*"
-      ],
-      "factor-designer": [
-        "dist/designer"
-      ],
-      "factor-designer/*": [
-        "dist/designer/*"
+      "factor-auth": [
+        "dist/auth/auth",
+        "dist/auth"
       ],
       "factor-dialogs": [
+        "dist/dialogs/dialogs",
         "dist/dialogs"
       ],
-      "factor-dialogs/*": [
-        "dist/dialogs/*"
+      "factor-inputs": [
+        "dist/inputs/inputs",
+        "dist/inputs"
+      ],
+      "factor-navigation": [
+        "dist/navigation/navigation",
+        "dist/navigation"
+      ],
+      "factor-utils": [
+        "dist/utils/utils",
+        "dist/utils"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

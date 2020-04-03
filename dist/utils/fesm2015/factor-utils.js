@@ -1,51 +1,190 @@
-import { NavigationEnd, Router } from '@angular/router';
+import { __decorate, __param } from 'tslib';
+import { ɵɵdefineInjectable, Injectable, ɵɵinject, Injector, Inject, PLATFORM_ID, NgModule } from '@angular/core';
 import { LocationStrategy, PathLocationStrategy, isPlatformBrowser } from '@angular/common';
-import { AES, enc } from 'crypto-js';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { NavigationEnd, Router } from '@angular/router';
+import { AES, enc } from 'crypto-js';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Injectable, Injector, Inject, PLATFORM_ID, NgModule, defineInjectable, inject } from '@angular/core';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class FilesService {
+let ColorService = class ColorService {
+    constructor() {
+        const options = {};
+        let LS = [options.lightness, options.saturation].map(function (param) {
+            param = param || [0.35, 0.5, 0.65]; // note that 3 is a prime
+            return Array.isArray(param) ? param.concat() : [param];
+        });
+        this.L = LS[0];
+        this.S = LS[1];
+        if (typeof options.hue === 'number') {
+            options.hue = { min: options.hue, max: options.hue };
+        }
+        if (typeof options.hue === 'object' && !Array.isArray(options.hue)) {
+            options.hue = [options.hue];
+        }
+        if (typeof options.hue === 'undefined') {
+            options.hue = [];
+        }
+        this.hueRanges = options.hue.map(function (range) {
+            return {
+                min: typeof range.min === 'undefined' ? 0 : range.min,
+                max: typeof range.max === 'undefined' ? 360 : range.max
+            };
+        });
+    }
+    /**
+     * BKDR Hash (modified version)
+     *
+     * @param str string to hash
+     */
+    hash(str) {
+        let seed = 131;
+        let seed2 = 137;
+        let hash = 0;
+        // make hash more sensitive for short string like 'a', 'b', 'c'
+        str += 'x';
+        // Note: Number.MAX_SAFE_INTEGER equals 9007199254740991
+        const maxSafeInteger = Math.round(9007199254740991 / seed2);
+        for (let i = 0; i < str.length; i++) {
+            if (hash > maxSafeInteger) {
+                hash = Math.round(hash / seed2);
+            }
+            hash = hash * seed + str.charCodeAt(i);
+        }
+        return hash;
+    }
+    ;
+    /**
+   * Convert RGB Array to HEX
+   *
+   * @param RGBArray - [R, G, B]
+   * @returns 6 digits hex starting with #
+   */
+    rgb2hex(RGBArray) {
+        let hex = '#';
+        RGBArray.forEach(function (value) {
+            if (value < 16) {
+                hex += 0;
+            }
+            hex += value.toString(16);
+        });
+        return hex;
+    }
+    ;
+    /**
+     * Convert HSL to RGB
+     *
+     * @see {@link http://zh.wikipedia.org/wiki/HSL和HSV色彩空间} for further information.
+     * @param H Hue ∈ [0, 360)
+     * @param S Saturation ∈ [0, 1]
+     * @param L Lightness ∈ [0, 1]
+     * @returns R, G, B ∈ [0, 255]
+     */
+    hsl2rgb(H, S, L) {
+        H /= 360;
+        let q = L < 0.5 ? L * (1 + S) : L + S - L * S;
+        let p = 2 * L - q;
+        return [H + 1 / 3, H, H - 1 / 3].map(function (color) {
+            if (color < 0) {
+                color++;
+            }
+            if (color > 1) {
+                color--;
+            }
+            if (color < 1 / 6) {
+                color = p + (q - p) * 6 * color;
+            }
+            else if (color < 0.5) {
+                color = q;
+            }
+            else if (color < 2 / 3) {
+                color = p + (q - p) * 6 * (2 / 3 - color);
+            }
+            else {
+                color = p;
+            }
+            return Math.round(color * 255);
+        });
+    }
+    ;
+    /**
+     * Returns the hash in [h, s, l].
+     * Note that H ∈ [0, 360); S ∈ [0, 1]; L ∈ [0, 1];
+     *
+     * @param str string to hash
+     * @returns [h, s, l]
+     */
+    hsl(str) {
+        let H;
+        let S;
+        let L;
+        let hash = this.hash(str);
+        if (this.hueRanges.length) {
+            let range = this.hueRanges[hash % this.hueRanges.length];
+            let hueResolution = 727; // note that 727 is a prime
+            H = ((hash / this.hueRanges.length) % hueResolution) * (range.max - range.min) / hueResolution + range.min;
+        }
+        else {
+            H = hash % 359; // note that 359 is a prime
+        }
+        hash = Math.round(hash / 360);
+        S = this.S[hash % this.S.length];
+        hash = Math.round(hash / this.S.length);
+        L = this.L[hash % this.L.length];
+        return [H, S, L];
+    }
+    ;
+    /**
+     * Returns the hash in [r, g, b].
+     * Note that R, G, B ∈ [0, 255]
+     *
+     * @param str string to hash
+     * @returns [r, g, b]
+     */
+    rgb(str) {
+        let hsl = this.hsl(str);
+        return this.hsl2rgb(hsl[0], hsl[1], hsl[2]);
+    }
+    ;
+    /**
+     * Returns the hash in hex
+     *
+     * @param str string to hash
+     * @returns hex with #
+     */
+    hex(str) {
+        let rgb = this.rgb(str);
+        return this.rgb2hex(rgb);
+    }
+    ;
+};
+ColorService.ɵprov = ɵɵdefineInjectable({ factory: function ColorService_Factory() { return new ColorService(); }, token: ColorService, providedIn: "root" });
+ColorService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], ColorService);
+
+let FilesService = class FilesService {
     //private valueChangesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
     //private valueChanges: Observable<any[]> = this.valueChangesSubject.asObservable();
     constructor() {
         this.fileInput = document.createElement('input');
         //this.fileInput.style.display = 'none';
         this.fileInput.type = 'file';
-        this.fileInput.addEventListener('change', (/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
-            /** @type {?} */
+        this.fileInput.addEventListener('change', (event) => {
             const reader = new FileReader();
             this.loadValue(event.target.files);
-        }));
+        });
     }
-    /**
-     * @private
-     * @param {?} files
-     * @return {?}
-     */
     loadValue(files) {
         if (files && files.length > 0) {
-            /** @type {?} */
             let data = [];
             for (let i = 0; i < files.length; i++) {
-                /** @type {?} */
                 const file = files.item(i);
-                /** @type {?} */
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = (/**
-                 * @return {?}
-                 */
-                () => {
+                reader.onload = () => {
                     data.push(Object.assign(file, {
                         data: reader.result
                     }));
@@ -54,56 +193,36 @@ class FilesService {
                         this.callback(data.length > 0 ? data : null);
                         this.fileInput.value = null;
                     }
-                });
+                };
             }
         }
     }
-    /**
-     * @param {?} callback
-     * @param {?} options
-     * @return {?}
-     */
     open(callback, options) {
         this.fileInput.accept = options && options.accept ? options.accept : '';
         this.fileInput.multiple = options && options.multiple;
         this.fileInput.click();
         this.callback = callback;
     }
-}
-FilesService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-FilesService.ctorParameters = () => [];
-/** @nocollapse */ FilesService.ngInjectableDef = defineInjectable({ factory: function FilesService_Factory() { return new FilesService(); }, token: FilesService, providedIn: "root" });
+};
+FilesService.ɵprov = ɵɵdefineInjectable({ factory: function FilesService_Factory() { return new FilesService(); }, token: FilesService, providedIn: "root" });
+FilesService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], FilesService);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class GoogleAnalyticsService {
-    /**
-     * @param {?} router
-     */
+let GoogleAnalyticsService = class GoogleAnalyticsService {
     constructor(router) {
         this.router = router;
     }
-    /**
-     * @param {?} trackingId
-     * @return {?}
-     */
     appendTrackingCode(trackingId) {
         try {
             if (trackingId) {
                 this.trackingId = trackingId;
-                /** @type {?} */
                 const s1 = document.createElement('script');
                 s1.async = true;
                 s1.src = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`;
                 document.head.appendChild(s1);
-                /** @type {?} */
                 const s2 = document.createElement('script');
                 s2.innerHTML = `
          window.dataLayer = window.dataLayer || [];
@@ -120,43 +239,25 @@ class GoogleAnalyticsService {
             console.error(ex);
         }
     }
-    /**
-     * @private
-     * @return {?}
-     */
     initSubscribers() {
-        this.router.events.subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
+        this.router.events.subscribe(event => {
             try {
                 if (typeof gtag === 'function') {
                     if (event instanceof NavigationEnd && this.trackingId) {
-                        setTimeout((/**
-                         * @return {?}
-                         */
-                        () => {
+                        setTimeout(() => {
                             gtag('config', this.trackingId, {
                                 'page_title': document.title,
                                 'page_path': event.urlAfterRedirects
                             });
-                        }), 100);
+                        }, 100);
                     }
                 }
             }
             catch (e) {
                 console.error(e);
             }
-        }));
+        });
     }
-    /**
-     * @param {?} action
-     * @param {?=} category
-     * @param {?=} label
-     * @param {?=} value
-     * @return {?}
-     */
     trackEvent(action, category = null, label = null, value = null) {
         if (typeof gtag === 'function') {
             gtag('event', action, {
@@ -166,11 +267,6 @@ class GoogleAnalyticsService {
             });
         }
     }
-    /**
-     * @param {?} description
-     * @param {?} fatal
-     * @return {?}
-     */
     trackException(description, fatal) {
         if (typeof gtag === 'function') {
             gtag('event', 'exception', {
@@ -179,93 +275,58 @@ class GoogleAnalyticsService {
             });
         }
     }
-    /**
-     * @param {?} userId
-     * @return {?}
-     */
     setUserId(userId) {
         if (typeof gtag === 'function') {
             gtag('set', { 'user_id': userId });
         }
     }
-}
-GoogleAnalyticsService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
+};
 GoogleAnalyticsService.ctorParameters = () => [
     { type: Router }
 ];
-/** @nocollapse */ GoogleAnalyticsService.ngInjectableDef = defineInjectable({ factory: function GoogleAnalyticsService_Factory() { return new GoogleAnalyticsService(inject(Router)); }, token: GoogleAnalyticsService, providedIn: "root" });
+GoogleAnalyticsService.ɵprov = ɵɵdefineInjectable({ factory: function GoogleAnalyticsService_Factory() { return new GoogleAnalyticsService(ɵɵinject(Router)); }, token: GoogleAnalyticsService, providedIn: "root" });
+GoogleAnalyticsService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], GoogleAnalyticsService);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class GoogleAnalyticsErrorHandler {
-    /**
-     * @param {?} injector
-     */
+let GoogleAnalyticsErrorHandler = class GoogleAnalyticsErrorHandler {
     constructor(injector) {
         this.injector = injector;
     }
-    /**
-     * @param {?} error
-     * @return {?}
-     */
     handleError(error) {
-        /** @type {?} */
         const googleAnalyticsService = this.injector.get(GoogleAnalyticsService);
         if (error instanceof HttpErrorResponse) {
             if (navigator.onLine) {
-                /** @type {?} */
                 const message = error.error ? JSON.stringify(error.error) : error.message;
                 googleAnalyticsService.trackEvent(error.url, 'Http Error', `${error.status} - ${message}`);
             }
         }
         else {
-            /** @type {?} */
             const location = this.injector.get(LocationStrategy);
-            /** @type {?} */
             const message = error.message ? error.message : error.toString();
-            /** @type {?} */
             const stack = error.stack ? error.stack : error.toString();
-            /** @type {?} */
             const url = location instanceof PathLocationStrategy ? location.path() : '';
             googleAnalyticsService.trackEvent(message, 'Javascript Error', stack);
         }
         throw error;
     }
-}
-GoogleAnalyticsErrorHandler.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
+};
 GoogleAnalyticsErrorHandler.ctorParameters = () => [
     { type: Injector }
 ];
+GoogleAnalyticsErrorHandler = __decorate([
+    Injectable()
+], GoogleAnalyticsErrorHandler);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class GoogleTagManagerErrorHandler {
-    /**
-     * @param {?} injector
-     */
+let GoogleTagManagerErrorHandler = class GoogleTagManagerErrorHandler {
     constructor(injector) {
         this.injector = injector;
     }
-    /**
-     * @param {?} error
-     * @return {?}
-     */
     handleError(error) {
         if (error instanceof HttpErrorResponse) {
             if (navigator.onLine) {
-                /** @type {?} */
                 const message = error.error ? JSON.stringify(error.error) : error.message;
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
@@ -275,52 +336,25 @@ class GoogleTagManagerErrorHandler {
                     'error_status': error.status
                 });
             }
-        } /* else {
-          // DEPRECATED: Google Tag Manager automatically collect javascript errors this not neccesary now
-          const location = this.injector.get(LocationStrategy);
-          const message = error.message ? error.message : error.toString();
-          const stack = error.stack ? error.stack : error.toString();
-          const url = location instanceof PathLocationStrategy ? location.path() : '';
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({
-            event: 'javascript_error',
-            'gtm.errorMessage': message,
-            'gtm.errorUrl': url,
-            'error_stack': stack,
-    
-          });
-        }*/
+        }
         throw error;
     }
-}
-GoogleTagManagerErrorHandler.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
+};
 GoogleTagManagerErrorHandler.ctorParameters = () => [
     { type: Injector }
 ];
+GoogleTagManagerErrorHandler = __decorate([
+    Injectable()
+], GoogleTagManagerErrorHandler);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class GoogleTagManagerService {
-    /**
-     * @param {?} platformId
-     */
+let GoogleTagManagerService = class GoogleTagManagerService {
     constructor(platformId) {
         this.platformId = platformId;
     }
-    /**
-     * @param {?} trackingId
-     * @return {?}
-     */
     appendTrackingCode(trackingId) {
         try {
             if (isPlatformBrowser(this.platformId) && trackingId) {
                 this.trackingId = trackingId;
-                /** @type {?} */
                 const s1 = document.createElement('script');
                 s1.innerHTML = `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -330,9 +364,7 @@ class GoogleTagManagerService {
           })(window,document,'script','dataLayer','${trackingId}');
         `;
                 document.head.appendChild(s1);
-                /** @type {?} */
                 const s2 = document.createElement('noscript');
-                /** @type {?} */
                 const s3 = document.createElement('iframe');
                 s3.width = '0';
                 s3.height = '0';
@@ -340,7 +372,7 @@ class GoogleTagManagerService {
                 s3.style.visibility = 'hidden';
                 s3.src = `https://www.googletagmanager.com/ns.html?id=${trackingId}`;
                 s2.appendChild(s3);
-                ((/** @type {?} */ (document.body))).prepend(s2);
+                document.body.prepend(s2);
             }
         }
         catch (ex) {
@@ -348,45 +380,75 @@ class GoogleTagManagerService {
             console.error(ex);
         }
     }
-    /**
-     * @param {?} variable
-     * @return {?}
-     */
     addVariable(variable) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push(variable);
     }
-}
-GoogleTagManagerService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
+};
 GoogleTagManagerService.ctorParameters = () => [
     { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] }
 ];
-/** @nocollapse */ GoogleTagManagerService.ngInjectableDef = defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(inject(PLATFORM_ID)); }, token: GoogleTagManagerService, providedIn: "root" });
+GoogleTagManagerService.ɵprov = ɵɵdefineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(ɵɵinject(PLATFORM_ID)); }, token: GoogleTagManagerService, providedIn: "root" });
+GoogleTagManagerService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(0, Inject(PLATFORM_ID))
+], GoogleTagManagerService);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // Only works on client storage
-class StorageService {
-    /**
-     * @param {?} platformId
-     * @param {?} configuration
-     */
+let StorageService = class StorageService {
     constructor(platformId, configuration) {
         this.platformId = platformId;
         this.configuration = configuration;
     }
-    /**
-     * @param {?} key
-     * @param {?=} storage
-     * @return {?}
-     */
+    getValue(key, storage) {
+        let value;
+        if (!storage || typeof storage == 'string') {
+            switch (storage) {
+                case 'local':
+                case 'localStorage':
+                    value = localStorage[key];
+                    break;
+                case 'memory':
+                    value = this.memoryStorage[key];
+                    break;
+                default:
+                    value = sessionStorage[key];
+                    break;
+            }
+        }
+        else if (typeof storage == 'object') {
+            value = storage[key];
+        }
+        return this.decrypt(value);
+    }
+    decrypt(value) {
+        if (value !== null &&
+            value !== undefined &&
+            value !== '' &&
+            this.configuration &&
+            this.configuration.storage &&
+            this.configuration.storage.encryptionSecret) {
+            const decryptedValue = AES.decrypt(value, this.configuration.storage.encryptionSecret);
+            value = decryptedValue.toString(enc.Utf8);
+        }
+        return value;
+    }
+    encrypt(value) {
+        if (value !== null &&
+            value !== undefined &&
+            value !== '' &&
+            this.configuration &&
+            this.configuration.storage &&
+            this.configuration.storage.encryptionSecret) {
+            value = AES.encrypt(value, this.configuration.storage.encryptionSecret);
+            return value.toString();
+        }
+        else {
+            return value;
+        }
+    }
     delete(key, storage) {
         if (isPlatformBrowser(this.platformId)) {
             if (!storage || typeof storage == 'string') {
@@ -408,13 +470,7 @@ class StorageService {
             }
         }
     }
-    /**
-     * @param {?} key
-     * @param {?=} storage
-     * @return {?}
-     */
     get(key, storage) {
-        /** @type {?} */
         let parsedValue;
         if (isPlatformBrowser(this.platformId)) {
             try {
@@ -426,80 +482,8 @@ class StorageService {
         }
         return parsedValue;
     }
-    /**
-     * @private
-     * @param {?} key
-     * @param {?=} storage
-     * @return {?}
-     */
-    getValue(key, storage) {
-        /** @type {?} */
-        let value;
-        if (!storage || typeof storage == 'string') {
-            switch (storage) {
-                case 'local':
-                case 'localStorage':
-                    value = localStorage[key];
-                    break;
-                case 'memory':
-                    value = this.memoryStorage[key];
-                    break;
-                default:
-                    value = sessionStorage[key];
-                    break;
-            }
-        }
-        else if (typeof storage == 'object') {
-            value = storage[key];
-        }
-        return this.decrypt(value);
-    }
-    /**
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
-    decrypt(value) {
-        if (value !== null &&
-            value !== undefined &&
-            value !== '' &&
-            this.configuration &&
-            this.configuration.storage &&
-            this.configuration.storage.encryptionSecret) {
-            /** @type {?} */
-            const decryptedValue = AES.decrypt(value, this.configuration.storage.encryptionSecret);
-            value = decryptedValue.toString(enc.Utf8);
-        }
-        return value;
-    }
-    /**
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
-    encrypt(value) {
-        if (value !== null &&
-            value !== undefined &&
-            value !== '' &&
-            this.configuration &&
-            this.configuration.storage &&
-            this.configuration.storage.encryptionSecret) {
-            value = AES.encrypt(value, this.configuration.storage.encryptionSecret);
-            return value.toString();
-        }
-        else {
-            return value;
-        }
-    }
-    /**
-     * @param {?} key
-     * @param {?} value
-     * @param {?=} storage
-     * @return {?}
-     */
     set(key, value, storage) {
         if (isPlatformBrowser(this.platformId)) {
-            /** @type {?} */
             const valueEncrypted = this.encrypt(JSON.stringify(value));
             if (!storage || typeof storage == 'string') {
                 switch (storage) {
@@ -520,185 +504,116 @@ class StorageService {
             }
         }
     }
-}
-StorageService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
+};
 StorageService.ctorParameters = () => [
     { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
     { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
 ];
-/** @nocollapse */ StorageService.ngInjectableDef = defineInjectable({ factory: function StorageService_Factory() { return new StorageService(inject(PLATFORM_ID), inject("FactorUtilsConfiguration")); }, token: StorageService, providedIn: "root" });
+StorageService.ɵprov = ɵɵdefineInjectable({ factory: function StorageService_Factory() { return new StorageService(ɵɵinject(PLATFORM_ID), ɵɵinject("FactorUtilsConfiguration")); }, token: StorageService, providedIn: "root" });
+StorageService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(0, Inject(PLATFORM_ID)),
+    __param(1, Inject('FactorUtilsConfiguration'))
+], StorageService);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-const MAX_CACHE_AGE = 60 * 60 * 1000;
+const MAX_CACHE_AGE = 60 * 60 * 1000; // in milliseconds
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class CacheService {
+let CacheService = class CacheService {
     constructor() {
         this.cacheMap = new Map();
     }
-    /**
-     * @param {?} req
-     * @return {?}
-     */
     get(req) {
-        /** @type {?} */
         const entry = this.cacheMap.get(req.urlWithParams);
         if (!entry) {
             return null;
         }
-        /** @type {?} */
         const isExpired = (Date.now() - entry.entryTime) > MAX_CACHE_AGE;
         return isExpired ? null : entry.response;
     }
-    /**
-     * @param {?} req
-     * @param {?} res
-     * @return {?}
-     */
     put(req, res) {
-        /** @type {?} */
         const entry = { url: req.urlWithParams, response: res, entryTime: Date.now() };
         this.cacheMap.set(req.urlWithParams, entry);
         this.deleteExpired();
     }
-    /**
-     * @param {?} url
-     * @return {?}
-     */
     invalidate(url) {
         this.cacheMap.delete(url);
     }
-    /**
-     * @private
-     * @return {?}
-     */
     deleteExpired() {
-        this.cacheMap.forEach((/**
-         * @param {?} entry
-         * @return {?}
-         */
-        entry => {
+        this.cacheMap.forEach(entry => {
             if ((Date.now() - entry.entryTime) > MAX_CACHE_AGE) {
                 this.cacheMap.delete(entry.url);
             }
-        }));
+        });
     }
-}
-CacheService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ CacheService.ngInjectableDef = defineInjectable({ factory: function CacheService_Factory() { return new CacheService(); }, token: CacheService, providedIn: "root" });
+};
+CacheService.ɵprov = ɵɵdefineInjectable({ factory: function CacheService_Factory() { return new CacheService(); }, token: CacheService, providedIn: "root" });
+CacheService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], CacheService);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 //const CACHABLE_URL = "/api/booksSearch";
-class CacheInterceptor {
-    /**
-     * @param {?} cacheService
-     * @param {?} configuration
-     */
+let CacheInterceptor = class CacheInterceptor {
     constructor(cacheService, configuration) {
         this.cacheService = cacheService;
         this.configuration = configuration;
     }
-    /**
-     * @param {?} req
-     * @param {?} next
-     * @return {?}
-     */
     intercept(req, next) {
         if (!this.isRequestCachable(req)) {
             return next.handle(req);
         }
-        /** @type {?} */
         const response = this.cacheService.get(req);
         if (response !== null) {
             return of(response);
         }
-        return next.handle(req).pipe(tap((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => {
+        return next.handle(req).pipe(tap(event => {
             if (event instanceof HttpResponse) {
                 this.cacheService.put(req, event);
             }
-        })));
+        }));
     }
-    /**
-     * @private
-     * @param {?} req
-     * @return {?}
-     */
     isRequestCachable(req) {
-        return (req.method === 'GET') && (this.configuration.cache.urls.find((/**
-         * @param {?} url
-         * @return {?}
-         */
-        url => req.url.indexOf(url) > -1)));
+        return (req.method === 'GET') && (this.configuration.cache.urls.find(url => req.url.indexOf(url) > -1));
     }
-}
-CacheInterceptor.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
+};
 CacheInterceptor.ctorParameters = () => [
     { type: CacheService },
     { type: undefined, decorators: [{ type: Inject, args: ['FactorUtilsConfiguration',] }] }
 ];
+CacheInterceptor = __decorate([
+    Injectable(),
+    __param(1, Inject('FactorUtilsConfiguration'))
+], CacheInterceptor);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class UtilsModule {
-    /**
-     * @param {?} configuration
-     * @return {?}
-     */
+var UtilsModule_1;
+let UtilsModule = UtilsModule_1 = class UtilsModule {
     static forRoot(configuration) {
         return {
-            ngModule: UtilsModule,
+            ngModule: UtilsModule_1,
             providers: [
                 { provide: 'FactorUtilsConfiguration', useValue: configuration }
             ]
         };
     }
-}
-UtilsModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [],
-                imports: [],
-                exports: []
-            },] }
-];
+};
+UtilsModule = UtilsModule_1 = __decorate([
+    NgModule({
+        declarations: [],
+        imports: [],
+        exports: []
+    })
+], UtilsModule);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+/*
+ * Public API Surface of utils
  */
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-export { FilesService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, StorageService, CacheService, CacheInterceptor, UtilsModule };
-
+export { CacheInterceptor, CacheService, ColorService, FilesService, GoogleAnalyticsErrorHandler, GoogleAnalyticsService, GoogleTagManagerErrorHandler, GoogleTagManagerService, StorageService, UtilsModule };
 //# sourceMappingURL=factor-utils.js.map
