@@ -22,10 +22,6 @@ import { ProgressComponent } from './common/progress/progress.component';
 import { RatingComponent } from './inputs/rating/rating.component';
 import { FilePickerComponent } from './inputs/file-picker/file-picker.component';
 import { MessageComponent } from './dialogs/message/message.component';
-import { ListComponent } from './navigation/list/list.component';
-import { NavbarComponent } from './navigation/navbar/navbar.component';
-import { SearchboxComponent } from './navigation/searchbox/searchbox.component';
-import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 
 export function hljsLanguages() {
   return [

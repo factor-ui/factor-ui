@@ -8,6 +8,10 @@ This component library for Angular is designed to be used in mobile and desktop 
 - **Report bugs**: File issues for the components in their respective GitHub projects. You can find links to them from the list in this readme.
 - **Send pull requests**: If you want to contribute code, check out the development instructions below.
 
+## Development
+
+If you want to develop the components yourself see the [development instructions](DEVELOPMENT.md) that apply to all Factor components.
+
 ## License
 
 CC-BY-NC-ND-4.0 - Attribution-NonCommercial-NoDerivatives 4.0 International
