@@ -2,23 +2,20 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/_mixins";
 :host {
-  --background-color: #FFF;
-  --text-color: #333;
-  --z-index: 980;
-  z-index: var(--z-index);
-}
-.content {
-  background-color: var(--background-color);
-  transition: background-color 0.2s, box-shadow 0.2s;
-  position: sticky;
-  top: 0;
-  z-index: 970;
-  @include media-breakpoint-up(md) {
-    top: -2rem;
-  }
+  z-index: var(--z-index, 980);
   &.overlapped {
     box-shadow: 0 0 1px 0 rgba(0,0,0,.14), 0 0 6px 0 rgba(0,0,0,.12);
   }
+  background-color: var(--background-color, #FFF);
+  transition: background-color 0.2s, box-shadow 0.2s;
+  display: block;
+  position: sticky;
+  top: -1px;
+  @include media-breakpoint-up(md) {
+    top: -2rem;
+  }
+}
+.content {
   button {
     min-width: 0;
     .label {

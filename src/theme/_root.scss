@@ -7,7 +7,12 @@
   --purple: #7E4CAF;
   --primary-rgb: var(--green-rgb);
   --primary: var(--green);
-  --background-color: #F8F9FA;
+  @include media-breakpoint-up(md) {
+    --background-color: #F8F9FA;
+  }
+  @include media-breakpoint-down(md) {
+    --background-color: #FFF;
+  }
   --background-color-active: rgba(var(--primary-rgb), 0.1);
   --background-color-hover: rgba(0, 0, 0, 0.03);
   --border-color: rgba(0, 0, 0, 0.1);
@@ -25,9 +30,7 @@
   --dialog-elevation: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
 }
 body {
-  @include media-breakpoint-up(md) {
-    background-color: var(--background-color);
-  }
+  background-color: var(--background-color);
 }
 button:focus {
   outline: none;

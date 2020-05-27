@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 
 import { Option } from '../models/option';
 
@@ -13,7 +13,7 @@ export class ToolbarComponent implements OnInit {
   @Input() title: string;
   @Input() titleOptions: Option[];
   overlapped: boolean;
-  rootMargin: any = { rootMargin: '32px 0px 0px 0px' };
+  rootMargin: any = { rootMargin: '0px 0px 0px 0px' };
 
   constructor() {
     const breakpointSm = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--breakpoint-sm'));
@@ -26,6 +26,15 @@ export class ToolbarComponent implements OnInit {
     if (this.titleOptions && !this.currentTitleOption) {
       this.currentTitleOption = this.titleOptions[0];
     }
+  }
+  @Input()
+  class: string = '';
+  @HostBinding('class')
+  get hostClasses(): string {
+    return [
+      this.class,
+      this.overlapped ? 'overlapped' : ''
+    ].join(' ');
   }
   setOverlapped(overlapped) {
     this.overlapped = !overlapped;

@@ -1,5 +1,5 @@
 <div (ftObserveIntersecting)="setOverlapped($event)" [ftObserveIntersectingOptions]="rootMargin"></div>
-<div class="content" [ngClass]="{overlapped: overlapped}">
+<div class="content">
   <div class="container p-2 p-sm-3 pb-md-3 pt-md-5 px-md-3 px-lg-5">
     <div class="d-flex align-items-center">
       <h5 class="title ml-2 ml-md-0 mb-0 mr-auto" *ngIf="!titleOptions; else titleForm">{{ title }}</h5>

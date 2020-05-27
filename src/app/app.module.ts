@@ -22,6 +22,8 @@ import { ProgressComponent } from './common/progress/progress.component';
 import { RatingComponent } from './inputs/rating/rating.component';
 import { FilePickerComponent } from './inputs/file-picker/file-picker.component';
 import { MessageComponent } from './dialogs/message/message.component';
+import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
+import { ListComponent } from './navigation/list/list.component';
 
 export function hljsLanguages() {
   return [
@@ -42,8 +44,6 @@ export function hljsLanguages() {
     FilePickerComponent,
     MessageComponent,
     ListComponent,
-    NavbarComponent,
-    SearchboxComponent,
     ToolbarComponent
   ],
   imports: [

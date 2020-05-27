@@ -8,6 +8,8 @@ import { ProgressComponent } from './common/progress/progress.component';
 import { RatingComponent } from './inputs/rating/rating.component';
 import { FilePickerComponent } from './inputs/file-picker/file-picker.component';
 import { MessageComponent } from './dialogs/message/message.component';
+import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
+import { ListComponent } from './navigation/list/list.component';
 
 const routes: Routes = [
   { path: 'common/icon', component: IconComponent },
@@ -16,7 +18,9 @@ const routes: Routes = [
   { path: 'common/progress', component: ProgressComponent },
   { path: 'inputs/rating', component: RatingComponent },
   { path: 'inputs/file-picker', component: FilePickerComponent },
-  { path: 'dialogs/message', component: MessageComponent }
+  { path: 'dialogs/message', component: MessageComponent },
+  { path: 'navigation/toolbar', component: ToolbarComponent },
+  { path: 'navigation/list', component: ListComponent }
 ];
 
 @NgModule({
