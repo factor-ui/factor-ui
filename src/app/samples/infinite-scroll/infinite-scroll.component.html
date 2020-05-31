@@ -1,0 +1,5 @@
+<div class="container p-4">
+  <div style="position: fixed; top:1rem; left:1rem;">{{ observeStatus | json }}</div>
+  <div style="height:800px;"></div>
+  <div (ftObserveIntersecting)="observeIntersecting($event)">test: {{ observeStatus | json }}</div>
+</div>

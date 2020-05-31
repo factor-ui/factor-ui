@@ -1,0 +1,128 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+.files {
+  min-height: 10rem;
+  background-color: rgba(0,0,0,.04);
+  padding: 1rem;
+  border-radius: 1rem;
+  &:hover {
+    background-color: rgba(0,0,0,.08);
+    cursor: pointer;
+  }
+  &-group {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, 130px);
+    &__item {
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 130px;
+      height: 130px;
+      border-radius: 0.5rem;
+      background-color: rgba(0,0,0,.05);
+      padding: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      &:hover {
+        .item__remove {
+          box-shadow: 0 0 0 2px #f2f2f2;
+          cursor: pointer;
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+          transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
+        }
+      }
+      .item__name {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        font-size: 80%;
+        font-weight: 600;
+        max-width: 100%;
+      }
+      .item__size {
+        color: $text-muted;
+        font-size: 80%;
+        font-weight: 400;
+      }
+      .item__status {
+        display: block;
+        border-radius: 100vh;
+        color: #FFF;
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+        transition: transform 0.2s, opacity 0.2s, visibility 0.2s linear 0.2s;
+        transform: translateY(100%);
+      }
+      .item__remove {
+        display: block;
+        border-radius: 100vh;
+        background-color: rgba(0,0,0,.3);
+        color: #FFF;
+        padding: 0.25rem;
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+        transition: transform 0.2s, opacity 0.2s, visibility 0.2s linear 0.2s;
+        transform: translateY(100%);
+        backdrop-filter: saturate(50%) blur(2px);
+        &:hover {
+          background-color: rgba(0,0,0,.5);
+        }
+      }
+      .item__progress {
+        position: absolute;
+        left: 0;
+        height: 3px;
+        bottom: 0;
+        background: $primary;
+        border-radius: 0.5rem;
+        opacity: 1;
+        transition: opacity 0.3s;
+      }
+      &.files-group__item--failed {
+        .item__status {
+          background-color: $danger;
+          box-shadow: 0 0 5px 10px #f2f2f2;
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+          transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
+        }
+        .item__progress {
+          opacity: 0;
+        }
+      }
+      &.files-group__item--uploaded {
+        .item__status {
+          background-color: $success;
+          box-shadow: 0 0 5px 10px #f2f2f2;
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+          transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
+        }
+        .item__progress {
+          opacity: 0;
+        }
+      }
+      &.files-group__item--sending {
+        opacity: .5;
+      }
+      &.files-group__item--sending,
+      &.files-group__item--uploaded {
+        .item__remove {
+          display: none;
+        }
+      }
+    }
+  }
+}

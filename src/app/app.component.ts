@@ -66,6 +66,26 @@ export class AppComponent implements OnInit {
       {
         label: 'Searchbox',
         url: '/navigation/searchbox'
+      },
+      {
+        label: 'Utils',
+        type: 'header'
+      },
+      {
+        label: 'Files service',
+        url: '/utils/files'
+      },
+      {
+        label: 'Cache',
+        url: '/utils/cache'
+      },
+      {
+        label: 'Samples',
+        type: 'header'
+      },
+      {
+        label: 'Infinite scroll',
+        url: '/samples/infinite-scroll'
       }
     ];
   }

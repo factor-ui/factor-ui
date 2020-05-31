@@ -10,11 +10,10 @@
   --hover-text-color: #333;
   --active-background-color: rgba(0, 0, 0, .10);
   --active-text-color: #FFF;
-  --z-index: 980;
   background-color: var(--background-color);
   position: fixed;
   transition: transform 0.3s ease-in-out, width 0.3s, color 0.3s, background-color 0.3s;
-  z-index: var(--z-index);
+  z-index: var(--z-index, 990);
   font-size: 0.875rem;
   display: flex;
   @include media-breakpoint-up(sm) {

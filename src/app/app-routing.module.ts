@@ -10,6 +10,8 @@ import { FilePickerComponent } from './inputs/file-picker/file-picker.component'
 import { MessageComponent } from './dialogs/message/message.component';
 import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 import { ListComponent } from './navigation/list/list.component';
+import { FilesComponent } from './utils/files/files.component';
+import { CacheComponent } from './utils/cache/cache.component';
 
 const routes: Routes = [
   { path: 'common/icon', component: IconComponent },
@@ -20,7 +22,13 @@ const routes: Routes = [
   { path: 'inputs/file-picker', component: FilePickerComponent },
   { path: 'dialogs/message', component: MessageComponent },
   { path: 'navigation/toolbar', component: ToolbarComponent },
-  { path: 'navigation/list', component: ListComponent }
+  { path: 'navigation/list', component: ListComponent },
+  { path: 'utils/files', component: FilesComponent },
+  { path: 'utils/cache', component: CacheComponent },
+  {
+    path: 'samples',
+    loadChildren: () => import('./samples/samples.module').then(mod => mod.SamplesModule)
+  },
 ];
 
 @NgModule({

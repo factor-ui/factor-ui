@@ -2,15 +2,12 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/_mixins";
 :host {
-  --background-color: #FFF;
-  --text-color: #333;
-  --z-index: 970;
-  z-index: var(--z-index);
-  background-color: var(--background-color);
+  z-index: var(--z-index, 980);
+  background-color: var(--background-color, #FFF);
   display: block;
   transition: background-color 0.2s, box-shadow 0.2s;
   position: sticky;
-  top: 0;
+  top: -1px;
   margin-top: -3.5rem;
   opacity: 0;
   visibility: hidden;

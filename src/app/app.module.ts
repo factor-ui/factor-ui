@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 
 import { CommonModule as FactorCommonModule } from 'factor-common';
@@ -24,6 +25,9 @@ import { FilePickerComponent } from './inputs/file-picker/file-picker.component'
 import { MessageComponent } from './dialogs/message/message.component';
 import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 import { ListComponent } from './navigation/list/list.component';
+import { NavbarComponent } from './navigation/navbar/navbar.component';
+import { FilesComponent } from './utils/files/files.component';
+import { CacheComponent } from './utils/cache/cache.component';
 
 export function hljsLanguages() {
   return [
@@ -44,7 +48,10 @@ export function hljsLanguages() {
     FilePickerComponent,
     MessageComponent,
     ListComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    NavbarComponent,
+    FilesComponent,
+    CacheComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,8 @@ export function hljsLanguages() {
     DialogsModule,
     InputsModule,
     NavigationModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
   ],
   providers: [
     {

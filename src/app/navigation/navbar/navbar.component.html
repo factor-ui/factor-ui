@@ -1,0 +1,23 @@
+<ft-navbar #navbar class="test" [items]="menu" [position]="position" labelField="name" iconNameField="icon" [labelPlacement]="labelPlacement"></ft-navbar>
+<div class="content p-4">
+  <div class="form-group">
+    <label>Position</label>
+    <select class="form-control" [(ngModel)]="position">
+      <option value="left">Left</option>
+      <option value="right">Right</option>
+      <option value="bottom">Bottom</option>
+      <option value="top">Top</option>
+      <option value="auto">Auto</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Label placement</label>
+    <select class="form-control" [(ngModel)]="labelPlacement">
+      <option value="left">Left</option>
+      <option value="right">Right</option>
+      <option value="bottom">Bottom</option>
+      <option value="top">Top</option>
+      <option value="auto">Auto</option>
+    </select>
+  </div>
+</div>
