@@ -10,6 +10,8 @@ import { Option } from '../models/option';
 })
 export class NavbarComponent implements OnInit {
   @Input()
+  class: string = '';
+  @Input()
   iconCollection: string;
   @Input()
   iconNameField: string = 'iconName';
@@ -27,8 +29,6 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() { }
-  @Input()
-  class: string = '';
   @HostBinding('class')
   get hostClasses(): string {
     return [

@@ -26,6 +26,6 @@ export class AuthService {
   }
 
   getProvider(): AuthProvider {
-    return this.configuration.type === 'oauth' ? this.oauthService : this.jwtService;
+    return this[`${this.configuration.type}Service`];
   }
 }

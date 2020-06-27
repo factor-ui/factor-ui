@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Option } from '../models/option';
@@ -9,10 +9,14 @@ import { Option } from '../models/option';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  @Output()
+  change = new EventEmitter<Option>();
   @Input()
   iconCollection: string;
   @Input()
   iconNameField: string = 'iconName';
+  @Input()
+  iconPath: string;
   @Input()
   labelField: string = 'label';
   @Input()
@@ -43,6 +47,7 @@ export class ListComponent implements OnInit {
   }
   toggleCollapsible(option) {
     option.show = !option.show;
+    this.change.emit(option);
   }
 
 }

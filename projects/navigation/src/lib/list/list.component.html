@@ -25,7 +25,7 @@
 <ng-template #collapsible let-item="item">
   <button type="button" matRipple class="collapsible-header list__item" [ngClass]="{ show: item.show }" (click)="toggleCollapsible(item)">
     <div class="d-flex align-items-center flex-grow-1">
-      <ft-icon class="item__icon" *ngIf="item[iconNameField]" [name]="item[iconNameField]" [collection]="iconCollection"></ft-icon>
+      <ft-icon class="item__icon" *ngIf="item[iconNameField]" [name]="item[iconNameField]" [collection]="iconCollection" [path]="iconPath"></ft-icon>
       <div class="item__label flex-grow-1">{{ item[labelField] }}</div>
       <ft-icon class="item__toggle" name="angle-right" size="1"></ft-icon>
     </div>
@@ -41,7 +41,7 @@
 </ng-template>
 <ng-template #text let-item="item">
   <div class="d-flex align-items-center">
-    <ft-icon class="item__icon" *ngIf="item[iconNameField]" [name]="item[iconNameField]" [collection]="iconCollection"></ft-icon>
+    <ft-icon class="item__icon" *ngIf="item[iconNameField]" [name]="item[iconNameField]" [collection]="iconCollection" [path]="iconPath"></ft-icon>
     <div class="item__label">{{ item[labelField] }}</div>
   </div>
 </ng-template>

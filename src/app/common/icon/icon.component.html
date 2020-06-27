@@ -1,4 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="0" height="0" style="display:none;">
+  <symbol viewBox="0 0 24 24" id="search"><path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M16 16l4.5 4.5"/><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></symbol>
+  <symbol viewBox="0 0 24 24" id="bookmark"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4h8c.554 0 1 .446 1 1v14c0 .554-.446 1-1 1l-4-4-4 4c-.392.392-1-.446-1-1V5c0-.554.446-1 1-1z"/></symbol>
+  <symbol viewBox="0 0 24 24" id="pencil"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.875" d="M5.33 15.068L4.25 19.75l4.682-1.08L19.734 7.865a1.015 1.015 0 0 0 0-1.44l-2.16-2.16c-.4-.4-1.042-.4-1.441 0z"/><path fill="none" stroke="currentColor" d="M14.092 6.067l3.841 3.841M5 15l3.841 3.841"/></symbol>
+  <symbol viewBox="0 0 24 24" id="gear"><g fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2"><path stroke-linejoin="round" d="M10.579 3l-.222 2.096a7.105 7.105 0 0 0-2.074.865L6.64 4.632l-2.009 2.01 1.329 1.64a7.105 7.105 0 0 0-.866 2.077L3 10.579v2.842l2.096.22a7.105 7.105 0 0 0 .859 2.084l-1.323 1.634 2.01 2.01 1.637-1.326a7.105 7.105 0 0 0 2.08.86l.22 2.097h2.842l.222-2.096a7.105 7.105 0 0 0 2.074-.864l1.642 1.328 2.01-2.01-1.33-1.64a7.105 7.105 0 0 0 .867-2.077l2.094-.22V10.58l-2.096-.22a7.105 7.105 0 0 0-.859-2.084l1.323-1.634-2.01-2.009-1.637 1.325a7.105 7.105 0 0 0-2.08-.86L13.421 3z"/><path d="M12 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2z"/></g></symbol>
+  <symbol viewBox="0 0 32 32" id="music"><path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M9 21V8l10-4v13"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M26.805 19.488s.654-3.334-1.268-5.073C23.615 12.675 23 10 23 10v15"/><path d="M23.801 24.41c.64 1.406-.317 3.255-2.14 4.134-1.824.878-3.821.45-4.462-.954-.64-1.406.317-3.256 2.14-4.134 1.824-.878 3.821-.45 4.462.955zM19.801 16.41c.64 1.406-.317 3.255-2.14 4.134-1.824.878-3.821.45-4.462-.954-.64-1.406.317-3.256 2.14-4.134 1.824-.878 3.821-.45 4.462.955zM9.801 20.41c.64 1.406-.317 3.255-2.14 4.134-1.824.878-3.821.45-4.462-.954-.64-1.406.317-3.256 2.14-4.134 1.824-.878 3.821-.45 4.462.955z"/><path fill="none" stroke="currentColor" stroke-linejoin="round" d="M9 12l10-4"/></symbol>
+</svg>
+
 <div class="container p-4 p-md-5">
+  <h4>Path</h4>
+  <table class="table table-bordered">
+    <tr>
+      <td colspan="5" class="p-0">
+        <pre class="m-0"><code [highlight]="codePath" [lineNumbers]="true" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td class="text-center p-3">
+        <ft-icon name="search" size="3" path="assets/factoricons/symbols"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon name="bookmark" size="3" path="assets/factoricons/symbols"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon name="pencil" size="3" path="assets/factoricons/symbols"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon name="gear" size="3" path="assets/factoricons/symbols"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon name="music" size="3" path="assets/factoricons/symbols"></ft-icon>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th>search</th>
+      <th>bookmark</th>
+      <th>pencil</th>
+      <th>gear</th>
+      <th>music</th>
+    </tr>
+  </table>
+
   <h4>Collection</h4>
   <table class="table table-bordered">
     <tr>
@@ -93,6 +134,72 @@
       <th>3</th>
       <th>4</th>
       <th>5</th>
+    </tr>
+  </table>
+
+  <h4>Mode</h4>
+  <table class="table table-bordered">
+    <tr>
+      <td colspan="5" class="p-0">
+        <pre class="m-0"><code [highlight]="codeMode" [lineNumbers]="true" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td class="text-center p-3">
+        <ft-icon name="search" collection="unset" size="3" mode="inline"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon name="bookmark" collection="unset" size="3" mode="inline"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon name="pencil" collection="unset" size="3" mode="inline"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon name="gear" collection="unset" size="3" mode="inline"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon name="music" collection="unset" size="3" mode="inline"></ft-icon>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th>search</th>
+      <th>bookmark</th>
+      <th>pencil</th>
+      <th>gear</th>
+      <th>music</th>
+    </tr>
+  </table>
+
+  <h4>Src</h4>
+  <table class="table table-bordered">
+    <tr>
+      <td colspan="5" class="p-0">
+        <pre class="m-0"><code [highlight]="codeSrc" [lineNumbers]="true" [languages]="['xml']" class="p-3 bg-white"></code></pre>
+      </td>
+    </tr>
+    <tr>
+      <td class="text-center p-3">
+        <ft-icon size="3" src="assets/factoricons/svg/slim/actions/search.svg"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon size="3" src="assets/factoricons/svg/slim/actions/bookmark.svg"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon size="3" src="assets/factoricons/svg/slim/actions/pencil.svg"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon size="3" src="assets/factoricons/svg/slim/things/gear.svg"></ft-icon>
+      </td>
+      <td class="text-center p-3">
+        <ft-icon size="3" src="assets/factoricons/svg/slim/things/music.svg"></ft-icon>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th>search</th>
+      <th>bookmark</th>
+      <th>pencil</th>
+      <th>gear</th>
+      <th>music</th>
     </tr>
   </table>
 </div>

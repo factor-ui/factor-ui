@@ -8,9 +8,11 @@
   background-repeat: no-repeat;
   border-radius: 100vh;
   padding: 0.25rem;
-  font-size: calc(var(--default-size) - (var(--default-size) * 0.5));
+  font-size: calc(var(--default-size) - (var(--default-size) * 0.6));
   min-width: var(--default-size);
   min-height: var(--default-size);
+  cursor: default;
+  user-select: none;
 }
 div {
   font-size: 1em;

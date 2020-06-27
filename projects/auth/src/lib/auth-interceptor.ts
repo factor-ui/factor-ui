@@ -13,8 +13,7 @@ export class AuthInterceptor {
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(
-    private injector: Injector,
-    @Inject('FactorAuthConfiguration') private configuration
+    private injector: Injector
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any> | any> {
@@ -24,7 +23,7 @@ export class AuthInterceptor {
         if (error instanceof HttpErrorResponse) {
           switch ((<HttpErrorResponse>error).status) {
             case 401:
-              if (this.authService.getProvider().handle401Error !== 'undefined') {
+              if (this.authService.getProvider().handle401Error) {
                 return this.authService.getProvider().handle401Error(request, next);
               } else {
                 this.authService.getProvider().logout();
