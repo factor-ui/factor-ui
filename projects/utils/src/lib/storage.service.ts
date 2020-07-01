@@ -62,7 +62,6 @@ export class StorageService {
     }
 
   }
-
   public delete(key: string, storage?) {
     if (isPlatformBrowser(this.platformId)) {
       if (!storage || typeof storage == 'string') {

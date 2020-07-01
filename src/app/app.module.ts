@@ -8,6 +8,7 @@ import { CommonModule as FactorCommonModule } from 'factor-common';
 import { InputsModule } from 'factor-inputs';
 import { DialogsModule } from 'factor-dialogs';
 import { NavigationModule } from 'factor-navigation';
+import { UtilsModule } from 'factor-utils';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import xml from 'highlight.js/lib/languages/xml';
 import scss from 'highlight.js/lib/languages/scss';
@@ -28,6 +29,7 @@ import { ListComponent } from './navigation/list/list.component';
 import { NavbarComponent } from './navigation/navbar/navbar.component';
 import { FilesComponent } from './utils/files/files.component';
 import { CacheComponent } from './utils/cache/cache.component';
+import { StorageComponent } from './utils/storage/storage.component';
 
 export function hljsLanguages() {
   return [
@@ -51,7 +53,8 @@ export function hljsLanguages() {
     ToolbarComponent,
     NavbarComponent,
     FilesComponent,
-    CacheComponent
+    CacheComponent,
+    StorageComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,8 @@ export function hljsLanguages() {
     InputsModule,
     NavigationModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    UtilsModule.forRoot({ storage: { encryptionSecret: 'Factor' }})
   ],
   providers: [
     {

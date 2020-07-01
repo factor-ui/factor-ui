@@ -1,0 +1,7 @@
+<div class="container p-4">
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <input type="text" formControlName="key" placeholder="Key" />
+    <input type="text" formControlName="value" placeholder="Value" />
+    <button type="submit">Submit</button>
+  </form>
+</div>

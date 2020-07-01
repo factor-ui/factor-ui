@@ -12,6 +12,7 @@ import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 import { ListComponent } from './navigation/list/list.component';
 import { FilesComponent } from './utils/files/files.component';
 import { CacheComponent } from './utils/cache/cache.component';
+import { StorageComponent } from './utils/storage/storage.component';
 
 const routes: Routes = [
   { path: 'common/icon', component: IconComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'navigation/list', component: ListComponent },
   { path: 'utils/files', component: FilesComponent },
   { path: 'utils/cache', component: CacheComponent },
+  { path: 'utils/storage', component: StorageComponent },
   {
     path: 'samples',
     loadChildren: () => import('./samples/samples.module').then(mod => mod.SamplesModule)

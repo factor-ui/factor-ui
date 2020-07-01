@@ -19,7 +19,7 @@ export class GoogleAnalyticsService {
         this.trackingId = trackingId;
         const s1 = document.createElement('script');
         s1.async = true;
-        s1.src = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`;
+        s1.src = `//www.googletagmanager.com/gtag/js?id=${trackingId}`;
         document.head.appendChild(s1);
         const s2 = document.createElement('script');
         s2.innerHTML = `

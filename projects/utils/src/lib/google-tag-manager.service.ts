@@ -12,7 +12,7 @@ export class GoogleTagManagerService {
   trackingId: string;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   public appendTrackingCode(trackingId: string): void {
@@ -24,7 +24,7 @@ export class GoogleTagManagerService {
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','${trackingId}');
         `;
         document.head.appendChild(s1);
@@ -34,7 +34,7 @@ export class GoogleTagManagerService {
         s3.height = '0';
         s3.style.display = 'none';
         s3.style.visibility = 'hidden';
-        s3.src = `https://www.googletagmanager.com/ns.html?id=${trackingId}`
+        s3.src = `//www.googletagmanager.com/ns.html?id=${trackingId}`
         s2.appendChild(s3);
         (document.body as HTMLElementExtended).prepend(s2);
       }
@@ -44,7 +44,9 @@ export class GoogleTagManagerService {
     }
   }
   public addVariable(variable) {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push(variable);
+    if (isPlatformBrowser(this.platformId) && this.trackingId) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(variable);
+    }
   }
 }

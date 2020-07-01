@@ -80,6 +80,10 @@ export class AppComponent implements OnInit {
         url: '/utils/cache'
       },
       {
+        label: 'Storage',
+        url: '/utils/storage'
+      },
+      {
         label: 'Samples',
         type: 'header'
       },
