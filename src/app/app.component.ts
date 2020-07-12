@@ -24,10 +24,6 @@ export class AppComponent implements OnInit {
         url: '/common/icon'
       },
       {
-        label: 'Image',
-        url: '/common/image'
-      },
-      {
         label: 'Progress',
         url: '/common/progress'
       },
@@ -72,12 +68,20 @@ export class AppComponent implements OnInit {
         type: 'header'
       },
       {
-        label: 'Files service',
+        label: 'Files',
         url: '/utils/files'
       },
       {
-        label: 'Cache',
-        url: '/utils/cache'
+        label: 'Color',
+        url: '/utils/files'
+      },
+      {
+        label: 'Google Tag Manager',
+        url: '/utils/files'
+      },
+      {
+        label: 'Google Analytics',
+        url: '/utils/files'
       },
       {
         label: 'Storage',

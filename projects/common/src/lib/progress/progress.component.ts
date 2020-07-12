@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'ft-progress',
@@ -7,9 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProgressComponent implements OnInit {
   @Input()
+  class: string = '';
+  @Input()
   color: string;
   @Input()
   mode: 'determinate' | 'indeterminate' = 'indeterminate';
+  @Input()
+  overlay: boolean;
   @Input()
   size: number;
   @Input()
@@ -20,6 +24,13 @@ export class ProgressComponent implements OnInit {
   ngOnInit() {
     this.color = this.color || 'var(--primary)';
     this.value = 0;
+  }
+  @HostBinding('class')
+  get hostClasses(): string {
+    return [
+      this.class,
+      this.overlay ? 'progress--overlay' : ''
+    ].join(' ');
   }
 
 }

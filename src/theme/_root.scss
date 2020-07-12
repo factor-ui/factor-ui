@@ -1,11 +1,13 @@
 :root {
+  /*
   --green-rgb: 0, 221, 139;
   --green: rgb(var(--green-rgb));
   --orange-rgb: 255, 152, 0;
   --orange: rgb(var(--orange-rgb));
   --blue: #0094FF;
   --purple: #7E4CAF;
-  --primary-rgb: var(--green-rgb);
+  */
+  --primary-rgb: 0, 148, 93;
   --primary: var(--green);
   @include media-breakpoint-up(md) {
     --background-color: #F8F9FA;

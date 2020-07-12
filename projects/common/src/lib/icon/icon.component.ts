@@ -6,14 +6,30 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
   styleUrls: ['./icon.component.scss']
 })
 export class IconComponent implements OnInit {
+  _collection: string;
+  _name: string;
+  _mode: 'inline' | 'external';
+  _path: string;
   @Input()
-  name: string;
+  set collection(collection: string) {
+    this._collection = collection;
+    this.update();
+  }
   @Input()
-  collection: string;
+  set mode(mode: 'inline' | 'external') {
+    this._mode = mode;
+    this.update();
+  }
   @Input()
-  mode: 'inline' | 'external';
+  set name(name: string) {
+    this._name = name;
+    this.update();
+  } 
   @Input()
-  path: string;
+  set path(path: string) {
+    this._path = path;
+    this.update();
+  }
   @Input()
   size: string;
   @Input()
@@ -25,34 +41,37 @@ export class IconComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.update();
+  }
+  private update() {
     // Set the default collection if the mode is external
-    if (!this.collection) {
+    if (!this._collection) {
       if (this.configuration.icon && this.configuration.icon.collection) {
-        this.collection = this.configuration.icon.collection;
+        this._collection = this.configuration.icon.collection;
       } else if (this.mode === 'external') {
-        this.collection = 'icons';
+        this._collection = 'icons';
       }
     }
-    if (!this.mode) {
+    if (!this._mode) {
       if (this.configuration.icon && this.configuration.icon.mode) {
-        this.mode = this.configuration.icon.mode;
+        this._mode = this.configuration.icon.mode;
       } else {
-        this.mode = 'external';
+        this._mode = 'external';
       }
     }
-    if (this.mode === 'external') {
+    if (this._mode === 'external') {
       // If the icon mode is external
-      if (!this.path) {
+      if (!this._path) {
         if (this.configuration.icon && this.configuration.icon.path) {
-          this.path = this.configuration.icon.path;
+          this._path = this.configuration.icon.path;
         } else {
-          this.path = 'assets';
+          this._path = 'assets';
         }
       }
-      this.url = `${ this.path }/${ this.collection }.svg#${this.name}`;
+      this.url = `${ this._path }/${ this._collection }.svg#${this._name}`;
     } else {
       // If the icon mode is inline
-      const name = this.collection && this.collection !== 'unset' ? `${this.collection}--${this.name}` : this.name;
+      const name = this._collection && this._collection !== 'unset' ? `${this._collection}--${this._name}` : this._name;
       this.url = `#${name}`;
     }
   }

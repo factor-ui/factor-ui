@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ProgressService } from 'factor-common';
+
 @Component({
   selector: 'app-progress',
   templateUrl: './progress.component.html',
@@ -15,14 +17,26 @@ export class ProgressComponent implements OnInit {
   codeMode = `<ft-progress size="3" mode="determinate" [value]="value"></ft-progress>
 <!-- Por defecto el modo es indeterminate -->
 <ft-progress size="3"></ft-progress>`;
+  codeService = `
+    this.progressService.show();
+    this.progressService.hide();
+  `;
+  interval;
 
-  constructor() { }
+  constructor(
+    public progressService: ProgressService
+  ) { }
 
   ngOnInit(): void {
-    let interval = setInterval(() => {
+    this.startProgress();
+  }
+  startProgress() {
+    clearInterval(this.interval);
+    this.value = 0;
+    this.interval = setInterval(() => {
       this.value += 2;
       if (this.value>=100) {
-        clearInterval(interval);
+        clearInterval(this.interval);
       }
     }, 100);
   }

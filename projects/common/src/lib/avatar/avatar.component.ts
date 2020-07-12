@@ -10,6 +10,8 @@ import { ColorService } from 'factor-utils';
 export class AvatarComponent implements OnInit {
   _label: string;
   _src: string;
+  @Input()
+  color: string;
   initials: string;
   loaded: boolean;
   @Input()
@@ -36,7 +38,7 @@ export class AvatarComponent implements OnInit {
   }
   @HostBinding('style.background-color')
   get backgroundColor(): string {
-    return this.colorService.hex(this._label);
+    return this.color || this.colorService.hex(this._label);
   }
   @HostBinding('style.background-image')
   get backgroundImage(): string {
