@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from "rxjs";
 
 declare var document: any;
 
@@ -9,12 +8,9 @@ declare var document: any;
 export class FilesService {
   private callback: Function;
   private fileInput: HTMLInputElement;
-  //private valueChangesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
-  //private valueChanges: Observable<any[]> = this.valueChangesSubject.asObservable();
-
+  
   constructor() {
     this.fileInput = document.createElement('input');
-    //this.fileInput.style.display = 'none';
     this.fileInput.type = 'file';
     this.fileInput.addEventListener('change', (event: any) => {
       const reader = new FileReader();
@@ -33,7 +29,6 @@ export class FilesService {
             data: reader.result
           }));
           if (data.length == files.length) {
-            //this.valueChangesSubject.next(data.length > 0 ? data : null);
             this.callback(data.length > 0 ? data : null);
             this.fileInput.value = null;
           }

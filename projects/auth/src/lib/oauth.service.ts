@@ -1,5 +1,5 @@
 import { Inject, Injectable, Injector } from '@angular/core';
-import { HttpClient, HttpRequest, HttpHandler } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHandler, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { tap, catchError, filter, take, switchMap, finalize, share } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import { Token } from './models/token';
 export class OAuthService implements AuthProvider {
   private loggedInSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public loggedIn: Observable<boolean> = this.loggedInSource.asObservable();
-  private refreshTokenInProgress = false;
+  public refreshTokenInProgress = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(
@@ -64,15 +64,26 @@ export class OAuthService implements AuthProvider {
             this.refreshTokenSubject.next(newToken);
             return next.handle(this.addAuthenticationToken(request));
           }
-
           // If we don't get a new token, we are in trouble so logout.
-          this.logout();
-          return throwError('');
+          this.storageService.delete('token', 'local');
+          this.loggedInSource.next(false);
+          return throwError(new HttpErrorResponse({
+            error: {},
+            headers: new HttpHeaders(),
+            status: 401,
+            statusText: '',
+            url: undefined,
+          }));
         }),
         catchError(error => {
-          // If there is an exception calling 'refreshToken', bad news so logout.
-          this.logout();
-          return throwError(error);
+          // It cant replace access token set error status 401 to continue flow
+          return throwError(new HttpErrorResponse({
+            error: error.error,
+            headers: error.headers,
+            status: 401,
+            statusText: error.statusText,
+            url: error.url || undefined,
+          }));
         }),
         share(),
         finalize(() => {
@@ -124,6 +135,9 @@ export class OAuthService implements AuthProvider {
     return this.http.get(url, { params: params }).pipe(tap((token: Token) => {
       this.storageService.set('token', token, 'local');
       this.loggedInSource.next(true);
+    }, (error) => {
+      this.storageService.delete('token', 'local');
+      this.loggedInSource.next(false);
     }));
   }
 }
