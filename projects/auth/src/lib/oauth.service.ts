@@ -55,49 +55,63 @@ export class OAuthService implements AuthProvider {
     return this.storageService.get('token', 'local');
   }
   handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    if (!this.refreshTokenInProgress) {
-      this.refreshTokenInProgress = true;
-      this.refreshTokenSubject.next(null);
-      return this.refreshToken().pipe(
-        switchMap((newToken: Token) => {
-          if (newToken) {
-            this.refreshTokenSubject.next(newToken);
+    const token = this.getToken();
+    if (token && token.refresh_token && this.configuration.refreshTokenUrl) {
+      if (!this.refreshTokenInProgress) {
+        this.refreshTokenInProgress = true;
+        this.refreshTokenSubject.next(null);
+        return this.refreshToken().pipe(
+          switchMap((newToken: Token) => {
+            if (newToken) {
+              this.refreshTokenSubject.next(newToken);
+              return next.handle(this.addAuthenticationToken(request));
+            }
+            // If we don't get a new token, we are in trouble so logout.
+            this.storageService.delete('token', 'local');
+            this.loggedInSource.next(false);
+            return throwError(new HttpErrorResponse({
+              error: {},
+              headers: new HttpHeaders(),
+              status: 401,
+              statusText: '',
+              url: undefined,
+            }));
+          }),
+          catchError(error => {
+            // It cant replace access token set error status 401 to continue flow
+            return throwError(new HttpErrorResponse({
+              error: error.error,
+              headers: error.headers,
+              status: 401,
+              statusText: error.statusText,
+              url: error.url || undefined,
+            }));
+          }),
+          share(),
+          finalize(() => {
+            this.refreshTokenInProgress = false;
+          }),
+        );
+      } else {
+        return this.refreshTokenSubject.pipe(
+          filter(token => token != null),
+          take(1),
+          switchMap(token => {
             return next.handle(this.addAuthenticationToken(request));
-          }
-          // If we don't get a new token, we are in trouble so logout.
-          this.storageService.delete('token', 'local');
-          this.loggedInSource.next(false);
-          return throwError(new HttpErrorResponse({
-            error: {},
-            headers: new HttpHeaders(),
-            status: 401,
-            statusText: '',
-            url: undefined,
-          }));
-        }),
-        catchError(error => {
-          // It cant replace access token set error status 401 to continue flow
-          return throwError(new HttpErrorResponse({
-            error: error.error,
-            headers: error.headers,
-            status: 401,
-            statusText: error.statusText,
-            url: error.url || undefined,
-          }));
-        }),
-        share(),
-        finalize(() => {
-          this.refreshTokenInProgress = false;
-        }),
-      );
+          })
+        );
+      }
     } else {
-      return this.refreshTokenSubject.pipe(
-        filter(token => token != null),
-        take(1),
-        switchMap(token => {
-          return next.handle(this.addAuthenticationToken(request));
-        })
-      );
+      // No refresh token flow
+      this.storageService.delete('token', 'local');
+      this.loggedInSource.next(false);
+      return throwError(new HttpErrorResponse({
+        error: {},
+        headers: new HttpHeaders(),
+        status: 401,
+        statusText: '',
+        url: undefined,
+      }));
     }
   }
   login(form: { username: string, password: string }): Observable<Token> {
@@ -125,7 +139,7 @@ export class OAuthService implements AuthProvider {
   }
   refreshToken(): Observable<Token> {
     const token = this.getToken();
-    const url = `${this.configuration.tokenUrl}`;
+    const url = `${this.configuration.refreshTokenUrl}`;
     const params = {
       client_id: this.configuration.clientId,
       client_secret: this.configuration.clientSecret,

@@ -13,7 +13,6 @@ export class FilesService {
     this.fileInput = document.createElement('input');
     this.fileInput.type = 'file';
     this.fileInput.addEventListener('change', (event: any) => {
-      const reader = new FileReader();
       this.loadValue(event.target.files);
     });
   }
