@@ -124,7 +124,7 @@ function storeCodeValidator(number: string): boolean {
   return value;
 }
 
-export function identification(type: string): ValidatorFn {
+export function identificationValidator(type: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const number: string = String(control.value);
       if (number && number.trim() !== '') {
