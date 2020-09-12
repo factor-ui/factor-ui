@@ -2,7 +2,7 @@
  * Public API Surface of utils
  */
 
-export * from './lib/validators/ec/identificationValidator';
+export * from './lib/validators/ec/identification-validator';
 export * from './lib/color.service';
 export * from './lib/files.service';
 export * from './lib/google-analytics-error-handler';
