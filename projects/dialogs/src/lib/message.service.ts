@@ -12,11 +12,18 @@ export interface Action {
   type?: string;
   metadata?: any;
 }
+export interface Icon {
+  name: string;
+  collection?: string;
+  class?: string;
+  size?: number;
+}
 export interface Options {
   type?: 'modal' | 'notification';
   actions?: Action[];
   duration?: number;
   title?: string;
+  icon?: Icon;
   width?: string;
 }
 

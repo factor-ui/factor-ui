@@ -3,6 +3,7 @@
  */
 
 export * from './lib/validators/ec/identification-validator';
+export * from './lib/validators/ec/identification-type';
 export * from './lib/color.service';
 export * from './lib/files.service';
 export * from './lib/google-analytics-error-handler';
