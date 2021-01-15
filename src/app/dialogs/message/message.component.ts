@@ -51,7 +51,7 @@ show() {
 
   ngOnInit() {
   }
-  show(message, options) {
+  show(message, options?) {
     this.messageService.show(message, options);
   }
 

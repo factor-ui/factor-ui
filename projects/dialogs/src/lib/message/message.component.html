@@ -1,16 +1,25 @@
-<h1 mat-dialog-title *ngIf="data.options.title">{{ data.options.title }}</h1>
+<h1 mat-dialog-title *ngIf="data.options?.title">{{ data.options?.title }}</h1>
 <div class="mb-2" mat-dialog-content>
-  <ft-icon class="mr-2" *ngIf="data.options.icon" [name]="data.options.icon.name" [collection]="data.options.icon.collection" [ngClass]="data.options.icon.class"  [size]="data.options.icon.size || 2"></ft-icon>
-  <div>{{ data.message }}</div>
+  <ft-icon class="mr-2" *ngIf="data.options?.icon" [name]="data.options?.icon?.name"
+    [collection]="data.options?.icon?.collection" [ngClass]="data.options?.icon?.class"
+    [size]="data.options?.icon?.size || 2"></ft-icon>
+  <ng-container [ngSwitch]="data.message?.type">
+    <div *ngSwitchCase="'html'" [innerHTML]="data.message?.content"></div>
+    <ng-container *ngSwitchDefault>{{ data.message?.content }}</ng-container>
+  </ng-container>
 </div>
 <div class="d-flex justify-content-end pb-4" mat-dialog-actions>
-  <ng-container *ngIf="data.options && data.options.actions && data.options.actions.length > 0; else acceptTemplate">
-    <ng-container *ngFor="let action of data.options.actions; let i = index">
+  <ng-container *ngIf="data.options?.actions?.length > 0; else acceptTemplate">
+    <ng-container *ngFor="let action of data.options?.actions; let i = index">
       <ng-container [ngSwitch]="action.type">
-        <button type="button" *ngSwitchCase="'raised'" mat-raised-button [color]="action.metadata?.color" (click)="select(action.value)" autofocus>{{ action.label }}</button>
-        <button type="button" *ngSwitchCase="'flat'" mat-flat-button [color]="action.metadata?.color" (click)="select(action.value)" autofocus>{{ action.label }}</button>
-        <button type="button" *ngSwitchCase="'stroked'" mat-stroked-button [color]="action.metadata?.color" (click)="select(action.value)" autofocus>{{ action.label }}</button>
-        <button type="button" *ngSwitchDefault mat-button [color]="action.metadata?.color" (click)="select(action.value)">{{ action.label }}</button>
+        <button type="button" *ngSwitchCase="'raised'" mat-raised-button [color]="action.metadata?.color"
+          (click)="select(action.value)" autofocus>{{ action.label }}</button>
+        <button type="button" *ngSwitchCase="'flat'" mat-flat-button [color]="action.metadata?.color"
+          (click)="select(action.value)" autofocus>{{ action.label }}</button>
+        <button type="button" *ngSwitchCase="'stroked'" mat-stroked-button [color]="action.metadata?.color"
+          (click)="select(action.value)" autofocus>{{ action.label }}</button>
+        <button type="button" *ngSwitchDefault mat-button [color]="action.metadata?.color"
+          (click)="select(action.value)">{{ action.label }}</button>
       </ng-container>
     </ng-container>
   </ng-container>

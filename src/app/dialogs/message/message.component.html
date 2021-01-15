@@ -10,12 +10,20 @@
       <tr class="text-center">
         <td><button type="button" mat-stroked-button color="primary" (click)="show('Has leído este mensaje importante.', {type:'modal'})">Abrir mensaje</button></td>
         <td><button type="button" mat-stroked-button color="primary" (click)="show('Notificaciones pueden incluir alertas, sonidos e insignia en el ícono.', {title: 'Tareas quiere enviarte notificaciones', type:'modal', width: '350px', actions: [{label: 'No permitir', value: 1}, {label: 'Permitir', value: 2, type: 'stroked', metadata: { color: 'primary' }}]})">Abrir mensaje</button></td>
-        <td><button type="button" mat-stroked-button color="primary" (click)="show('Se ha eliminado el archivo exitosamente.', {title: 'Confirmación'})">Abrir mensaje</button></td>
+        <td><button type="button" mat-stroked-button color="primary" (click)="show({content: 'Notificaciones pueden incluir alertas, <strong>sonidos</strong> e insignia en el ícono.', type: 'html'}, {title: 'Tareas quiere enviarte notificaciones', type:'modal', width: '350px', actions: [{label: 'No permitir', value: 1}, {label: 'Permitir', value: 2, type: 'stroked', metadata: { color: 'primary' }}]})">Abrir mensaje</button></td>
       </tr>
       <tr class="text-center">
         <th>Modal simple</th>
         <th>Modal acciones personalidados</th>
-        <th>Notificación</th>
+        <th>Modal mensaje HTML</th>
+      </tr>
+      <tr class="text-center">
+        <td><button type="button" mat-stroked-button color="primary" (click)="show('Se ha eliminado el archivo exitosamente.')">Abrir mensaje</button></td>
+        <td><button type="button" mat-stroked-button color="primary" (click)="show({content: 'Se ha eliminado el archivo <strong>document.txt</strong> exitosamente.', type: 'html'})">Abrir mensaje</button></td>
+      </tr>
+      <tr class="text-center">
+        <th>Notificación simple</th>
+        <th>Notificación HTML</th>
       </tr>
     </tbody>
   </table>

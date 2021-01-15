@@ -6,10 +6,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MessageComponent } from './message/message.component';
 import { CommonModule as FactorCommonModule } from 'factor-common';
+import { ContentComponent } from './content/content.component';
 
 @NgModule({
   declarations: [
-    MessageComponent
+    MessageComponent,
+    ContentComponent
   ],
   imports: [
     AngularCommonModule,
@@ -17,12 +19,6 @@ import { CommonModule as FactorCommonModule } from 'factor-common';
     MatDialogModule,
     MatSnackBarModule,
     FactorCommonModule.forRoot({ icon: { path: '', collection: '' } })
-  ],
-  exports: [
-    MessageComponent
-  ],
-  entryComponents: [
-    MessageComponent
   ]
 })
 export class DialogsModule { }

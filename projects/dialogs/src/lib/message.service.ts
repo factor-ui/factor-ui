@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 import { MessageComponent } from './message/message.component';
+import { Content } from './models/content';
+import { ContentComponent } from './content/content.component';
 
 export interface Action {
   label: string;
@@ -38,7 +40,7 @@ export class MessageService {
     private dialog: MatDialog
   ) { }
 
-  show(message: string, options?: Options): Observable<any> {
+  show(message: string | Content, options?: Options): Observable<any> {
     let selectionSource: ReplaySubject<string> = new ReplaySubject<string>(null);
     let selection: Observable<string> = selectionSource.asObservable();
     const defaults: any = {
@@ -46,17 +48,19 @@ export class MessageService {
       duration: 2000
     };
     options = Object.assign(defaults, options);
+    const data = { message: typeof message === 'string' ? { content: message, type: 'text' } : message, options };
     switch (options.type) {
       default:
       case 'notification':
-        this.snackBar.open(message, '', {
+        this.snackBar.openFromComponent(ContentComponent, {
+          data,
           duration: options.duration || 2000,
         });
         break;
       case 'modal':
         const dialogRef = this.dialog.open(MessageComponent, {
           width: options.width || '350px',
-          data: { message, options },
+          data,
           autoFocus: false,
           disableClose: true
         });
