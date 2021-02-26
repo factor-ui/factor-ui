@@ -6,7 +6,7 @@
   color: #FFF;
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 100vh;
+  border-radius: calc(var(--default-size) / 2);
   padding: 0.25rem;
   font-size: calc(var(--default-size) - (var(--default-size) * 0.6));
   min-width: var(--default-size);

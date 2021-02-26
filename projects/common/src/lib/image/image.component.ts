@@ -26,7 +26,9 @@ export class ImageComponent implements OnInit {
             let image = new Image();
             image.src = this.src;
             setTimeout(() => {
-              this.loading = true;
+              if (!this.shown && !this.error) {
+                this.loading = true;
+              }
             }, 100);
             image.onerror = () => {
               this.error = true;
@@ -39,7 +41,8 @@ export class ImageComponent implements OnInit {
                   this.shown = true;
                 });
               } else {
-                console.error('Image.decode not available.');
+                this.loading = false;
+                this.shown = true;
               }
             };
             elementObserver.unobserve(this.element.nativeElement);
